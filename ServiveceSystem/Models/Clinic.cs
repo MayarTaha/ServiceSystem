@@ -22,6 +22,6 @@ namespace ServiceSystem.Models
         public string CreatedLog { get; set; }
         public string UpdatedLog { get; set; }
         public string DeletedLog { get; set; }
-        public bool isDeleted { get; set; }
+        public bool isDeleted { get; set; }//test
     }
 }

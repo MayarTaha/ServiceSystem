@@ -21,7 +21,7 @@ namespace ServiceSystem.Models
         public string Location { get; set; }
         public string CreatedLog { get; set; }
         public string UpdatedLog { get; set; }
-        public string DeletedLog { get; set; }
+        public string DeletedLog { get; set; }//test2
         public bool isDeleted { get; set; }//test
     }
 }

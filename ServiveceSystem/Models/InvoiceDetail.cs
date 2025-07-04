@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiceSystem.Models
 {
+   
     public class InvoiceDetail
     {
         public int InvoiceDetailId { get; set; }

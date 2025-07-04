@@ -13,7 +13,7 @@ namespace ServiveceSystem.Models
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<ContactPerson> ContactPersons { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Service> services { get; set; }
+        public DbSet<Service> Services { get; set; }
         public DbSet<QuotationHeader> QuotationHeaders { get; set; }
         public DbSet<QuotationDetail> QuotationDetails { get; set; }
         public DbSet<InvoiceHeader> invoiceHeaders { get; set; }

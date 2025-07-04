@@ -14,13 +14,13 @@ namespace ServiceSystem.Models
         public int QuotationId { get; set; } // FK
         public QuotationHeader quotationHeader { get; set; }
         public int Quantity { get; set; }
-        public Discount DiscountType { get; set; }
+        public Discount DiscountType { get; set; } 
         public decimal Discount { get; set; }
 
        
 
-        public decimal ServicePrice { get; set; } 
-  
+        public decimal ServicePrice { get; set; }
+
         public decimal TotalService { get; set; } // Calculated: ServicePrice * Quantity - Discount
 
         public string CreatedLog { get; set; }

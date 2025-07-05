@@ -2,15 +2,28 @@
 using ServiceSystem.Models;
 using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
+using ServiveceSystem.PresentationLayer.InvoiceDetail;
+using ServiveceSystem.PresentationLayer.PaymentMethod;
 
 namespace ServiveceSystem
 {
     internal static class Program
     {
+
+
+
+
+        [STAThread]
+        static void Main()
+        {
+           
+            Application.Run(new AddPaymentForm()); // ← your desired form here
+        }
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-        [STAThread]
+        //[STAThread]
         //static void Main()
         //{
         //    // To customize application configuration such as set high DPI settings or default font,
@@ -34,65 +47,68 @@ namespace ServiveceSystem
         //    clinicService.AddClinic(newClinic);
 
         //}
-        static void Main(string[] args)
-        {
-            using (var context = new AppDBContext()) 
-            {
-                var clinicService = new ClinicService(context);
+        //static void Main(string[] args)
+        //{
+        //    using (var context = new AppDBContext()) 
+        //    {
+        //        var clinicService = new ClinicService(context);
 
-                try
-                {
-                    var clinic = new Clinic
-                    {
-                        ClinicName = "roaa",
-                        CompanyName = "Tariq",
-                        Phone = "01017557580",
-                        Email = "test@test.com",
-                        Location = "minia",
-                        CreatedLog = DateTime.Now.ToString(),
-                        UpdatedLog = DateTime.Now.ToString(),
-                        DeletedLog = "",
-                        isDeleted = false
-                    };
-
-                    
+        //        try
+        //        {
+        //            var clinic = new Clinic
+        //            {
+        //                ClinicName = "roaa",
+        //                CompanyName = "Tariq",
+        //                Phone = "01017557580",
+        //                Email = "test@test.com",
+        //                Location = "minia",
+        //                CreatedLog = DateTime.Now.ToString(),
+        //                UpdatedLog = DateTime.Now.ToString(),
+        //                DeletedLog = "",
+        //                isDeleted = false
+        //            };
 
 
-                    clinicService.AddClinic(clinic);
-                    Console.WriteLine("Clinic added successfully!");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("ERROR: " + ex.Message);
-                    if (ex.InnerException != null)
-                        Console.WriteLine("INNER: " + ex.InnerException.Message);
-                }
-
-                var contactService = new ContactPersonService(context);
-                var newContact = new ContactPerson
-                {
-                    ContactName = "Ali Youssef",
-                    ContactEmail = "ali@example.com",
-                    ContactNumber = "01012345678",
-                    ClinicId = 5
-                };
-
-                try
-                {
-                    contactService.AddContactPerson(newContact);
-                    Console.WriteLine("ContactPerson added successfully.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("ERROR: " + ex.Message);
-                }
-
-            }
-
-           
 
 
-        }
+        //            clinicService.AddClinic(clinic);
+        //            Console.WriteLine("Clinic added successfully!");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine("ERROR: " + ex.Message);
+        //            if (ex.InnerException != null)
+        //                Console.WriteLine("INNER: " + ex.InnerException.Message);
+        //        }
+
+        //        var contactService = new ContactPersonService(context);
+        //        var newContact = new ContactPerson
+        //        {
+        //            ContactName = "Ali Youssef",
+        //            ContactEmail = "ali@example.com",
+        //            ContactNumber = "01012345678",
+        //            ClinicId = 5
+        //        };
+
+        //        try
+        //        {
+        //            contactService.AddContactPerson(newContact);
+        //            Console.WriteLine("ContactPerson added successfully.");
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine("ERROR: " + ex.Message);
+        //        }
+
+        //    }
+
+
+
+
+        //}
+
+
+
 
     }
 }

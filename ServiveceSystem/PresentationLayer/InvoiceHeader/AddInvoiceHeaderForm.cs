@@ -9,16 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace ServiveceSystem.PresentationLayer.PaymentMethod
+namespace ServiveceSystem.PresentationLayer.InvoiceHeader
 {
-    public partial class AddPaymentForm: Form
+    public partial class AddInvoiceHeaderForm : Form
     {
-        public AddPaymentForm()
+        public AddInvoiceHeaderForm()
         {
             InitializeComponent();
-            PaymentStatuscomboBox.DataSource = Enum.GetValues(typeof(PaymentStatus));
+            PaymentMethodcomboBox.DataSource = Enum.GetValues(typeof(PaymentStatus));
             using (var context = new AppDBContext())
             {
                 var paymentMethods = context.PaymentMethods
@@ -30,9 +29,14 @@ namespace ServiveceSystem.PresentationLayer.PaymentMethod
                     .ToList();
 
                 PaymentMethodcomboBox.DataSource = paymentMethods;
-                 PaymentMethodcomboBox.DisplayMember = "PaymentType";
-                PaymentMethodcomboBox.ValueMember = "PaymentMethodId";    
+                PaymentMethodcomboBox.DisplayMember = "PaymentType";
+                PaymentMethodcomboBox.ValueMember = "PaymentMethodId";     
             }
+        }
+
+        private void DiscounttextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

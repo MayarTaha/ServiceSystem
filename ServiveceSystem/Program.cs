@@ -2,6 +2,8 @@
 using ServiceSystem.Models;
 using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
+using ServiveceSystem.PresentationLayer.Clinic;
+using ServiveceSystem.PresentationLayer.ContactPerson;
 using ServiveceSystem.PresentationLayer.InvoiceDetail;
 using ServiveceSystem.PresentationLayer.PaymentMethod;
 
@@ -17,7 +19,7 @@ namespace ServiveceSystem
         static void Main()
         {
            
-            Application.Run(new AddPaymentForm()); // ← your desired form here
+            Application.Run(new AddContactPerson()); // ← your desired form here
         }
 
         /// <summary>

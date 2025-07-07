@@ -35,7 +35,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
             {
-                //service.CreatedLog = DateTime.Now;
+                service.CreatedLog = DateTime.Now.ToString();
                 _context.Services.Add(service);
                 await _context.SaveChangesAsync();
             }
@@ -47,7 +47,7 @@ namespace ServiveceSystem.BusinessLayer
             var exists = await _context.Services.AnyAsync(s => s.Name.ToLower() == service.Name.ToLower() && s.ServiceId != service.ServiceId && !s.isDeleted);
 
             if (exists)
-                // entity.UpdatedLog = DateTime.Now;
+                service.UpdatedLog = DateTime.Now.ToString();
                 _context.Services.Update(service);
             await _context.SaveChangesAsync();
         }
@@ -58,6 +58,7 @@ namespace ServiveceSystem.BusinessLayer
             if (service != null)
             {
                 service.isDeleted = true;
+                service.DeletedLog = DateTime.Now.ToString();
                 await _context.SaveChangesAsync();
             }
         }

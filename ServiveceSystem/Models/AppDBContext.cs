@@ -57,7 +57,7 @@ namespace ServiveceSystem.Models
             // --- QuotationHeader and QuotationDetail (One-to-Many) --- //
             modelBuilder.Entity<QuotationHeader>()
                 .HasMany(qh => qh.QuotationDetails)
-                .WithOne(qd => qd.quotationHeader)
+                .WithOne(qd => qd.QuotationHeader)
                 .HasForeignKey(qd => qd.QuotationId)
                 .OnDelete(DeleteBehavior.NoAction);
 

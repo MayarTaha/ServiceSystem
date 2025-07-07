@@ -36,7 +36,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
               { 
-                //taxes.CreatedLog = DateTime.Now;
+                taxes.CreatedLog = DateTime.Now.ToString();
                 _context.Taxeses.Add(taxes);
                 await _context.SaveChangesAsync();
             }
@@ -48,7 +48,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
             {
-               // taxes.UpdatedLog = DateTime.Now;
+                taxes.UpdatedLog = DateTime.Now.ToString();
                 _context.Taxeses.Update(taxes);
                 await _context.SaveChangesAsync();
             }
@@ -60,6 +60,7 @@ namespace ServiveceSystem.BusinessLayer
             if (taxes != null)
             {
                 taxes.isDeleted = true;
+                taxes.DeletedLog = DateTime.Now.ToString();
                 await _context.SaveChangesAsync();
             }
         }

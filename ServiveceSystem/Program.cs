@@ -1,11 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DevExpress.XtraWaitForm;
+using Microsoft.EntityFrameworkCore;
 using ServiceSystem.Models;
 using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
+using ServiveceSystem.PresentationLayer;
 using ServiveceSystem.PresentationLayer.Clinic;
 using ServiveceSystem.PresentationLayer.ContactPerson;
 using ServiveceSystem.PresentationLayer.InvoiceDetail;
 using ServiveceSystem.PresentationLayer.PaymentMethod;
+using ServiveceSystem.PresentationLayer.Service;
+using ServiveceSystem.PresentationLayer.Taxes;
+using ServiveceSystem.PresentationLayer.User;
 
 namespace ServiveceSystem
 {
@@ -18,8 +23,18 @@ namespace ServiveceSystem
         [STAThread]
         static void Main()
         {
-           
-            Application.Run(new AddContactPerson()); // ← your desired form here
+            var login = new LoginForm();
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new AddService());
+            }
+            else
+            {
+                // Exit if login fails or canceled
+                Application.Exit();
+            }
+
+            // Application.Run(new AddUser()); // ← your desired form here
         }
 
         /// <summary>

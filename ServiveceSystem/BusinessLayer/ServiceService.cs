@@ -35,7 +35,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
             {
-                service.CreatedLog = DateTime.Now.ToString();
+                service.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.Services.Add(service);
                 await _context.SaveChangesAsync();
             }

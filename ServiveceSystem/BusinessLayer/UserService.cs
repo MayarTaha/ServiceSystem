@@ -33,7 +33,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
             {
-                // user.CreatedLog = DateTime.Now;
+                 user.CreatedLog = DateTime.Now.ToString();
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
             }
@@ -45,7 +45,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
                { 
-                // user.UpdatedLog = DateTime.Now;
+                user.UpdatedLog = DateTime.Now.ToString();
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
             }
@@ -57,6 +57,7 @@ namespace ServiveceSystem.BusinessLayer
             if (user != null)
             {
                 user.isDeleted = true;
+                user.DeletedLog = DateTime.Now.ToString();
                 await _context.SaveChangesAsync();
             }
         }

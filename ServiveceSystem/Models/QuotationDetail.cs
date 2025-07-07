@@ -10,9 +10,9 @@ namespace ServiceSystem.Models
     public class QuotationDetail
     {
         public int QuotationDetailId { get; set; }
-        [ForeignKey("quotationHeader")]
+        [ForeignKey("QuotationHeader")]
         public int QuotationId { get; set; } // FK
-        public QuotationHeader quotationHeader { get; set; }
+        public QuotationHeader QuotationHeader { get; set; }
         public int Quantity { get; set; }
         public Discount DiscountType { get; set; } 
         public decimal Discount { get; set; }

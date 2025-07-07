@@ -33,10 +33,11 @@ namespace ServiveceSystem.BusinessLayer
         public void AddPayment(Payment payment)
         {
            
-            var exists = _context.payments.Any(p => p.PaymentId == payment.PaymentId);
+            var exists = _context.payments.Any(p => p.PaymentId == payment.PaymentId && !p.isDeleted);
 
             if (!exists)
             {
+                payment.CreatedLog = DateTime.Now.ToString();
                 _context.payments.Add(payment);
                 _context.SaveChanges();
             }

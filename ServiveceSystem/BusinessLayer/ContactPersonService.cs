@@ -33,7 +33,7 @@ namespace ServiveceSystem.BusinessLayer
         public void AddContactPerson(ContactPerson contact)
         {
             
-            bool clinicExists = _context.Clinics.Any(c => c.ClinicId == contact.ClinicId);
+            bool clinicExists = _context.Clinics.Any(c => c.ClinicId == contact.ClinicId && !c.isDeleted);
             if (!clinicExists)
                 throw new Exception("Clinic not found");
 

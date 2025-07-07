@@ -1,4 +1,5 @@
-﻿using ServiceSystem.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ServiceSystem.Models;
 using ServiveceSystem.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace ServiveceSystem.BusinessLayer
         //Get All  Clinics
         public List<Clinic> GetAll()
         {
-            return _context.Clinics.ToList();
+            return _context.Clinics.Include(E => E.ContactPersons).ToList();
         }
 
         //get by id
@@ -33,11 +34,13 @@ namespace ServiveceSystem.BusinessLayer
 
         public void AddClinic(Clinic clinic)
         {
+
             
-            var exists = _context.Clinics.Any(c => c.ClinicName == clinic.ClinicName);
+            var exists = _context.Clinics.Any(c => c.ClinicName.ToLower() == clinic.ClinicName.ToLower() && !c.isDeleted);
 
             if (!exists)
             {
+                clinic.CreatedLog = DateTime.Now.ToString();
                 _context.Clinics.Add(clinic);
                 _context.SaveChanges();
             }

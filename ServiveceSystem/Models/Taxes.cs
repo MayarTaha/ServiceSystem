@@ -15,5 +15,6 @@ namespace ServiceSystem.Models
         public string UpdatedLog { get; set; }
         public string DeletedLog { get; set; }
         public bool isDeleted { get; set; }
+        //test taxes
     }
 }

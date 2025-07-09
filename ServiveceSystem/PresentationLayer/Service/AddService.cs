@@ -56,11 +56,5 @@ namespace ServiveceSystem.PresentationLayer.Service
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
     }
 }

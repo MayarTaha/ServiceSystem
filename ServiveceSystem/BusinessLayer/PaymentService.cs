@@ -37,7 +37,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
             {
-                payment.CreatedLog = DateTime.Now.ToString();
+                payment.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.payments.Add(payment);
                 _context.SaveChanges();
             }
@@ -56,7 +56,7 @@ namespace ServiveceSystem.BusinessLayer
                 existingPayment.PaymentDate = payment.PaymentDate;
                 existingPayment.PaymentMethodId = payment.PaymentMethodId;
                 existingPayment.PaymentStatus = payment.PaymentStatus;
-                existingPayment.UpdatedLog = DateTime.Now.ToString();
+                existingPayment.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
                 _context.SaveChanges();
             }
@@ -106,7 +106,8 @@ namespace ServiveceSystem.BusinessLayer
             var payment = _context.payments.Find(id);
             if (payment != null)
             {
-                _context.payments.Remove(payment);
+                payment.DeletedLog = $"{CurrentUser.Username} - {DateTime.Now}";
+                payment.isDeleted = true;
                 _context.SaveChanges();
             }
         }

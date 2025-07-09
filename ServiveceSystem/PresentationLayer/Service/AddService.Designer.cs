@@ -30,20 +30,21 @@
         {
             labelControl4 = new DevExpress.XtraEditors.LabelControl();
             txtDescription = new DevExpress.XtraEditors.TextEdit();
-            btnCancel = new DevExpress.XtraEditors.SimpleButton();
             btnSave = new DevExpress.XtraEditors.SimpleButton();
             txtName = new DevExpress.XtraEditors.TextEdit();
             labelControl3 = new DevExpress.XtraEditors.LabelControl();
             labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            labelControl1 = new DevExpress.XtraEditors.LabelControl();
             spinPrice = new DevExpress.XtraEditors.SpinEdit();
+            ((System.ComponentModel.ISupportInitialize)txtDescription.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtName.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)spinPrice.Properties).BeginInit();
             SuspendLayout();
             // 
             // labelControl4
             // 
             labelControl4.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelControl4.Appearance.Options.UseFont = true;
-            labelControl4.Location = new Point(72, 197);
+            labelControl4.Location = new Point(12, 143);
             labelControl4.Name = "labelControl4";
             labelControl4.Size = new Size(112, 25);
             labelControl4.TabIndex = 24;
@@ -51,36 +52,25 @@
             // 
             // txtDescription
             // 
-            txtDescription.Location = new Point(199, 162);
+            txtDescription.Location = new Point(162, 93);
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(132, 20);
             txtDescription.TabIndex = 23;
-            // 
-            // btnCancel
-            // 
-            btnCancel.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCancel.Appearance.Options.UseFont = true;
-            btnCancel.Location = new Point(256, 256);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(75, 36);
-            btnCancel.TabIndex = 22;
-            btnCancel.Text = "Cancel";
-            btnCancel.Click += btnCancel_Click;
             // 
             // btnSave
             // 
             btnSave.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSave.Appearance.Options.UseFont = true;
-            btnSave.Location = new Point(117, 256);
+            btnSave.Location = new Point(114, 196);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 36);
             btnSave.TabIndex = 21;
-            btnSave.Text = "Save";
+            btnSave.Text = "Add";
             btnSave.Click += btnSave_Click;
             // 
             // txtName
             // 
-            txtName.Location = new Point(199, 115);
+            txtName.Location = new Point(162, 36);
             txtName.Name = "txtName";
             txtName.Size = new Size(132, 20);
             txtName.TabIndex = 20;
@@ -89,7 +79,7 @@
             // 
             labelControl3.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelControl3.Appearance.Options.UseFont = true;
-            labelControl3.Location = new Point(72, 156);
+            labelControl3.Location = new Point(12, 88);
             labelControl3.Name = "labelControl3";
             labelControl3.Size = new Size(102, 25);
             labelControl3.TabIndex = 19;
@@ -99,46 +89,41 @@
             // 
             labelControl2.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelControl2.Appearance.Options.UseFont = true;
-            labelControl2.Location = new Point(72, 109);
+            labelControl2.Location = new Point(12, 30);
             labelControl2.Name = "labelControl2";
             labelControl2.Size = new Size(120, 25);
             labelControl2.TabIndex = 18;
             labelControl2.Text = "Service Name";
             // 
-            // labelControl1
-            // 
-            labelControl1.Appearance.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl1.Appearance.Options.UseFont = true;
-            labelControl1.Location = new Point(176, 41);
-            labelControl1.Name = "labelControl1";
-            labelControl1.Size = new Size(116, 30);
-            labelControl1.TabIndex = 17;
-            labelControl1.Text = "Add Service";
-            // 
             // spinPrice
             // 
             spinPrice.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
-            spinPrice.Location = new Point(199, 203);
+            spinPrice.Location = new Point(162, 148);
             spinPrice.Name = "spinPrice";
             spinPrice.Size = new Size(132, 20);
             spinPrice.TabIndex = 25;
             // 
             // AddService
             // 
+            Appearance.Options.UseFont = true;
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(437, 345);
+            ClientSize = new Size(318, 253);
             Controls.Add(spinPrice);
             Controls.Add(labelControl4);
             Controls.Add(txtDescription);
-            Controls.Add(btnCancel);
             Controls.Add(btnSave);
             Controls.Add(txtName);
             Controls.Add(labelControl3);
             Controls.Add(labelControl2);
-            Controls.Add(labelControl1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "AddService";
             Text = "AddService";
+            ((System.ComponentModel.ISupportInitialize)txtDescription.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtName.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)spinPrice.Properties).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -146,12 +131,10 @@
         #endregion
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraEditors.TextEdit txtDescription;
-        private DevExpress.XtraEditors.SimpleButton btnCancel;
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private DevExpress.XtraEditors.TextEdit txtName;
         private DevExpress.XtraEditors.LabelControl labelControl3;
         private DevExpress.XtraEditors.LabelControl labelControl2;
-        private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.SpinEdit spinPrice;
     }
 }

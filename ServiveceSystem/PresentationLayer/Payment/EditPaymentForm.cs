@@ -39,5 +39,10 @@ namespace ServiveceSystem.PresentationLayer.PaymentMethod
         {
 
         }
+
+        private void Savebtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

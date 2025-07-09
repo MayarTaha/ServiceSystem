@@ -66,6 +66,7 @@ namespace ServiveceSystem.BusinessLayer
                 existingContact.ContactNumber = contact.ContactNumber;
                 existingContact.ContactEmail = contact.ContactEmail;
                 existingContact.ClinicId = contact.ClinicId;
+             //   existingContact.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
                 _context.SaveChanges();
             }

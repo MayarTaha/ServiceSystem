@@ -36,7 +36,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
               { 
-                taxes.CreatedLog = DateTime.Now.ToString();
+                taxes.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.Taxeses.Add(taxes);
                 await _context.SaveChangesAsync();
             }
@@ -48,7 +48,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
             {
-                taxes.UpdatedLog = DateTime.Now.ToString();
+                taxes.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.Taxeses.Update(taxes);
                 await _context.SaveChangesAsync();
             }
@@ -59,8 +59,8 @@ namespace ServiveceSystem.BusinessLayer
             var taxes = await _context.Taxeses.FindAsync(id);
             if (taxes != null)
             {
+                taxes.DeletedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 taxes.isDeleted = true;
-                taxes.DeletedLog = DateTime.Now.ToString();
                 await _context.SaveChangesAsync();
             }
         }

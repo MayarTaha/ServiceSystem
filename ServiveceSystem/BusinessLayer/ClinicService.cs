@@ -40,7 +40,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
             {
-                clinic.CreatedLog = DateTime.Now.ToString();
+                clinic.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.Clinics.Add(clinic);
                 _context.SaveChanges();
             }
@@ -59,6 +59,7 @@ namespace ServiveceSystem.BusinessLayer
                 existingClinic.CompanyName = clinic.CompanyName;
                 existingClinic.Location = clinic.Location;
                 
+                clinic.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
                 _context.SaveChanges();
             }
@@ -69,6 +70,8 @@ namespace ServiveceSystem.BusinessLayer
             var clinic = _context.Clinics.Find(id);
             if (clinic != null)
             {
+                clinic.DeletedLog = $"{CurrentUser.Username} - {DateTime.Now}";
+                clinic.isDeleted = true;
                 _context.Clinics.Remove(clinic);
                 _context.SaveChanges();
             }

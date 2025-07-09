@@ -1,29 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
+using System;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
-using DevExpress.XtraEditors.DXErrorProvider;
 
 namespace ServiveceSystem.PresentationLayer.Clinic
 {
-    public partial class AddClinic : DevExpress.XtraEditors.XtraForm
+    public partial class EditClinic : DevExpress.XtraEditors.XtraForm
     {
         private readonly ClinicService _clinicService;
         private readonly AppDBContext _context;
+        private ServiceSystem.Models.Clinic _clinic;
+        private readonly int _clinicId;
 
-        public AddClinic()
+        public EditClinic(int clinicId)
         {
             InitializeComponent();
             _context = new AppDBContext();
             _clinicService = new ClinicService(_context);
+            _clinicId = clinicId;
+            LoadClinic();
+        }
+
+        private void LoadClinic()
+        {
+            _clinic = _context.Clinics.Find(_clinicId);
+            if (_clinic == null)
+            {
+                MessageBox.Show("Clinic not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
+            ClinicnametextEdit.Text = _clinic.ClinicName;
+            CompanyNametextEdit.Text = _clinic.CompanyName;
+            PhonetextEdit.Text = _clinic.Phone;
+            EmailtextEdit.Text = _clinic.Email;
+            LocationtextEdit.Text = _clinic.Location;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -32,47 +44,36 @@ namespace ServiveceSystem.PresentationLayer.Clinic
                 return;
             try
             {
-               
-                var clinic = new ServiceSystem.Models.Clinic
-                {
-                    ClinicName = ClinicnametextEdit.Text.Trim(),
-                    CompanyName = CompanyNametextEdit.Text.Trim(),
-                    Phone = PhonetextEdit.Text.Trim(),
-                    Email = EmailtextEdit.Text.Trim(),
-                    Location = LocationtextEdit.Text.Trim(),
-                    CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}",
-                    UpdatedLog = "",
-                    DeletedLog = "",
-                    isDeleted = false
-                };
-
-                _clinicService.AddClinic(clinic);
-
-                MessageBox.Show("Clinic added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _clinic.ClinicName = ClinicnametextEdit.Text.Trim();
+                _clinic.CompanyName = CompanyNametextEdit.Text.Trim();
+                _clinic.Phone = PhonetextEdit.Text.Trim();
+                _clinic.Email = EmailtextEdit.Text.Trim();
+                _clinic.Location = LocationtextEdit.Text.Trim();
+                _clinic.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
+                _clinicService.Update(_clinic);
+                MessageBox.Show("Clinic updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while adding the clinic:\n" + ex.Message, "Erorr", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An error occurred while updating the clinic:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private bool ValidateForm()
         {
             bool isValid = true;
-
             labelClinicNameError.Visible = false;
             labelCompanynameError.Visible = false;
             labelemailerror.Visible = false;
             labelPhoneError.Visible = false;
             labelLocationError.Visible = false;
-            
 
             if (string.IsNullOrWhiteSpace(ClinicnametextEdit.Text))
             {
                 labelClinicNameError.Visible = true;
                 labelClinicNameError.Text = "Clinic Name is required";
-
                 isValid = false;
             }
             if (string.IsNullOrWhiteSpace(CompanyNametextEdit.Text))
@@ -93,23 +94,18 @@ namespace ServiveceSystem.PresentationLayer.Clinic
                 labelemailerror.Text = "Invalid email format.";
                 isValid = false;
             }
-
             if (string.IsNullOrWhiteSpace(PhonetextEdit.Text))
             {
                 labelPhoneError.Visible = true;
                 labelPhoneError.Text = "Phone is required.";
                 isValid = false;
             }
-
-            
-
             if (string.IsNullOrWhiteSpace(LocationtextEdit.Text))
             {
                 labelLocationError.Visible = true;
                 labelLocationError.Text = "Location is required.";
                 isValid = false;
             }
-
             return isValid;
         }
 
@@ -125,11 +121,5 @@ namespace ServiveceSystem.PresentationLayer.Clinic
                 return false;
             }
         }
-
-       
-
-       
-
-
     }
-}
+} 

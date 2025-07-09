@@ -42,6 +42,7 @@ namespace ServiveceSystem.BusinessLayer
             if (!paymentMethodExists)
                 throw new Exception("Payment method not found");
 
+            invoice.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
             invoice.UpdatedLog = DateTime.Now.ToString();
 
             _context.invoiceHeaders.Add(invoice);
@@ -73,9 +74,7 @@ namespace ServiveceSystem.BusinessLayer
                 existingInvoice.PaymentMethodId = invoice.PaymentMethodId;
                 existingInvoice.Reminder = invoice.Reminder;
                 existingInvoice.ContactId = invoice.ContactId;
-
-               
-                existingInvoice.UpdatedLog = DateTime.Now.ToString();
+                existingInvoice.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
                 _context.SaveChanges();
             }
@@ -88,6 +87,8 @@ namespace ServiveceSystem.BusinessLayer
             var invoice = _context.invoiceHeaders.Find(id);
             if (invoice != null)
             {
+                invoice.DeletedLog = $"{CurrentUser.Username} - {DateTime.Now}";
+                invoice.isDeleted = true;
                 _context.invoiceHeaders.Remove(invoice);
                 _context.SaveChanges();
             }

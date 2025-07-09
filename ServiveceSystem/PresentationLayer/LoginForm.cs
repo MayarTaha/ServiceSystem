@@ -64,9 +64,9 @@ namespace ServiveceSystem.PresentationLayer
                 MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
+        //private void btnCancel_Click(object sender, EventArgs e)
+        //{
+        //    Application.Exit();
+        //}
     }
 }

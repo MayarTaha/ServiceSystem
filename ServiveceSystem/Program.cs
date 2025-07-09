@@ -26,7 +26,7 @@ namespace ServiveceSystem
             var login = new LoginForm();
             if (login.ShowDialog() == DialogResult.OK)
             {
-                Application.Run(new AddService());
+                Application.Run(new AllTaxes());
             }
             else
             {

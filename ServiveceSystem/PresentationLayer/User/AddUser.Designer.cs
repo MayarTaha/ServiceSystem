@@ -28,12 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            btnCancel = new DevExpress.XtraEditors.SimpleButton();
             btnSave = new DevExpress.XtraEditors.SimpleButton();
             txtUsername = new DevExpress.XtraEditors.TextEdit();
             labelControl3 = new DevExpress.XtraEditors.LabelControl();
             labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            labelControl1 = new DevExpress.XtraEditors.LabelControl();
             txtPassword = new DevExpress.XtraEditors.TextEdit();
             labelControl4 = new DevExpress.XtraEditors.LabelControl();
             txtPermission = new DevExpress.XtraEditors.TextEdit();
@@ -42,31 +40,20 @@
             ((System.ComponentModel.ISupportInitialize)txtPermission.Properties).BeginInit();
             SuspendLayout();
             // 
-            // btnCancel
-            // 
-            btnCancel.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCancel.Appearance.Options.UseFont = true;
-            btnCancel.Location = new Point(252, 258);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(75, 36);
-            btnCancel.TabIndex = 13;
-            btnCancel.Text = "Cancel";
-            btnCancel.Click += btnCancel_Click;
-            // 
             // btnSave
             // 
             btnSave.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSave.Appearance.Options.UseFont = true;
-            btnSave.Location = new Point(91, 258);
+            btnSave.Location = new Point(87, 160);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 36);
             btnSave.TabIndex = 12;
-            btnSave.Text = "Save";
+            btnSave.Text = "Add";
             btnSave.Click += btnSave_Click;
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(173, 106);
+            txtUsername.Location = new Point(129, 21);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(132, 20);
             txtUsername.TabIndex = 10;
@@ -75,7 +62,7 @@
             // 
             labelControl3.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelControl3.Appearance.Options.UseFont = true;
-            labelControl3.Location = new Point(57, 148);
+            labelControl3.Location = new Point(13, 62);
             labelControl3.Name = "labelControl3";
             labelControl3.Size = new Size(85, 25);
             labelControl3.TabIndex = 9;
@@ -85,25 +72,15 @@
             // 
             labelControl2.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelControl2.Appearance.Options.UseFont = true;
-            labelControl2.Location = new Point(57, 101);
+            labelControl2.Location = new Point(13, 16);
             labelControl2.Name = "labelControl2";
             labelControl2.Size = new Size(92, 25);
             labelControl2.TabIndex = 8;
             labelControl2.Text = "UserName";
             // 
-            // labelControl1
-            // 
-            labelControl1.Appearance.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl1.Appearance.Options.UseFont = true;
-            labelControl1.Location = new Point(150, 32);
-            labelControl1.Name = "labelControl1";
-            labelControl1.Size = new Size(90, 30);
-            labelControl1.TabIndex = 7;
-            labelControl1.Text = "Add User";
-            // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(173, 153);
+            txtPassword.Location = new Point(129, 67);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(132, 20);
             txtPassword.TabIndex = 14;
@@ -112,7 +89,7 @@
             // 
             labelControl4.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelControl4.Appearance.Options.UseFont = true;
-            labelControl4.Location = new Point(57, 189);
+            labelControl4.Location = new Point(13, 108);
             labelControl4.Name = "labelControl4";
             labelControl4.Size = new Size(97, 25);
             labelControl4.TabIndex = 15;
@@ -121,7 +98,7 @@
             // txtPermission
             // 
             txtPermission.EditValue = "";
-            txtPermission.Location = new Point(173, 194);
+            txtPermission.Location = new Point(129, 113);
             txtPermission.Name = "txtPermission";
             txtPermission.Size = new Size(132, 20);
             txtPermission.TabIndex = 16;
@@ -130,16 +107,17 @@
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(394, 341);
+            ClientSize = new Size(281, 215);
             Controls.Add(txtPermission);
             Controls.Add(labelControl4);
             Controls.Add(txtPassword);
-            Controls.Add(btnCancel);
             Controls.Add(btnSave);
             Controls.Add(txtUsername);
             Controls.Add(labelControl3);
             Controls.Add(labelControl2);
-            Controls.Add(labelControl1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "AddUser";
             Text = "AddUser";
             ((System.ComponentModel.ISupportInitialize)txtUsername.Properties).EndInit();

@@ -13,7 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ServiveceSystem.PresentationLayer.PaymentMethod
 {
-    public partial class AddPaymentForm: Form
+    public partial class AddPaymentForm : Form
     {
         public AddPaymentForm()
         {
@@ -30,9 +30,14 @@ namespace ServiveceSystem.PresentationLayer.PaymentMethod
                     .ToList();
 
                 PaymentMethodcomboBox.DataSource = paymentMethods;
-                 PaymentMethodcomboBox.DisplayMember = "PaymentType";
-                PaymentMethodcomboBox.ValueMember = "PaymentMethodId";    
+                PaymentMethodcomboBox.DisplayMember = "PaymentType";
+                PaymentMethodcomboBox.ValueMember = "PaymentMethodId";
             }
+        }
+
+        private void Savebtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

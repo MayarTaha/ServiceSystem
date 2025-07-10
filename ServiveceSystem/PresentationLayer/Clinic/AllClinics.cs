@@ -11,7 +11,7 @@ using ServiveceSystem.Models;
 
 namespace ServiveceSystem.PresentationLayer.Clinic
 {
-    public partial class AllClinics : Form
+    public partial class AllClinics : DevExpress.XtraEditors.XtraForm
     {
         private readonly ClinicService _clinicService;
         private List<ServiceSystem.Models.Clinic> _clinics;
@@ -23,10 +23,17 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             LoadClinics();
         }
 
-        private void LoadClinics()
+        private async void LoadClinics()
         {
-            _clinics = _clinicService.GetAll().Where(c => !c.isDeleted).ToList();
-            BindGrid(_clinics);
+            try
+            {
+                _clinics = await _clinicService.GetAll();
+                BindGrid(_clinics);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading clinics: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BindGrid(List<ServiceSystem.Models.Clinic> clinics)
@@ -87,7 +94,7 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             }
         }
 
-        private void EditButton_Click(object sender, EventArgs e)
+        private async void EditButton_Click(object sender, EventArgs e)
         {
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
@@ -95,11 +102,11 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             var editForm = new EditClinic(clinicId);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                LoadClinics();
+                await LoadClinicsAsync();
             }
         }
 
-        private void DeleteButton_Click(object sender, EventArgs e)
+        private async void DeleteButton_Click(object sender, EventArgs e)
         {
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
@@ -107,17 +114,17 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             var clinic = _clinics.FirstOrDefault(c => c.ClinicId == clinicId);
             if (clinic != null && MessageBox.Show($"Delete clinic '{clinic.ClinicName}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                _clinicService.Delete(clinicId);
-                LoadClinics();
+                await _clinicService.DeleteAsync(clinicId);
+                await LoadClinicsAsync();
             }
         }
 
-        private void btnAddClinic_Click(object sender, EventArgs e)
+        private async void btnAddClinic_Click(object sender, EventArgs e)
         {
             var addForm = new AddClinic();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                LoadClinics();
+                await LoadClinicsAsync();
             }
         }
 
@@ -126,6 +133,19 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             string filter = txtFilter.Text.Trim().ToLower();
             var filtered = _clinics.Where(c => c.ClinicName != null && c.ClinicName.ToLower().Contains(filter)).ToList();
             BindGrid(filtered);
+        }
+
+        private async Task LoadClinicsAsync()
+        {
+            try
+            {
+                _clinics = await _clinicService.GetAll();
+                BindGrid(_clinics);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading clinics: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 } 

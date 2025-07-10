@@ -13,7 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ServiveceSystem.PresentationLayer.PaymentMethod
 {
-    public partial class AddPaymentForm : Form
+    public partial class AddPaymentForm : DevExpress.XtraEditors.XtraForm
     {
         public AddPaymentForm()
         {

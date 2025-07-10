@@ -242,6 +242,10 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             this.Controls.Add(labelPhoneError);
             this.Controls.Add(labelemailerror);
             this.Controls.Add(labelLocationError);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Name = "EditClinic";
             this.Text = "Edit Clinic";
             ((System.ComponentModel.ISupportInitialize)ClinicnametextEdit.Properties).EndInit();

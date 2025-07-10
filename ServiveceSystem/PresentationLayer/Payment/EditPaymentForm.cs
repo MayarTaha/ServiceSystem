@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ServiveceSystem.PresentationLayer.PaymentMethod
 {
-    public partial class EditPaymentForm : Form
+    public partial class EditPaymentForm : DevExpress.XtraEditors.XtraForm
     {
         public EditPaymentForm()
         {

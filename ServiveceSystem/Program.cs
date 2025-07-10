@@ -23,18 +23,21 @@ namespace ServiveceSystem
         [STAThread]
         static void Main()
         {
-            var login = new LoginForm();
-            if (login.ShowDialog() == DialogResult.OK)
-            {
-                Application.Run(new AllTaxes());
-            }
-            else
-            {
-                // Exit if login fails or canceled
-                Application.Exit();
-            }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = "Office 2019 Black";
+            //var login = new LoginForm();
+            //if (login.ShowDialog() == DialogResult.OK)
+            //{
+            //    Application.Run(new AllTaxes());
+            //}
+            //else
+            //{
+            //    // Exit if login fails or canceled
+            //    Application.Exit();
+            //}
 
-            // Application.Run(new AddUser()); // ← your desired form here
+             Application.Run(new AllClinics()); // ← your desired form here
         }
 
         /// <summary>

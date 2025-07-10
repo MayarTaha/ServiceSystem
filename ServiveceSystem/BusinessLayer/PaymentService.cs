@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServiveceSystem.BusinessLayer
 {
-    class PaymentService
+    public class PaymentService
     {
         private readonly AppDBContext _context;
 
@@ -18,38 +19,38 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         // Get all Payments
-        public List<Payment> GetAll()
+        public async Task<List<Payment>> GetAll()
         {
-            return _context.payments.ToList();
+            return await _context.payments
+                .Where(p => !p.isDeleted)
+                .ToListAsync();
         }
 
         // Get Payment by ID
-        public Payment? GetById(int id)
+        public async Task<Payment> GetById(int id)
         {
-            return _context.payments.Find(id);
+            return await _context.payments.FindAsync(id);
         }
 
         // Add new Payment
-        public void AddPayment(Payment payment)
+        public async Task AddPayment(Payment payment)
         {
-           
-            var exists = _context.payments.Any(p => p.PaymentId == payment.PaymentId && !p.isDeleted);
+            var exists = await _context.payments.AnyAsync(p => p.PaymentId == payment.PaymentId && !p.isDeleted);
 
             if (!exists)
             {
                 payment.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.payments.Add(payment);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
         // Update Payment
-        public void Update(Payment payment)
+        public async Task UpdateAsync(Payment payment)
         {
-            var existingPayment = _context.payments.Find(payment.PaymentId);
+            var existingPayment = await _context.payments.FindAsync(payment.PaymentId);
             if (existingPayment != null)
             {
-               
                 existingPayment.InvoiceId = payment.InvoiceId;
                 existingPayment.AmountPaid = payment.AmountPaid;
                 existingPayment.RemainingAmount = payment.RemainingAmount;
@@ -58,59 +59,20 @@ namespace ServiveceSystem.BusinessLayer
                 existingPayment.PaymentStatus = payment.PaymentStatus;
                 existingPayment.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        //update with two check on the fk ????
-        //public void UpdateWithCheck(Payment payment)
-        //{
-        //    var existingPayment = _context.payments.Find(payment.PaymentId);
-        //    if (existingPayment != null)
-        //    {
-
-        //        bool invoiceExists = _context.invoiceHeaders.Any(i => i.InvoiceHeaderId == payment.InvoiceId);
-        //        if (!invoiceExists)
-        //        {
-        //            throw new Exception("Invoice not found");
-        //        }
-
-
-        //        bool paymentMethodExists = _context.PaymentMethods.Any(pm => pm.PaymentMethodId == payment.PaymentMethodId);
-        //        if (!paymentMethodExists)
-        //        {
-        //            throw new Exception("Payment Method not found");
-        //        }
-
-
-        //        existingPayment.InvoiceId = payment.InvoiceId;
-        //        existingPayment.AmountPaid = payment.AmountPaid;
-        //        existingPayment.RemainingAmount = payment.RemainingAmount;
-        //        existingPayment.PaymentDate = payment.PaymentDate;
-        //        existingPayment.PaymentMethodId = payment.PaymentMethodId;
-        //        existingPayment.PaymentStatus = payment.PaymentStatus;
-        //        existingPayment.UpdatedLog = DateTime.Now.ToString();
-
-        //        _context.SaveChanges();
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("Payment not found");
-        //    }
-        //}
-
-
         // Delete Payment
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var payment = _context.payments.Find(id);
+            var payment = await _context.payments.FindAsync(id);
             if (payment != null)
             {
                 payment.DeletedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 payment.isDeleted = true;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
-
     }
 }

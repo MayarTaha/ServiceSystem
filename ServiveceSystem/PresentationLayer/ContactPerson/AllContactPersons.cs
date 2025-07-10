@@ -1,55 +1,58 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraEditors.Repository;
 using ServiveceSystem.BusinessLayer;
-using ServiveceSystem.Models;
 using ServiceSystem.Models;
+using ServiveceSystem.Models;
 
-using System.Threading.Tasks;
-
-namespace ServiveceSystem.PresentationLayer.Taxes
+namespace ServiveceSystem.PresentationLayer.ContactPerson
 {
-    public partial class AllTaxes : DevExpress.XtraEditors.XtraForm
+    public partial class AllContactPersons : DevExpress.XtraEditors.XtraForm
     {
-        private readonly TaxesService _taxesService;
-        private List<ServiceSystem.Models.Taxes> _taxes;
-        private RepositoryItemButtonEdit editButton;
-        private RepositoryItemButtonEdit deleteButton;
+        private readonly ContactPersonService _contactPersonService;
+        private readonly ClinicService _clinicService;
+        private List<ServiceSystem.Models.ContactPerson> _contactPersons;
+        private List<ServiceSystem.Models.Clinic> _clinics;
 
-        public AllTaxes()
+        public AllContactPersons()
         {
             InitializeComponent();
-            _taxesService = new TaxesService(new AppDBContext());
-            LoadTaxes();
+            _contactPersonService = new ContactPersonService(new AppDBContext());
+            _clinicService = new ClinicService(new AppDBContext());
+            LoadData();
         }
 
-        private async void LoadTaxes()
+        private async void LoadData()
         {
             try
             {
-                _taxes = await _taxesService.GetAll();
-                BindGrid(_taxes);
+                _contactPersons = await _contactPersonService.GetAll();
+                _clinics = await _clinicService.GetAll();
+                BindGrid(_contactPersons);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading taxes: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error loading contact persons: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void BindGrid(List<ServiceSystem.Models.Taxes> taxes)
+        private void BindGrid(List<ServiceSystem.Models.ContactPerson> contactPersons)
         {
-            var displayList = taxes.Select(t => new
+            var displayList = contactPersons.Select(cp => new
             {
-                t.TaxesID, // hidden
-                t.Name,
-                t.TaxRate
+                cp.ContactId, // hidden
+                cp.ContactName,
+                cp.ContactNumber,
+                cp.ContactEmail,
+                ClinicName = _clinics.FirstOrDefault(c => c.ClinicId == cp.ClinicId)?.ClinicName ?? "Unknown"
             }).ToList();
             gridControl1.DataSource = displayList;
             gridControl1.ForceInitialize();
-            var col = gridView1.Columns["TaxesID"];
+            var col = gridView1.Columns["ContactId"];
             if (col != null)
                 col.Visible = false;
             InitGridButtons();
@@ -57,7 +60,6 @@ namespace ServiveceSystem.PresentationLayer.Taxes
 
         private void InitGridButtons()
         {
-            // Only add if not already present
             if (gridView1.Columns["Edit"] == null)
             {
                 var editButton = new RepositoryItemButtonEdit();
@@ -95,15 +97,15 @@ namespace ServiveceSystem.PresentationLayer.Taxes
             }
         }
 
-        private void EditButton_Click(object sender, EventArgs e)
+        private async void EditButton_Click(object sender, EventArgs e)
         {
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
-            int taxesId = (int)gridView1.GetRowCellValue(rowHandle, "TaxesID");
-            var editForm = new EditTaxes(taxesId);
+            int contactId = (int)gridView1.GetRowCellValue(rowHandle, "ContactId");
+            var editForm = new EditContactPerson(contactId);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                LoadTaxes();
+                await LoadDataAsync();
             }
         }
 
@@ -111,41 +113,42 @@ namespace ServiveceSystem.PresentationLayer.Taxes
         {
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
-            int taxesId = (int)gridView1.GetRowCellValue(rowHandle, "TaxesID");
-            var taxes = _taxes.FirstOrDefault(t => t.TaxesID == taxesId);
-            if (taxes != null && MessageBox.Show($"Delete tax '{taxes.Name}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            int contactId = (int)gridView1.GetRowCellValue(rowHandle, "ContactId");
+            var contactPerson = _contactPersons.FirstOrDefault(cp => cp.ContactId == contactId);
+            if (contactPerson != null && MessageBox.Show($"Delete contact person '{contactPerson.ContactName}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                await _taxesService.DeleteAsync(taxesId);
-                LoadTaxes();
+                await _contactPersonService.DeleteAsync(contactId);
+                await LoadDataAsync();
             }
         }
 
-        private async void btnAddTaxes_Click(object sender, EventArgs e)
+        private async void btnAddContactPerson_Click(object sender, EventArgs e)
         {
-            var addForm = new AddTaxes();
+            var addForm = new AddContactPerson();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                await LoadTaxesAsync();
+                await LoadDataAsync();
             }
         }
 
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filter = txtFilter.Text.Trim().ToLower();
-            var filtered = _taxes.Where(t => t.Name != null && t.Name.ToLower().Contains(filter)).ToList();
+            var filtered = _contactPersons.Where(cp => cp.ContactName != null && cp.ContactName.ToLower().Contains(filter)).ToList();
             BindGrid(filtered);
         }
 
-        private async Task LoadTaxesAsync()
+        private async Task LoadDataAsync()
         {
             try
             {
-                _taxes = await _taxesService.GetAll();
-                BindGrid(_taxes);
+                _contactPersons = await _contactPersonService.GetAll();
+                _clinics = await _clinicService.GetAll();
+                BindGrid(_contactPersons);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading taxes: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error loading contact persons: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -77,6 +77,10 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             Margin = new Padding(4, 3, 4, 3);
             Name = "AllClinics";
             Text = "All Clinics";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtFilter.Properties).EndInit();

@@ -14,69 +14,77 @@ namespace ServiveceSystem.PresentationLayer.Taxes
         #region Windows Form Designer generated code
         private void InitializeComponent()
         {
-            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.txtFilter = new DevExpress.XtraEditors.TextEdit();
-            this.btnAddTaxes = new DevExpress.XtraEditors.SimpleButton();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // txtFilter
-            // 
-            this.txtFilter.Location = new System.Drawing.Point(12, 12);
-            this.txtFilter.Name = "txtFilter";
-            this.txtFilter.Size = new System.Drawing.Size(200, 20);
-            this.txtFilter.TabIndex = 0;
-            this.txtFilter.Properties.NullValuePrompt = "Filter by name...";
-            this.txtFilter.Properties.NullValuePromptShowForEmptyValue = true;
-            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
-            // 
-            // btnAddTaxes
-            // 
-            this.btnAddTaxes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddTaxes.Appearance.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnAddTaxes.Appearance.Options.UseFont = true;
-            this.btnAddTaxes.Location = new System.Drawing.Point(670, 10);
-            this.btnAddTaxes.Name = "btnAddTaxes";
-            this.btnAddTaxes.Size = new System.Drawing.Size(100, 25);
-            this.btnAddTaxes.TabIndex = 1;
-            this.btnAddTaxes.Text = "Add Taxes";
-            this.btnAddTaxes.Click += new System.EventHandler(this.btnAddTaxes_Click);
+            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            txtFilter = new DevExpress.XtraEditors.TextEdit();
+            btnAddTaxes = new DevExpress.XtraEditors.SimpleButton();
+            ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtFilter.Properties).BeginInit();
+            SuspendLayout();
             // 
             // gridControl1
             // 
-            this.gridControl1.Location = new System.Drawing.Point(12, 45);
-            this.gridControl1.MainView = this.gridView1;
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(758, 400);
-            this.gridControl1.TabIndex = 2;
-            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
+            gridControl1.EmbeddedNavigator.Margin = new Padding(4, 3, 4, 3);
+            gridControl1.Location = new Point(14, 52);
+            gridControl1.MainView = gridView1;
+            gridControl1.Margin = new Padding(4, 3, 4, 3);
+            gridControl1.Name = "gridControl1";
+            gridControl1.Size = new Size(884, 462);
+            gridControl1.TabIndex = 2;
+            gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
             // gridView1
             // 
-            this.gridView1.GridControl = this.gridControl1;
-            this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsBehavior.Editable = false;
-            this.gridView1.OptionsView.ShowGroupPanel = false;
+            gridView1.DetailHeight = 404;
+            gridView1.GridControl = gridControl1;
+            gridView1.Name = "gridView1";
+            gridView1.OptionsBehavior.Editable = false;
+            gridView1.OptionsEditForm.PopupEditFormWidth = 933;
+            gridView1.OptionsView.ShowGroupPanel = false;
+            // 
+            // txtFilter
+            // 
+            txtFilter.Location = new Point(14, 14);
+            txtFilter.Margin = new Padding(4, 3, 4, 3);
+            txtFilter.Name = "txtFilter";
+            txtFilter.Properties.NullValuePrompt = "Filter by name...";
+            txtFilter.Size = new Size(233, 20);
+            txtFilter.TabIndex = 0;
+            txtFilter.TextChanged += txtFilter_TextChanged;
+            // 
+            // btnAddTaxes
+            // 
+            btnAddTaxes.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAddTaxes.Appearance.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
+            btnAddTaxes.Appearance.Options.UseFont = true;
+            btnAddTaxes.Location = new Point(782, 12);
+            btnAddTaxes.Margin = new Padding(4, 3, 4, 3);
+            btnAddTaxes.Name = "btnAddTaxes";
+            btnAddTaxes.Size = new Size(117, 29);
+            btnAddTaxes.TabIndex = 1;
+            btnAddTaxes.Text = "Add Taxes";
+            btnAddTaxes.Click += btnAddTaxes_Click;
             // 
             // AllTaxes
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 461);
-            this.Controls.Add(this.gridControl1);
-            this.Controls.Add(this.btnAddTaxes);
-            this.Controls.Add(this.txtFilter);
-            this.Name = "AllTaxes";
-            this.Text = "All Taxes";
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(915, 532);
+            Controls.Add(gridControl1);
+            Controls.Add(btnAddTaxes);
+            Controls.Add(txtFilter);
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "AllTaxes";
+            Text = "All Taxes";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtFilter.Properties).EndInit();
+            ResumeLayout(false);
         }
         #endregion
         private DevExpress.XtraGrid.GridControl gridControl1;

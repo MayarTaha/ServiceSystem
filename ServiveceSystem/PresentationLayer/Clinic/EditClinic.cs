@@ -50,7 +50,7 @@ namespace ServiveceSystem.PresentationLayer.Clinic
                 _clinic.Email = EmailtextEdit.Text.Trim();
                 _clinic.Location = LocationtextEdit.Text.Trim();
                 _clinic.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
-                _clinicService.Update(_clinic);
+                _clinicService.UpdateAsync(_clinic);
                 MessageBox.Show("Clinic updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();

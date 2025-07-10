@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using ServiveceSystem.BusinessLayer;
 using ServiceSystem.Models;
+using ServiveceSystem.Models;
 
 namespace ServiveceSystem.PresentationLayer.Taxes
 {
@@ -33,7 +34,7 @@ namespace ServiveceSystem.PresentationLayer.Taxes
                 spinRatio.Focus();
                 return;
             }
-            var tax = new Taxes
+            var tax = new ServiceSystem.Models.Taxes
             {
                 Name = txtName.Text.Trim(),
                 TaxRate = spinRatio.Value,

@@ -18,7 +18,7 @@ namespace ServiceSystem.Models
 
         [ForeignKey("QuotationHeader")]
         public int QuotationId { get; set; } // FK
-        public virtual QuotationHeader QuotationHeader { get; set; }
+        public virtual QuotationHeader QuotationHeader { get; set; } // 
 
         public int Quantity { get; set; }
         public decimal Discount { get; set; }

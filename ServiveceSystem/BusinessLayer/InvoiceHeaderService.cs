@@ -1,4 +1,5 @@
-﻿using ServiceSystem.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ServiceSystem.Models;
 using ServiveceSystem.Models;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,11 @@ namespace ServiveceSystem.BusinessLayer
     {
         private readonly AppDBContext _context;
 
+
         public InvoiceHeaderService(AppDBContext context)
         {
+           // var invoiceHeaderService = App.ServiceProvider.GetRequiredService<InvoiceHeaderService>();
+
             _context = context;
         }
 
@@ -30,22 +34,39 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         // Add new InvoiceHeader
-        public void AddInvoiceHeader(InvoiceHeader invoice)
+        public async Task<bool> AddInvoiceHeader(InvoiceHeader invoice)
         {
-            
-            bool quotationExists = _context.QuotationHeaders.Any(q => q.QuotationId == invoice.QuotationId);
-            if (!quotationExists)
-                throw new Exception("Quotation not found");
+            var quotationExists = await _context.QuotationHeaders.AnyAsync(q => q.QuotationId == invoice.QuotationId && !q.isDeleted);
+            var paymentMethodExists = await _context.PaymentMethods.AnyAsync(pm => pm.PaymentMethodId == invoice.PaymentMethodId );
+            //
+            if (!quotationExists || !paymentMethodExists)
+                return false;
+            var exists = await _context.invoiceHeaders
+               .AnyAsync(q => q.QuotationId == invoice.QuotationId &&
+                              q.PaymentMethodId == invoice.PaymentMethodId &&
+                              q.ContactId == invoice.ContactId &&
+                              !q.isDeleted);
+            MessageBox.Show($"QuotationId Exists: {quotationExists}\nPayment Exists: {paymentMethodExists}\nAlready Exists: {exists}");
 
-          
-            bool paymentMethodExists = _context.PaymentMethods.Any(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
-            if (!paymentMethodExists)
-                throw new Exception("Payment method not found");
+            if (!quotationExists || !paymentMethodExists || exists)
+                return false;
+
+            //  bool quotationExists = _context.QuotationHeaders.Any(q => q.QuotationId == invoice.QuotationId);
+            //if (!quotationExists)
+            //    throw new Exception("Quotation not found");
+
+
+            // bool paymentMethodExists = _context.PaymentMethods.Any(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
+            //if (!paymentMethodExists)
+            //    throw new Exception("Payment method not found");
 
             invoice.UpdatedLog = DateTime.Now.ToString();
 
+            //_context.invoiceHeaders.Add(invoice);
+            //_context.SaveChanges();
             _context.invoiceHeaders.Add(invoice);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         // Update 

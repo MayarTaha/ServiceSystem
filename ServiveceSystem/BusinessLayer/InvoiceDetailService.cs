@@ -1,4 +1,5 @@
-﻿using ServiceSystem.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ServiceSystem.Models;
 using ServiveceSystem.Models;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,21 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         // Getall InvoiceDetails
-        public List<InvoiceDetail> GetAll()
+        //public List<InvoiceDetail> GetAll()
+        //{
+        //    return _context.InvoiceDetails.ToList();
+        //}
+
+
+        public async Task<List<InvoiceDetail>> GetAllAsync()
         {
-            return _context.InvoiceDetails.ToList();
+            return await _context.InvoiceDetails.Include(d => d.Service)
+        .Include(d => d.QuotationHeader)
+            .ThenInclude(q => q.Clinic).ToListAsync();
         }
+
+        //
+
 
         // Get InvoiceDetail by ID
         public InvoiceDetail? GetById(int id)
@@ -30,15 +42,42 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         // Add new InvoiceDetail
-        public void AddInvoiceDetail(InvoiceDetail detail)
+        public async Task<bool> AddInvoiceDetail(InvoiceDetail detail)
         {
-           
+            var quotationExists = await _context.QuotationHeaders
+              .AnyAsync(q => q.QuotationId == detail.QuotationId && !q.isDeleted);
+
+            if (!quotationExists)
+                  return false;
+              
+
             detail.TotalService = CalculateTotalService(detail);
             detail.UpdatedLog = DateTime.Now.ToString();
-
+            detail.isDeleted = false;
             _context.InvoiceDetails.Add(detail);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return true;
         }
+
+
+        //public async Task<bool> AddQuotationDetails(QuotationDetail qout, string? username = "null")
+        //{
+        //    username ??= CurrentUser.Username ?? "system";
+        //    var quotationExists = await _context.QuotationHeaders
+        //        .AnyAsync(q => q.QuotationId == qout.QuotationId && !q.isDeleted);
+
+        //    if (!quotationExists)
+        //        return false;
+
+        //    // حساب TotalService
+        //    qout.TotalService = (qout.ServicePrice * qout.Quantity) - qout.Discount;
+        //    qout.CreatedLog = $"{username} - {DateTime.Now}";
+        //    qout.isDeleted = false;
+
+        //    _context.QuotationDetails.Add(qout);
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
 
         // Update 
         public void Update(InvoiceDetail detail)

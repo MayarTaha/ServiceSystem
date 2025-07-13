@@ -12,6 +12,11 @@ namespace ServiceSystem.Models
     {
         public int InvoiceDetailId { get; set; }
 
+        //public int InvoiceHeaderId { get; set; }
+        
+        //[ForeignKey("InvoiceHeaderId")]
+        //public virtual InvoiceHeader InvoiceHeader { get; set; }
+
         [ForeignKey("Service")]
         public int ServiceId { get; set; } // FK
         public virtual Service Service { get; set; }

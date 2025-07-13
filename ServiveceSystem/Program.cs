@@ -5,8 +5,8 @@ using ServiveceSystem.Models;
 using ServiveceSystem.PresentationLayer.Clinic;
 using ServiveceSystem.PresentationLayer.ContactPerson;
 using ServiveceSystem.PresentationLayer.InvoiceDetail;
-using ServiveceSystem.PresentationLayer.InvoiceHeader;
 using ServiveceSystem.PresentationLayer.PaymentMethod;
+using ServiveceSystem.PresentationLayer.QuotationHeader;
 
 namespace ServiveceSystem
 {
@@ -19,8 +19,12 @@ namespace ServiveceSystem
         [STAThread]
         static void Main()
         {
-           
-            Application.Run(new AddInvoiceForm()); // ← your desired form here
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // Enable DevExpress dark skin
+            DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2019 Black"); 
+                    Application.Run(new AddInvoiceForm()); // ← your desired form here
         }
 
         //static async Task Main(string[] args)
@@ -30,14 +34,14 @@ namespace ServiveceSystem
 
         //    var newQuotation = new QuotationHeader
         //    {
-        //        ClinicId = 7, // نفس العيادة ممكن، لكن غيري التواريخ
-        //        ContactId = 3,
+        //        ClinicId = 6, // نفس العيادة ممكن، لكن غيري التواريخ
+        //        ContactId = 1,
         //        InitialDate = DateTime.Today.AddDays(1), // غيري التاريخ علشان يكون سطر جديد
-        //        ExpireDate = DateTime.Today.AddDays(10),
-        //        Note = "الحمدلله",
+        //        ExpireDate = DateTime.Today.AddDays(6),
+        //        Note = "الحقونا  ",
         //        Status = QuotationStatus.Pending,
         //        DiscountType = Discount.Percentage,
-        //        Discount = 70, // خصم مختلف
+        //        Discount = 90, // خصم مختلف
         //        TotalDuo = 850, // قيمة مختلفة
         //        CreatedLog = "", // هيتعدل داخل Add
         //        UpdatedLog = "",

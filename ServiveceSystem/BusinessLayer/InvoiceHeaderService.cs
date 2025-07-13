@@ -16,7 +16,7 @@ namespace ServiveceSystem.BusinessLayer
 
         public InvoiceHeaderService(AppDBContext context)
         {
-           // var invoiceHeaderService = App.ServiceProvider.GetRequiredService<InvoiceHeaderService>();
+            // var invoiceHeaderService = App.ServiceProvider.GetRequiredService<InvoiceHeaderService>();
 
             _context = context;
         }
@@ -37,7 +37,7 @@ namespace ServiveceSystem.BusinessLayer
         public async Task<bool> AddInvoiceHeader(InvoiceHeader invoice)
         {
             var quotationExists = await _context.QuotationHeaders.AnyAsync(q => q.QuotationId == invoice.QuotationId && !q.isDeleted);
-            var paymentMethodExists = await _context.PaymentMethods.AnyAsync(pm => pm.PaymentMethodId == invoice.PaymentMethodId );
+            var paymentMethodExists = await _context.PaymentMethods.AnyAsync(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
             //
             if (!quotationExists || !paymentMethodExists)
                 return false;
@@ -75,10 +75,10 @@ namespace ServiveceSystem.BusinessLayer
             var existingInvoice = _context.invoiceHeaders.Find(invoice.InvoiceHeaderId);
             if (existingInvoice != null)
             {
-                
+
                 bool quotationExists = _context.QuotationHeaders.Any(q => q.QuotationId == invoice.QuotationId);
                 bool paymentMethodExists = _context.PaymentMethods.Any(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
-               
+
 
                 if (!quotationExists)
                     throw new Exception("Quotation not found");
@@ -86,7 +86,7 @@ namespace ServiveceSystem.BusinessLayer
                 if (!paymentMethodExists)
                     throw new Exception("Payment method not found");
 
-                
+
                 existingInvoice.QuotationId = invoice.QuotationId;
                 existingInvoice.InvoiceDate = invoice.InvoiceDate;
                 existingInvoice.TotalPrice = invoice.TotalPrice;
@@ -95,24 +95,32 @@ namespace ServiveceSystem.BusinessLayer
                 existingInvoice.Reminder = invoice.Reminder;
                 existingInvoice.ContactId = invoice.ContactId;
 
-               
+
                 existingInvoice.UpdatedLog = DateTime.Now.ToString();
 
                 _context.SaveChanges();
             }
-          
+
         }
 
         // Delete 
-        public void Delete(int id)
+        public async Task DeleteInvoice(int id)
         {
-            var invoice = _context.invoiceHeaders.Find(id);
+            var invoice = await _context.invoiceHeaders.FindAsync(id);
             if (invoice != null)
             {
-                _context.invoiceHeaders.Remove(invoice);
+                invoice.isDeleted = true;
+                invoice.DeletedLog = DateTime.Now.ToString();
                 _context.SaveChanges();
             }
         }
 
+
+
     }
 }
+
+
+
+
+

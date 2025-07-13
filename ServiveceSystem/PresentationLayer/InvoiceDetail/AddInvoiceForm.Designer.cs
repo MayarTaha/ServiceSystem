@@ -65,6 +65,12 @@
             comboBoxDiscountType = new DevExpress.XtraEditors.ComboBoxEdit();
             gridcontrolDetails = new DevExpress.XtraGrid.GridControl();
             gridViewdet = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)lookUpClinic.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lookUpQuotation.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)serviceLookUpEdit.Properties).BeginInit();
@@ -471,29 +477,100 @@
             gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(3, 2, 3, 2);
             gridLevelNode1.RelationName = "Level1";
             gridcontrolDetails.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode1 });
-            gridcontrolDetails.Location = new Point(12, 277);
+            gridcontrolDetails.Location = new Point(13, 277);
             gridcontrolDetails.MainView = gridViewdet;
             gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);
             gridcontrolDetails.Name = "gridcontrolDetails";
-            gridcontrolDetails.Size = new Size(1329, 412);
+            gridcontrolDetails.Size = new Size(1329, 455);
             gridcontrolDetails.TabIndex = 0;
             gridcontrolDetails.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewdet });
             gridcontrolDetails.Click += gridcontrolDetails_Click;
             // 
             // gridViewdet
             // 
+            gridViewdet.Appearance.GroupPanel.BackColor = Color.Black;
+            gridViewdet.Appearance.GroupPanel.ForeColor = Color.FromArgb(64, 64, 64);
+            gridViewdet.Appearance.GroupPanel.Options.UseBackColor = true;
+            gridViewdet.Appearance.GroupPanel.Options.UseForeColor = true;
+            gridViewdet.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn1, gridColumn3, gridColumn2, gridColumn4, gridColumn5, gridColumn6 });
             gridViewdet.DetailHeight = 417;
             gridViewdet.GridControl = gridcontrolDetails;
             gridViewdet.Name = "gridViewdet";
             // 
+            // gridColumn1
+            // 
+            gridColumn1.AccessibleName = "colServiceId";
+            gridColumn1.Caption = "Service";
+            gridColumn1.FieldName = "ServiceId";
+            gridColumn1.MinWidth = 30;
+            gridColumn1.Name = "gridColumn1";
+            gridColumn1.Visible = true;
+            gridColumn1.VisibleIndex = 0;
+            gridColumn1.Width = 112;
+            // 
+            // gridColumn3
+            // 
+            gridColumn3.AccessibleName = "colDiscount";
+            gridColumn3.Caption = "Discount";
+            gridColumn3.FieldName = "Discount";
+            gridColumn3.MinWidth = 30;
+            gridColumn3.Name = "gridColumn3";
+            gridColumn3.Visible = true;
+            gridColumn3.VisibleIndex = 1;
+            gridColumn3.Width = 112;
+            // 
+            // gridColumn2
+            // 
+            gridColumn2.AccessibleName = "colQuantity";
+            gridColumn2.Caption = "Quantity";
+            gridColumn2.FieldName = "Quantity";
+            gridColumn2.MinWidth = 30;
+            gridColumn2.Name = "gridColumn2";
+            gridColumn2.Visible = true;
+            gridColumn2.VisibleIndex = 2;
+            gridColumn2.Width = 112;
+            // 
+            // gridColumn4
+            // 
+            gridColumn4.AccessibleName = "colDiscountType";
+            gridColumn4.Caption = "DiscountType";
+            gridColumn4.FieldName = "DiscountType";
+            gridColumn4.MinWidth = 30;
+            gridColumn4.Name = "gridColumn4";
+            gridColumn4.Visible = true;
+            gridColumn4.VisibleIndex = 3;
+            gridColumn4.Width = 112;
+            // 
+            // gridColumn5
+            // 
+            gridColumn5.AccessibleName = "colServicePrice";
+            gridColumn5.Caption = "ServicePrice";
+            gridColumn5.FieldName = "ServicePrice";
+            gridColumn5.MinWidth = 30;
+            gridColumn5.Name = "gridColumn5";
+            gridColumn5.Visible = true;
+            gridColumn5.VisibleIndex = 4;
+            gridColumn5.Width = 112;
+            // 
+            // gridColumn6
+            // 
+            gridColumn6.AccessibleName = "colTotalService";
+            gridColumn6.Caption = "TotalService";
+            gridColumn6.FieldName = "TotalService";
+            gridColumn6.MinWidth = 30;
+            gridColumn6.Name = "gridColumn6";
+            gridColumn6.Visible = true;
+            gridColumn6.VisibleIndex = 5;
+            gridColumn6.Width = 112;
+            // 
             // AddInvoiceForm
             // 
-            Appearance.BackColor = SystemColors.InactiveCaption;
+            Appearance.BackColor = SystemColors.InactiveCaptionText;
             Appearance.Options.UseBackColor = true;
             Appearance.Options.UseFont = true;
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1479, 680);
+            ClientSize = new Size(1495, 752);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(Invoice);
@@ -501,11 +578,15 @@
             Controls.Add(gridcontrolDetails);
             Font = new Font("Segoe UI", 9F);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            LookAndFeel.SkinName = "Office 2019 Black";
+            LookAndFeel.UseDefaultLookAndFeel = false;
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "AddInvoiceForm";
             Padding = new Padding(20);
+            RightToLeftLayout = true;
+            ShowMdiChildCaptionInParentTitle = true;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Invoice";
             ((System.ComponentModel.ISupportInitialize)lookUpClinic.Properties).EndInit();
@@ -574,5 +655,11 @@
         private DevExpress.XtraGrid.GridControl gridcontrolDetails;
         private DevExpress.XtraEditors.ComboBoxEdit comboBoxDiscountType;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewdet;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
     }
 }

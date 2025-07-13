@@ -52,6 +52,7 @@ namespace ServiveceSystem.BusinessLayer
               
 
             detail.TotalService = CalculateTotalService(detail);
+            detail.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
             detail.UpdatedLog = DateTime.Now.ToString();
             detail.isDeleted = false;
             _context.InvoiceDetails.Add(detail);
@@ -96,8 +97,7 @@ namespace ServiveceSystem.BusinessLayer
                 
                 existingDetail.TotalService = CalculateTotalService(detail);
                 existingDetail.TotalDuo = detail.TotalDuo;
-
-                existingDetail.UpdatedLog = DateTime.Now.ToString();
+                existingDetail.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
                 _context.SaveChanges();
             }

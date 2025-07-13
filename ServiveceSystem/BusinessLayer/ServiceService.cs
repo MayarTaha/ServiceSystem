@@ -35,7 +35,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
             {
-                service.CreatedLog = DateTime.Now.ToString();
+                service.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.Services.Add(service);
                 await _context.SaveChangesAsync();
             }
@@ -47,8 +47,12 @@ namespace ServiveceSystem.BusinessLayer
             var exists = await _context.Services.AnyAsync(s => s.Name.ToLower() == service.Name.ToLower() && s.ServiceId != service.ServiceId && !s.isDeleted);
 
             if (exists)
-                service.UpdatedLog = DateTime.Now.ToString();
-                _context.Services.Update(service);
+            {
+                throw new InvalidOperationException("A service with this name already exists.");
+            }
+
+            service.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
+            _context.Services.Update(service);
             await _context.SaveChangesAsync();
         }
 

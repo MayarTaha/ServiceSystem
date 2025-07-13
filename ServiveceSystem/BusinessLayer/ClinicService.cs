@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ServiveceSystem.BusinessLayer
 {
-    class ClinicService
+    public class ClinicService
     {
         private readonly AppDBContext _context;
 
@@ -19,38 +19,37 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         //Get All  Clinics
-        public List<Clinic> GetAll()
+        public async Task<List<Clinic>> GetAll()
         {
-            return _context.Clinics.Include(E => E.ContactPersons).ToList();
+            return await _context.Clinics
+                .Include(E => E.ContactPersons)
+                .Where(c => !c.isDeleted)
+                .ToListAsync();
         }
 
         //get by id
-
-        public Clinic? GetById(int id)
+        public async Task<Clinic> GetById(int id)
         {
-            return _context.Clinics.Find(id);
+            return await _context.Clinics.FindAsync(id);
         }
+
         //Add new Clinic
-
-        public void AddClinic(Clinic clinic)
+        public async Task AddClinic(Clinic clinic)
         {
-
-            
-            var exists = _context.Clinics.Any(c => c.ClinicName.ToLower() == clinic.ClinicName.ToLower() && !c.isDeleted);
+            var exists = await _context.Clinics.AnyAsync(c => c.ClinicName.ToLower() == clinic.ClinicName.ToLower() && !c.isDeleted);
 
             if (!exists)
             {
-                clinic.CreatedLog = DateTime.Now.ToString();
+                clinic.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.Clinics.Add(clinic);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
-           
         }
 
         // update 
-        public void Update(Clinic clinic)
+        public async Task UpdateAsync(Clinic clinic)
         {
-            var existingClinic = _context.Clinics.Find(clinic.ClinicId);
+            var existingClinic = await _context.Clinics.FindAsync(clinic.ClinicId);
             if (existingClinic != null)
             {
                 existingClinic.ClinicName = clinic.ClinicName;
@@ -59,22 +58,22 @@ namespace ServiveceSystem.BusinessLayer
                 existingClinic.CompanyName = clinic.CompanyName;
                 existingClinic.Location = clinic.Location;
                 
+                existingClinic.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
+
         //deleted
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var clinic = _context.Clinics.Find(id);
+            var clinic = await _context.Clinics.FindAsync(id);
             if (clinic != null)
             {
-                _context.Clinics.Remove(clinic);
-                _context.SaveChanges();
+                clinic.DeletedLog = $"{CurrentUser.Username} - {DateTime.Now}";
+                clinic.isDeleted = true;
+                await _context.SaveChangesAsync();
             }
         }
-
-
-
     }
 }

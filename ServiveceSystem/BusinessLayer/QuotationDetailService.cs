@@ -79,8 +79,8 @@ namespace ServiveceSystem.BusinessLayer
             var qout = await _context.QuotationDetails.FindAsync(id);
             if (qout != null && !qout.isDeleted)
             {
-                qout.isDeleted = true;
                 qout.DeletedLog = $"{username} - {DateTime.Now}";
+                qout.isDeleted = true;
                 await _context.SaveChangesAsync();
             }
         }

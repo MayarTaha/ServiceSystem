@@ -91,10 +91,13 @@ namespace ServiveceSystem.BusinessLayer
             var qout = await _context.QuotationHeaders.FindAsync(id);
             if (qout != null)
             {
-                qout.isDeleted = true;
                 qout.DeletedLog = $"{username} - {DateTime.Now}";
+                qout.isDeleted = true;
                 await _context.SaveChangesAsync();
             }
         }
     }
+}}
+=========
 }
+>>>>>>>>> Temporary merge branch 2

@@ -40,6 +40,7 @@ namespace ServiveceSystem.PresentationLayer.Clinic
                     Phone = PhonetextEdit.Text.Trim(),
                     Email = EmailtextEdit.Text.Trim(),
                     Location = LocationtextEdit.Text.Trim(),
+                    CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}",
                     UpdatedLog = "",
                     DeletedLog = "",
                     isDeleted = false

@@ -19,5 +19,10 @@ namespace ServiceSystem.Models
         [ForeignKey("Clinic")]
         public int ClinicId { get; set; }
         public virtual Clinic Clinic { get; set; }
+
+        public string CreatedLog { get; set; }
+        public string UpdatedLog { get; set; }
+        public string DeletedLog { get; set; }
+        public bool isDeleted { get; set; }
     }
 }

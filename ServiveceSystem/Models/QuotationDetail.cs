@@ -12,11 +12,12 @@ namespace ServiceSystem.Models
         public int QuotationDetailId { get; set; }
         [ForeignKey("QuotationHeader")]
         public int QuotationId { get; set; } // FK
+        
         public QuotationHeader QuotationHeader { get; set; }
-
         [ForeignKey("Service")]
-        public int ServiceId { get; set; } //  ده بس اللي ضفته في الكوتيشن يا مياااار✅ لازم نضيفه
+        public int ServiceId { get; set; } // fk
         public Service Service { get; set; }
+
         public int Quantity { get; set; }
         public Discount DiscountType { get; set; } 
         public decimal Discount { get; set; }

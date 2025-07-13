@@ -9,6 +9,7 @@ namespace ServiveceSystem.Models
     public class CurrentUser
     {
         public static string Username { get; set; } = "system";
+        public static string Permission { get; set; } = "";
 
     }
 }

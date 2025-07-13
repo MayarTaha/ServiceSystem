@@ -37,7 +37,7 @@ namespace ServiveceSystem.BusinessLayer
 
             if (!exists)
               { 
-                taxes.CreatedLog = DateTime.Now.ToString();
+                taxes.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.Taxeses.Add(taxes);
                 await _context.SaveChangesAsync();
             }
@@ -45,13 +45,21 @@ namespace ServiveceSystem.BusinessLayer
 
         public async Task UpdateAsync(Taxes taxes)
         {
-            var exists = await _context.Taxeses.AnyAsync(s => s.Name.ToLower() == taxes.Name.ToLower() && !s.isDeleted);
+            // Check if another tax with the same name exists (excluding the current tax being updated)
+            var exists = await _context.Taxeses.AnyAsync(s => 
+                s.Name.ToLower() == taxes.Name.ToLower() && 
+                !s.isDeleted && 
+                s.TaxesID != taxes.TaxesID);
 
             if (!exists)
             {
-                taxes.UpdatedLog = DateTime.Now.ToString();
+                taxes.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.Taxeses.Update(taxes);
                 await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException($"A tax with the name '{taxes.Name}' already exists.");
             }
         }
 
@@ -60,8 +68,8 @@ namespace ServiveceSystem.BusinessLayer
             var taxes = await _context.Taxeses.FindAsync(id);
             if (taxes != null)
             {
+                taxes.DeletedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 taxes.isDeleted = true;
-                taxes.DeletedLog = DateTime.Now.ToString();
                 await _context.SaveChangesAsync();
             }
         }

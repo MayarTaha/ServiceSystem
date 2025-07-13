@@ -1,6 +1,6 @@
-﻿namespace ServiveceSystem
+namespace ServiveceSystem.PresentationLayer.ContactPerson
 {
-    partial class Home
+    partial class AllContactPersonsUserControl
     {
         /// <summary>
         /// Required designer variable.
@@ -20,26 +20,21 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            SuspendLayout();
+            this.SuspendLayout();
             // 
-            // Home
+            // AllContactPersonsUserControl
             // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(964, 448);
-            Name = "Home";
-            Text = "Home";
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "AllContactPersonsUserControl";
+            this.Size = new System.Drawing.Size(800, 550);
+            this.ResumeLayout(false);
         }
 
         #endregion
     }
-}
+} 

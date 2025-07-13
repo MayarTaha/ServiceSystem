@@ -42,6 +42,36 @@ namespace ServiveceSystem
             // ); // ← your desired form here
         }
 
+        //static async Task Main(string[] args)
+        //{
+        //    var context = new AppDBContext();
+        //    var quotationService = new QuotationHeaderService(context);
+
+        //    var newQuotation = new QuotationHeader
+        //    {
+        //        ClinicId = 7, // نفس العيادة ممكن، لكن غيري التواريخ
+        //        ContactId = 3,
+        //        InitialDate = DateTime.Today.AddDays(1), // غيري التاريخ علشان يكون سطر جديد
+        //        ExpireDate = DateTime.Today.AddDays(10),
+        //        Note = "الحمدلله",
+        //        Status = QuotationStatus.Pending,
+        //        DiscountType = Discount.Percentage,
+        //        Discount = 70, // خصم مختلف
+        //        TotalDuo = 850, // قيمة مختلفة
+        //        CreatedLog = "", // هيتعدل داخل Add
+        //        UpdatedLog = "",
+        //        DeletedLog = "",
+        //        isDeleted = false
+        //    };
+
+        //    var success = await quotationService.AddQuotationHeader(newQuotation, "Roaa");
+
+        //    if (success)
+        //        Console.WriteLine("✔️ تم إضافة العرض بنجاح");
+        //    else
+        //        Console.WriteLine("❌ فشل في الإضافة. تأكدي من صحة Clinic و Contact.");
+        //}
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>

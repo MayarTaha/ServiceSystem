@@ -158,7 +158,7 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
                 string.IsNullOrWhiteSpace(textEditServicePrice.Text) ||
                 string.IsNullOrWhiteSpace(quantityTextEdit.Text) ||
                 comboBoxDiscountTypeDetail.EditValue == null || comboBoxDiscountTypeHeader.EditValue == null ||
-                string.IsNullOrWhiteSpace(textEditDiscountDetail.Text)|| string.IsNullOrWhiteSpace(textEditDiscountHeader.Text))
+                string.IsNullOrWhiteSpace(textEditDiscountDetail.Text) || string.IsNullOrWhiteSpace(textEditDiscountHeader.Text))
             {
                 XtraMessageBox.Show("Please fill in all required detail fields.");
                 return;
@@ -212,7 +212,7 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
                 Quantity = quantity,
                 Discount = discount,
                 DiscountType = (Discount)comboBoxDiscountTypeDetail.EditValue,
-               // Discount = decimal.TryParse(textEditDiscountDetail.Text, out var dic) ? disc : 0,
+                // Discount = decimal.TryParse(textEditDiscountDetail.Text, out var dic) ? disc : 0,
                 ServicePrice = unitPrice,
                 TotalService = total,
                 CreatedLog = DateTime.Now.ToString(),
@@ -314,4 +314,4 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
             textEditDiscountHeader.Text = string.Empty;
         }
     }
-} 
+}

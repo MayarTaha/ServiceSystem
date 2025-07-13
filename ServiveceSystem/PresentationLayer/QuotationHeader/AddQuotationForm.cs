@@ -277,6 +277,7 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
             gridViewdet.Columns["QuotationHeader"].Visible = false;
             gridViewdet.Columns["Service"].Visible = false;
             gridViewdet.Columns["isDeleted"].Visible = false;
+            //gridViewdet.Columns["ServiceName"].Caption = "Service";
 
 
 

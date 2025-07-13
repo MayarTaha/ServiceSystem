@@ -280,6 +280,13 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
             //gridViewdet.Columns["ServiceName"].Caption = "Service";
 
 
+            //
+            ///
+            ///
+
+
+
+
 
         }
 

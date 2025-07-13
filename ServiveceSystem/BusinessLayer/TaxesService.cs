@@ -23,6 +23,7 @@ namespace ServiveceSystem.BusinessLayer
             return await _context.Taxeses
                 .Where(e => !e.isDeleted)
                 .ToListAsync();
+
         }
 
         public async Task<Taxes> GetById(int id)

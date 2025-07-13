@@ -59,51 +59,51 @@
             // ClinicnametextEdit
             // 
             ClinicnametextEdit.Location = new Point(155, 26);
-            ClinicnametextEdit.Margin = new Padding(2, 2, 2, 2);
+            ClinicnametextEdit.Margin = new Padding(2);
             ClinicnametextEdit.Name = "ClinicnametextEdit";
-            ClinicnametextEdit.Size = new Size(150, 20);
+            ClinicnametextEdit.Size = new Size(150, 22);
             ClinicnametextEdit.TabIndex = 0;
             // 
             // PhonetextEdit
             // 
             PhonetextEdit.Location = new Point(155, 105);
-            PhonetextEdit.Margin = new Padding(2, 2, 2, 2);
+            PhonetextEdit.Margin = new Padding(2);
             PhonetextEdit.Name = "PhonetextEdit";
-            PhonetextEdit.Size = new Size(150, 20);
+            PhonetextEdit.Size = new Size(150, 22);
             PhonetextEdit.TabIndex = 2;
             // 
             // EmailtextEdit
             // 
             EmailtextEdit.Location = new Point(155, 149);
-            EmailtextEdit.Margin = new Padding(2, 2, 2, 2);
+            EmailtextEdit.Margin = new Padding(2);
             EmailtextEdit.Name = "EmailtextEdit";
-            EmailtextEdit.Size = new Size(150, 20);
+            EmailtextEdit.Size = new Size(150, 22);
             EmailtextEdit.TabIndex = 3;
             // 
             // LocationtextEdit
             // 
             LocationtextEdit.Location = new Point(155, 188);
-            LocationtextEdit.Margin = new Padding(2, 2, 2, 2);
+            LocationtextEdit.Margin = new Padding(2);
             LocationtextEdit.Name = "LocationtextEdit";
-            LocationtextEdit.Size = new Size(150, 20);
+            LocationtextEdit.Size = new Size(150, 22);
             LocationtextEdit.TabIndex = 4;
             // 
             // CompanyNametextEdit
             // 
             CompanyNametextEdit.Location = new Point(155, 66);
-            CompanyNametextEdit.Margin = new Padding(2, 2, 2, 2);
+            CompanyNametextEdit.Margin = new Padding(2);
             CompanyNametextEdit.Name = "CompanyNametextEdit";
-            CompanyNametextEdit.Size = new Size(150, 20);
+            CompanyNametextEdit.Size = new Size(150, 22);
             CompanyNametextEdit.TabIndex = 5;
             // 
             // labelControl2
             // 
             labelControl2.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl2.Appearance.ForeColor = Color.Black;
+            labelControl2.Appearance.ForeColor = Color.White;
             labelControl2.Appearance.Options.UseFont = true;
             labelControl2.Appearance.Options.UseForeColor = true;
             labelControl2.Location = new Point(22, 26);
-            labelControl2.Margin = new Padding(2, 2, 2, 2);
+            labelControl2.Margin = new Padding(2);
             labelControl2.Name = "labelControl2";
             labelControl2.Size = new Size(74, 17);
             labelControl2.TabIndex = 6;
@@ -112,11 +112,11 @@
             // labelControl3
             // 
             labelControl3.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl3.Appearance.ForeColor = Color.Black;
+            labelControl3.Appearance.ForeColor = Color.White;
             labelControl3.Appearance.Options.UseFont = true;
             labelControl3.Appearance.Options.UseForeColor = true;
             labelControl3.Location = new Point(22, 64);
-            labelControl3.Margin = new Padding(2, 2, 2, 2);
+            labelControl3.Margin = new Padding(2);
             labelControl3.Name = "labelControl3";
             labelControl3.Size = new Size(98, 17);
             labelControl3.TabIndex = 7;
@@ -125,11 +125,11 @@
             // labelControl4
             // 
             labelControl4.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl4.Appearance.ForeColor = Color.Black;
+            labelControl4.Appearance.ForeColor = Color.White;
             labelControl4.Appearance.Options.UseFont = true;
             labelControl4.Appearance.Options.UseForeColor = true;
             labelControl4.Location = new Point(22, 105);
-            labelControl4.Margin = new Padding(2, 2, 2, 2);
+            labelControl4.Margin = new Padding(2);
             labelControl4.Name = "labelControl4";
             labelControl4.Size = new Size(39, 17);
             labelControl4.TabIndex = 8;
@@ -138,11 +138,11 @@
             // labelControl5
             // 
             labelControl5.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl5.Appearance.ForeColor = Color.Black;
+            labelControl5.Appearance.ForeColor = Color.White;
             labelControl5.Appearance.Options.UseFont = true;
             labelControl5.Appearance.Options.UseForeColor = true;
             labelControl5.Location = new Point(22, 147);
-            labelControl5.Margin = new Padding(2, 2, 2, 2);
+            labelControl5.Margin = new Padding(2);
             labelControl5.Name = "labelControl5";
             labelControl5.Size = new Size(34, 17);
             labelControl5.TabIndex = 9;
@@ -151,11 +151,11 @@
             // labelControl6
             // 
             labelControl6.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl6.Appearance.ForeColor = Color.Black;
+            labelControl6.Appearance.ForeColor = Color.White;
             labelControl6.Appearance.Options.UseFont = true;
             labelControl6.Appearance.Options.UseForeColor = true;
             labelControl6.Location = new Point(22, 186);
-            labelControl6.Margin = new Padding(2, 2, 2, 2);
+            labelControl6.Margin = new Padding(2);
             labelControl6.Name = "labelControl6";
             labelControl6.Size = new Size(53, 17);
             labelControl6.TabIndex = 10;
@@ -166,7 +166,7 @@
             SaveButton.Appearance.Font = new Font("Segoe UI", 13F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SaveButton.Appearance.Options.UseFont = true;
             SaveButton.Location = new Point(80, 245);
-            SaveButton.Margin = new Padding(2, 2, 2, 2);
+            SaveButton.Margin = new Padding(2);
             SaveButton.Name = "SaveButton";
             SaveButton.Size = new Size(112, 32);
             SaveButton.TabIndex = 11;
@@ -188,7 +188,7 @@
             labelClinicNameError.Appearance.Options.UseFont = true;
             labelClinicNameError.Appearance.Options.UseForeColor = true;
             labelClinicNameError.Location = new Point(162, 47);
-            labelClinicNameError.Margin = new Padding(2, 2, 2, 2);
+            labelClinicNameError.Margin = new Padding(2);
             labelClinicNameError.Name = "labelClinicNameError";
             labelClinicNameError.Size = new Size(70, 13);
             labelClinicNameError.TabIndex = 13;
@@ -202,7 +202,7 @@
             labelCompanynameError.Appearance.Options.UseFont = true;
             labelCompanynameError.Appearance.Options.UseForeColor = true;
             labelCompanynameError.Location = new Point(162, 88);
-            labelCompanynameError.Margin = new Padding(2, 2, 2, 2);
+            labelCompanynameError.Margin = new Padding(2);
             labelCompanynameError.Name = "labelCompanynameError";
             labelCompanynameError.Size = new Size(70, 13);
             labelCompanynameError.TabIndex = 14;
@@ -216,7 +216,7 @@
             labelPhoneError.Appearance.Options.UseFont = true;
             labelPhoneError.Appearance.Options.UseForeColor = true;
             labelPhoneError.Location = new Point(162, 126);
-            labelPhoneError.Margin = new Padding(2, 2, 2, 2);
+            labelPhoneError.Margin = new Padding(2);
             labelPhoneError.Name = "labelPhoneError";
             labelPhoneError.Size = new Size(70, 13);
             labelPhoneError.TabIndex = 15;
@@ -230,7 +230,7 @@
             labelemailerror.Appearance.Options.UseFont = true;
             labelemailerror.Appearance.Options.UseForeColor = true;
             labelemailerror.Location = new Point(162, 170);
-            labelemailerror.Margin = new Padding(2, 2, 2, 2);
+            labelemailerror.Margin = new Padding(2);
             labelemailerror.Name = "labelemailerror";
             labelemailerror.Size = new Size(70, 13);
             labelemailerror.TabIndex = 16;
@@ -244,7 +244,7 @@
             labelLocationError.Appearance.Options.UseFont = true;
             labelLocationError.Appearance.Options.UseForeColor = true;
             labelLocationError.Location = new Point(162, 209);
-            labelLocationError.Margin = new Padding(2, 2, 2, 2);
+            labelLocationError.Margin = new Padding(2);
             labelLocationError.Name = "labelLocationError";
             labelLocationError.Size = new Size(70, 13);
             labelLocationError.TabIndex = 17;
@@ -273,7 +273,7 @@
             Controls.Add(PhonetextEdit);
             Controls.Add(ClinicnametextEdit);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "AddClinic";

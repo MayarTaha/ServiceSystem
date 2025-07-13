@@ -9,6 +9,7 @@ using ServiveceSystem.Models;
 using ServiceSystem.Models;
 
 using System.Threading.Tasks;
+using ServiveceSystem.PresentationLayer.Service;
 
 namespace ServiveceSystem.PresentationLayer.Taxes
 {
@@ -23,6 +24,7 @@ namespace ServiveceSystem.PresentationLayer.Taxes
         {
             InitializeComponent();
             _taxesService = new TaxesService(new AppDBContext());
+            gridView1.RowCellClick += gridView1_RowCellClick;
             LoadTaxes();
         }
 
@@ -65,7 +67,6 @@ namespace ServiveceSystem.PresentationLayer.Taxes
                 editButton.Buttons[0].Caption = "Edit";
                 editButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
                 editButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Blue;
-                editButton.Click += EditButton_Click;
                 gridControl1.RepositoryItems.Add(editButton);
 
                 var editCol = gridView1.Columns.AddField("Edit");
@@ -83,7 +84,6 @@ namespace ServiveceSystem.PresentationLayer.Taxes
                 deleteButton.Buttons[0].Caption = "Delete";
                 deleteButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
                 deleteButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Red;
-                deleteButton.Click += DeleteButton_Click;
                 gridControl1.RepositoryItems.Add(deleteButton);
 
                 var deleteCol = gridView1.Columns.AddField("Delete");
@@ -105,6 +105,7 @@ namespace ServiveceSystem.PresentationLayer.Taxes
             {
                 LoadTaxes();
             }
+
         }
 
         private async void DeleteButton_Click(object sender, EventArgs e)
@@ -147,6 +148,23 @@ namespace ServiveceSystem.PresentationLayer.Taxes
             {
                 MessageBox.Show($"Error loading taxes: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void gridView1_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+            if (e.Column.FieldName == "Edit")
+            {
+                EditButton_Click(sender, EventArgs.Empty);
+            }
+            else if (e.Column.FieldName == "Delete")
+            {
+                DeleteButton_Click(sender, EventArgs.Empty);
+            }
+        }
+
+        private void AllTaxes_Load(object sender, EventArgs e)
+        {
+
         }
     }
 } 

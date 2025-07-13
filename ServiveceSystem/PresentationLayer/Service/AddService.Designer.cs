@@ -35,6 +35,7 @@
             labelControl3 = new DevExpress.XtraEditors.LabelControl();
             labelControl2 = new DevExpress.XtraEditors.LabelControl();
             spinPrice = new DevExpress.XtraEditors.SpinEdit();
+            this.groupBoxAddService = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)txtDescription.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtName.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)spinPrice.Properties).BeginInit();
@@ -54,7 +55,7 @@
             // 
             txtDescription.Location = new Point(162, 93);
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(132, 20);
+            txtDescription.Size = new Size(132, 22);
             txtDescription.TabIndex = 23;
             // 
             // btnSave
@@ -72,7 +73,7 @@
             // 
             txtName.Location = new Point(162, 36);
             txtName.Name = "txtName";
-            txtName.Size = new Size(132, 20);
+            txtName.Size = new Size(132, 22);
             txtName.TabIndex = 20;
             // 
             // labelControl3
@@ -100,32 +101,52 @@
             spinPrice.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
             spinPrice.Location = new Point(162, 148);
             spinPrice.Name = "spinPrice";
-            spinPrice.Size = new Size(132, 20);
+            spinPrice.Properties.Appearance.Options.UseTextOptions = true;
+            spinPrice.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            spinPrice.Properties.Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            spinPrice.Size = new Size(132, 22);
             spinPrice.TabIndex = 25;
             // 
-            // AddService
+            // groupBoxAddService
             // 
-            Appearance.Options.UseFont = true;
-            AutoScaleDimensions = new SizeF(6F, 13F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(318, 253);
-            Controls.Add(spinPrice);
-            Controls.Add(labelControl4);
-            Controls.Add(txtDescription);
-            Controls.Add(btnSave);
-            Controls.Add(txtName);
-            Controls.Add(labelControl3);
-            Controls.Add(labelControl2);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "AddService";
-            Text = "AddService";
+            this.groupBoxAddService.Text = "Add Service";
+            this.groupBoxAddService.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            this.groupBoxAddService.Location = new Point(6, 6);
+            this.groupBoxAddService.Size = new Size(306, 243);
+            this.groupBoxAddService.TabIndex = 100;
+            this.groupBoxAddService.TabStop = false;
+            this.groupBoxAddService.ForeColor = System.Drawing.Color.White;
+            // Add controls to group box
+            this.groupBoxAddService.Controls.Add(labelControl2);
+            this.groupBoxAddService.Controls.Add(txtName);
+            this.groupBoxAddService.Controls.Add(labelControl3);
+            this.groupBoxAddService.Controls.Add(txtDescription);
+            this.groupBoxAddService.Controls.Add(labelControl4);
+            this.groupBoxAddService.Controls.Add(spinPrice);
+            this.groupBoxAddService.Controls.Add(btnSave);
+            // Adjust controls' locations to be relative to group box
+            labelControl2.Location = new Point(12, 30);
+            txtName.Location = new Point(162, 36);
+            labelControl3.Location = new Point(12, 88);
+            txtDescription.Location = new Point(162, 93);
+            labelControl4.Location = new Point(12, 143);
+            spinPrice.Location = new Point(162, 148);
+            btnSave.Location = new Point(114, 196);
+            // 
+            // AddService (form)
+            // 
+            this.Controls.Clear();
+            this.Controls.Add(groupBoxAddService);
+            this.ClientSize = new Size(318, 255);
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "AddService";
+            this.Text = "AddService";
             ((System.ComponentModel.ISupportInitialize)txtDescription.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtName.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)spinPrice.Properties).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -136,5 +157,6 @@
         private DevExpress.XtraEditors.LabelControl labelControl3;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.SpinEdit spinPrice;
+        private System.Windows.Forms.GroupBox groupBoxAddService;
     }
 }

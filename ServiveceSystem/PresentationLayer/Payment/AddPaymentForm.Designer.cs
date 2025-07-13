@@ -46,17 +46,17 @@
             // PaymentStatuscomboBox
             // 
             PaymentStatuscomboBox.FormattingEnabled = true;
-            PaymentStatuscomboBox.Location = new Point(182, 222);
+            PaymentStatuscomboBox.Location = new Point(156, 192);
             PaymentStatuscomboBox.Margin = new Padding(2);
             PaymentStatuscomboBox.Name = "PaymentStatuscomboBox";
-            PaymentStatuscomboBox.Size = new Size(137, 23);
+            PaymentStatuscomboBox.Size = new Size(118, 21);
             PaymentStatuscomboBox.TabIndex = 44;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(18, 61);
+            label7.Location = new Point(15, 53);
             label7.Name = "label7";
             label7.Size = new Size(95, 21);
             label7.TabIndex = 42;
@@ -64,21 +64,23 @@
             // 
             // Savebtn
             // 
+            Savebtn.BackColor = Color.White;
+            Savebtn.FlatAppearance.BorderColor = Color.White;
             Savebtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Savebtn.Location = new Point(115, 277);
+            Savebtn.Location = new Point(99, 229);
             Savebtn.Margin = new Padding(2);
             Savebtn.Name = "Savebtn";
-            Savebtn.Size = new Size(88, 37);
+            Savebtn.Size = new Size(75, 32);
             Savebtn.TabIndex = 40;
             Savebtn.Text = "Add";
-            Savebtn.UseVisualStyleBackColor = true;
+            Savebtn.UseVisualStyleBackColor = false;
             Savebtn.Click += Savebtn_Click;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(16, 223);
+            label5.Location = new Point(14, 193);
             label5.Name = "label5";
             label5.Size = new Size(112, 21);
             label5.TabIndex = 38;
@@ -86,41 +88,41 @@
             // 
             // InvoiceIdtextBox
             // 
-            InvoiceIdtextBox.Location = new Point(182, 24);
+            InvoiceIdtextBox.Location = new Point(156, 21);
             InvoiceIdtextBox.Margin = new Padding(3, 2, 3, 2);
             InvoiceIdtextBox.Name = "InvoiceIdtextBox";
-            InvoiceIdtextBox.Size = new Size(137, 23);
+            InvoiceIdtextBox.Size = new Size(118, 22);
             InvoiceIdtextBox.TabIndex = 37;
             // 
             // PaymentDatetextBox
             // 
-            PaymentDatetextBox.Location = new Point(182, 146);
+            PaymentDatetextBox.Location = new Point(156, 127);
             PaymentDatetextBox.Margin = new Padding(3, 2, 3, 2);
             PaymentDatetextBox.Name = "PaymentDatetextBox";
-            PaymentDatetextBox.Size = new Size(137, 23);
+            PaymentDatetextBox.Size = new Size(118, 22);
             PaymentDatetextBox.TabIndex = 36;
             // 
             // AmountPaidtextBox
             // 
-            AmountPaidtextBox.Location = new Point(182, 103);
+            AmountPaidtextBox.Location = new Point(156, 89);
             AmountPaidtextBox.Margin = new Padding(3, 2, 3, 2);
             AmountPaidtextBox.Name = "AmountPaidtextBox";
-            AmountPaidtextBox.Size = new Size(137, 23);
+            AmountPaidtextBox.Size = new Size(118, 22);
             AmountPaidtextBox.TabIndex = 35;
             // 
             // RemainingAmounttextBox
             // 
-            RemainingAmounttextBox.Location = new Point(182, 61);
+            RemainingAmounttextBox.Location = new Point(156, 53);
             RemainingAmounttextBox.Margin = new Padding(3, 2, 3, 2);
             RemainingAmounttextBox.Name = "RemainingAmounttextBox";
-            RemainingAmounttextBox.Size = new Size(137, 23);
+            RemainingAmounttextBox.Size = new Size(118, 22);
             RemainingAmounttextBox.TabIndex = 34;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(18, 181);
+            label4.Location = new Point(15, 157);
             label4.Name = "label4";
             label4.Size = new Size(124, 21);
             label4.TabIndex = 33;
@@ -130,7 +132,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(16, 146);
+            label3.Location = new Point(14, 127);
             label3.Name = "label3";
             label3.Size = new Size(102, 21);
             label3.TabIndex = 32;
@@ -140,7 +142,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(24, 24);
+            label2.Location = new Point(21, 21);
             label2.Name = "label2";
             label2.Size = new Size(72, 21);
             label2.TabIndex = 31;
@@ -150,7 +152,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(16, 101);
+            label1.Location = new Point(14, 88);
             label1.Name = "label1";
             label1.Size = new Size(141, 21);
             label1.TabIndex = 30;
@@ -159,17 +161,17 @@
             // PaymentMethodcomboBox
             // 
             PaymentMethodcomboBox.FormattingEnabled = true;
-            PaymentMethodcomboBox.Location = new Point(182, 183);
+            PaymentMethodcomboBox.Location = new Point(156, 159);
             PaymentMethodcomboBox.Margin = new Padding(2);
             PaymentMethodcomboBox.Name = "PaymentMethodcomboBox";
-            PaymentMethodcomboBox.Size = new Size(137, 23);
+            PaymentMethodcomboBox.Size = new Size(118, 21);
             PaymentMethodcomboBox.TabIndex = 45;
             // 
             // AddPaymentForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(345, 325);
+            ClientSize = new Size(282, 268);
             Controls.Add(PaymentMethodcomboBox);
             Controls.Add(PaymentStatuscomboBox);
             Controls.Add(label7);

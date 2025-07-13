@@ -26,7 +26,7 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             labelControl5 = new DevExpress.XtraEditors.LabelControl();
             labelControl6 = new DevExpress.XtraEditors.LabelControl();
             SaveButton = new DevExpress.XtraEditors.SimpleButton();
-            errorProvider1 = new System.Windows.Forms.ErrorProvider(components);
+            errorProvider1 = new ErrorProvider(components);
             dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
             labelClinicNameError = new DevExpress.XtraEditors.LabelControl();
             labelCompanynameError = new DevExpress.XtraEditors.LabelControl();
@@ -44,106 +44,106 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             // 
             // ClinicnametextEdit
             // 
-            ClinicnametextEdit.Location = new System.Drawing.Point(155, 26);
+            ClinicnametextEdit.Location = new Point(155, 26);
             ClinicnametextEdit.Name = "ClinicnametextEdit";
-            ClinicnametextEdit.Size = new System.Drawing.Size(150, 20);
+            ClinicnametextEdit.Size = new Size(150, 22);
             ClinicnametextEdit.TabIndex = 0;
             // 
             // PhonetextEdit
             // 
-            PhonetextEdit.Location = new System.Drawing.Point(155, 105);
+            PhonetextEdit.Location = new Point(155, 105);
             PhonetextEdit.Name = "PhonetextEdit";
-            PhonetextEdit.Size = new System.Drawing.Size(150, 20);
+            PhonetextEdit.Size = new Size(150, 22);
             PhonetextEdit.TabIndex = 2;
             // 
             // EmailtextEdit
             // 
-            EmailtextEdit.Location = new System.Drawing.Point(155, 149);
+            EmailtextEdit.Location = new Point(155, 149);
             EmailtextEdit.Name = "EmailtextEdit";
-            EmailtextEdit.Size = new System.Drawing.Size(150, 20);
+            EmailtextEdit.Size = new Size(150, 22);
             EmailtextEdit.TabIndex = 3;
             // 
             // LocationtextEdit
             // 
-            LocationtextEdit.Location = new System.Drawing.Point(155, 188);
+            LocationtextEdit.Location = new Point(155, 188);
             LocationtextEdit.Name = "LocationtextEdit";
-            LocationtextEdit.Size = new System.Drawing.Size(150, 20);
+            LocationtextEdit.Size = new Size(150, 22);
             LocationtextEdit.TabIndex = 4;
             // 
             // CompanyNametextEdit
             // 
-            CompanyNametextEdit.Location = new System.Drawing.Point(155, 66);
+            CompanyNametextEdit.Location = new Point(155, 66);
             CompanyNametextEdit.Name = "CompanyNametextEdit";
-            CompanyNametextEdit.Size = new System.Drawing.Size(150, 20);
+            CompanyNametextEdit.Size = new Size(150, 22);
             CompanyNametextEdit.TabIndex = 5;
             // 
             // labelControl2
             // 
-            labelControl2.Appearance.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            labelControl2.Appearance.ForeColor = System.Drawing.Color.Black;
+            labelControl2.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelControl2.Appearance.ForeColor = Color.Black;
             labelControl2.Appearance.Options.UseFont = true;
             labelControl2.Appearance.Options.UseForeColor = true;
-            labelControl2.Location = new System.Drawing.Point(22, 26);
+            labelControl2.Location = new Point(22, 26);
             labelControl2.Name = "labelControl2";
-            labelControl2.Size = new System.Drawing.Size(74, 17);
+            labelControl2.Size = new Size(74, 17);
             labelControl2.TabIndex = 6;
             labelControl2.Text = "Clinic Name";
             // 
             // labelControl3
             // 
-            labelControl3.Appearance.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            labelControl3.Appearance.ForeColor = System.Drawing.Color.Black;
+            labelControl3.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelControl3.Appearance.ForeColor = Color.Black;
             labelControl3.Appearance.Options.UseFont = true;
             labelControl3.Appearance.Options.UseForeColor = true;
-            labelControl3.Location = new System.Drawing.Point(22, 64);
+            labelControl3.Location = new Point(22, 64);
             labelControl3.Name = "labelControl3";
-            labelControl3.Size = new System.Drawing.Size(98, 17);
+            labelControl3.Size = new Size(98, 17);
             labelControl3.TabIndex = 7;
             labelControl3.Text = "Company Name";
             // 
             // labelControl4
             // 
-            labelControl4.Appearance.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            labelControl4.Appearance.ForeColor = System.Drawing.Color.Black;
+            labelControl4.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelControl4.Appearance.ForeColor = Color.Black;
             labelControl4.Appearance.Options.UseFont = true;
             labelControl4.Appearance.Options.UseForeColor = true;
-            labelControl4.Location = new System.Drawing.Point(22, 105);
+            labelControl4.Location = new Point(22, 105);
             labelControl4.Name = "labelControl4";
-            labelControl4.Size = new System.Drawing.Size(39, 17);
+            labelControl4.Size = new Size(39, 17);
             labelControl4.TabIndex = 8;
             labelControl4.Text = "Phone";
             // 
             // labelControl5
             // 
-            labelControl5.Appearance.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            labelControl5.Appearance.ForeColor = System.Drawing.Color.Black;
+            labelControl5.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelControl5.Appearance.ForeColor = Color.Black;
             labelControl5.Appearance.Options.UseFont = true;
             labelControl5.Appearance.Options.UseForeColor = true;
-            labelControl5.Location = new System.Drawing.Point(22, 147);
+            labelControl5.Location = new Point(22, 147);
             labelControl5.Name = "labelControl5";
-            labelControl5.Size = new System.Drawing.Size(34, 17);
+            labelControl5.Size = new Size(34, 17);
             labelControl5.TabIndex = 9;
             labelControl5.Text = "Email";
             // 
             // labelControl6
             // 
-            labelControl6.Appearance.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            labelControl6.Appearance.ForeColor = System.Drawing.Color.Black;
+            labelControl6.Appearance.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelControl6.Appearance.ForeColor = Color.Black;
             labelControl6.Appearance.Options.UseFont = true;
             labelControl6.Appearance.Options.UseForeColor = true;
-            labelControl6.Location = new System.Drawing.Point(22, 186);
+            labelControl6.Location = new Point(22, 186);
             labelControl6.Name = "labelControl6";
-            labelControl6.Size = new System.Drawing.Size(53, 17);
+            labelControl6.Size = new Size(53, 17);
             labelControl6.TabIndex = 10;
             labelControl6.Text = "Location";
             // 
             // SaveButton
             // 
-            SaveButton.Appearance.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            SaveButton.Appearance.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             SaveButton.Appearance.Options.UseFont = true;
-            SaveButton.Location = new System.Drawing.Point(80, 245);
+            SaveButton.Location = new Point(106, 244);
             SaveButton.Name = "SaveButton";
-            SaveButton.Size = new System.Drawing.Size(112, 32);
+            SaveButton.Size = new Size(112, 32);
             SaveButton.TabIndex = 11;
             SaveButton.Text = "Save";
             SaveButton.Click += SaveButton_Click;
@@ -158,96 +158,96 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             // 
             // labelClinicNameError
             // 
-            labelClinicNameError.Appearance.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            labelClinicNameError.Appearance.ForeColor = System.Drawing.Color.Red;
+            labelClinicNameError.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            labelClinicNameError.Appearance.ForeColor = Color.Red;
             labelClinicNameError.Appearance.Options.UseFont = true;
             labelClinicNameError.Appearance.Options.UseForeColor = true;
-            labelClinicNameError.Location = new System.Drawing.Point(162, 47);
+            labelClinicNameError.Location = new Point(162, 47);
             labelClinicNameError.Name = "labelClinicNameError";
-            labelClinicNameError.Size = new System.Drawing.Size(70, 13);
+            labelClinicNameError.Size = new Size(70, 13);
             labelClinicNameError.TabIndex = 13;
             labelClinicNameError.Text = "labelControl7";
             labelClinicNameError.Visible = false;
             // 
             // labelCompanynameError
             // 
-            labelCompanynameError.Appearance.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            labelCompanynameError.Appearance.ForeColor = System.Drawing.Color.Red;
+            labelCompanynameError.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            labelCompanynameError.Appearance.ForeColor = Color.Red;
             labelCompanynameError.Appearance.Options.UseFont = true;
             labelCompanynameError.Appearance.Options.UseForeColor = true;
-            labelCompanynameError.Location = new System.Drawing.Point(162, 87);
+            labelCompanynameError.Location = new Point(162, 87);
             labelCompanynameError.Name = "labelCompanynameError";
-            labelCompanynameError.Size = new System.Drawing.Size(70, 13);
+            labelCompanynameError.Size = new Size(70, 13);
             labelCompanynameError.TabIndex = 14;
             labelCompanynameError.Text = "labelControl8";
             labelCompanynameError.Visible = false;
             // 
             // labelPhoneError
             // 
-            labelPhoneError.Appearance.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            labelPhoneError.Appearance.ForeColor = System.Drawing.Color.Red;
+            labelPhoneError.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            labelPhoneError.Appearance.ForeColor = Color.Red;
             labelPhoneError.Appearance.Options.UseFont = true;
             labelPhoneError.Appearance.Options.UseForeColor = true;
-            labelPhoneError.Location = new System.Drawing.Point(162, 127);
+            labelPhoneError.Location = new Point(162, 127);
             labelPhoneError.Name = "labelPhoneError";
-            labelPhoneError.Size = new System.Drawing.Size(70, 13);
+            labelPhoneError.Size = new Size(70, 13);
             labelPhoneError.TabIndex = 15;
             labelPhoneError.Text = "labelControl9";
             labelPhoneError.Visible = false;
             // 
             // labelemailerror
             // 
-            labelemailerror.Appearance.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            labelemailerror.Appearance.ForeColor = System.Drawing.Color.Red;
+            labelemailerror.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            labelemailerror.Appearance.ForeColor = Color.Red;
             labelemailerror.Appearance.Options.UseFont = true;
             labelemailerror.Appearance.Options.UseForeColor = true;
-            labelemailerror.Location = new System.Drawing.Point(162, 171);
+            labelemailerror.Location = new Point(162, 171);
             labelemailerror.Name = "labelemailerror";
-            labelemailerror.Size = new System.Drawing.Size(70, 13);
+            labelemailerror.Size = new Size(76, 13);
             labelemailerror.TabIndex = 16;
             labelemailerror.Text = "labelControl10";
             labelemailerror.Visible = false;
             // 
             // labelLocationError
             // 
-            labelLocationError.Appearance.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
-            labelLocationError.Appearance.ForeColor = System.Drawing.Color.Red;
+            labelLocationError.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            labelLocationError.Appearance.ForeColor = Color.Red;
             labelLocationError.Appearance.Options.UseFont = true;
             labelLocationError.Appearance.Options.UseForeColor = true;
-            labelLocationError.Location = new System.Drawing.Point(162, 210);
+            labelLocationError.Location = new Point(162, 210);
             labelLocationError.Name = "labelLocationError";
-            labelLocationError.Size = new System.Drawing.Size(70, 13);
+            labelLocationError.Size = new Size(76, 13);
             labelLocationError.TabIndex = 17;
             labelLocationError.Text = "labelControl11";
             labelLocationError.Visible = false;
             // 
             // EditClinic
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 300);
-            this.Controls.Add(ClinicnametextEdit);
-            this.Controls.Add(PhonetextEdit);
-            this.Controls.Add(EmailtextEdit);
-            this.Controls.Add(LocationtextEdit);
-            this.Controls.Add(CompanyNametextEdit);
-            this.Controls.Add(labelControl2);
-            this.Controls.Add(labelControl3);
-            this.Controls.Add(labelControl4);
-            this.Controls.Add(labelControl5);
-            this.Controls.Add(labelControl6);
-            this.Controls.Add(SaveButton);
-            this.Controls.Add(labelClinicNameError);
-            this.Controls.Add(labelCompanynameError);
-            this.Controls.Add(labelPhoneError);
-            this.Controls.Add(labelemailerror);
-            this.Controls.Add(labelLocationError);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Name = "EditClinic";
-            this.Text = "Edit Clinic";
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(338, 285);
+            Controls.Add(ClinicnametextEdit);
+            Controls.Add(PhonetextEdit);
+            Controls.Add(EmailtextEdit);
+            Controls.Add(LocationtextEdit);
+            Controls.Add(CompanyNametextEdit);
+            Controls.Add(labelControl2);
+            Controls.Add(labelControl3);
+            Controls.Add(labelControl4);
+            Controls.Add(labelControl5);
+            Controls.Add(labelControl6);
+            Controls.Add(SaveButton);
+            Controls.Add(labelClinicNameError);
+            Controls.Add(labelCompanynameError);
+            Controls.Add(labelPhoneError);
+            Controls.Add(labelemailerror);
+            Controls.Add(labelLocationError);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "EditClinic";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Edit Clinic";
             ((System.ComponentModel.ISupportInitialize)ClinicnametextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)PhonetextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)EmailtextEdit.Properties).EndInit();
@@ -255,8 +255,8 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             ((System.ComponentModel.ISupportInitialize)CompanyNametextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
         #endregion
         private DevExpress.XtraEditors.TextEdit ClinicnametextEdit;

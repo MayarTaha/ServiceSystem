@@ -21,6 +21,7 @@ namespace ServiveceSystem.PresentationLayer.Payment
         {
             InitializeComponent();
             _paymentService = new PaymentService(new AppDBContext());
+            gridView1.RowCellClick += gridView1_RowCellClick;
             LoadPayments();
         }
 
@@ -66,7 +67,6 @@ namespace ServiveceSystem.PresentationLayer.Payment
                 editButton.Buttons[0].Caption = "Edit";
                 editButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
                 editButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Blue;
-                editButton.Click += EditButton_Click;
                 gridControl1.RepositoryItems.Add(editButton);
 
                 var editCol = gridView1.Columns.AddField("Edit");
@@ -84,7 +84,6 @@ namespace ServiveceSystem.PresentationLayer.Payment
                 deleteButton.Buttons[0].Caption = "Delete";
                 deleteButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
                 deleteButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Red;
-                deleteButton.Click += DeleteButton_Click;
                 gridControl1.RepositoryItems.Add(deleteButton);
 
                 var deleteCol = gridView1.Columns.AddField("Delete");
@@ -148,6 +147,18 @@ namespace ServiveceSystem.PresentationLayer.Payment
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading payments: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void gridView1_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+            if (e.Column.FieldName == "Edit")
+            {
+                EditButton_Click(sender, EventArgs.Empty);
+            }
+            else if (e.Column.FieldName == "Delete")
+            {
+                DeleteButton_Click(sender, EventArgs.Empty);
             }
         }
     }

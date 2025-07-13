@@ -28,83 +28,81 @@ namespace ServiveceSystem.PresentationLayer.User
         /// </summary>
         private void InitializeComponent()
         {
-            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.btnAddUser = new DevExpress.XtraEditors.SimpleButton();
-            this.txtFilter = new DevExpress.XtraEditors.TextEdit();
-            this.lblFilter = new DevExpress.XtraEditors.LabelControl();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).BeginInit();
-            this.SuspendLayout();
+            gridControl1 = new DevExpress.XtraGrid.GridControl();
+            gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            btnAddUser = new DevExpress.XtraEditors.SimpleButton();
+            txtFilter = new DevExpress.XtraEditors.TextEdit();
+            lblFilter = new DevExpress.XtraEditors.LabelControl();
+            ((System.ComponentModel.ISupportInitialize)gridControl1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtFilter.Properties).BeginInit();
+            SuspendLayout();
             // 
             // gridControl1
             // 
-            this.gridControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridControl1.Location = new System.Drawing.Point(12, 40);
-            this.gridControl1.MainView = this.gridView1;
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(776, 398);
-            this.gridControl1.TabIndex = 0;
-            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
+            gridControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            gridControl1.Location = new Point(12, 40);
+            gridControl1.MainView = gridView1;
+            gridControl1.Name = "gridControl1";
+            gridControl1.Size = new Size(774, 398);
+            gridControl1.TabIndex = 0;
+            gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
             // gridView1
             // 
-            this.gridView1.GridControl = this.gridControl1;
-            this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsBehavior.Editable = false;
+            gridView1.GridControl = gridControl1;
+            gridView1.Name = "gridView1";
+            gridView1.OptionsBehavior.Editable = false;
+            gridView1.OptionsView.ShowGroupPanel = false;
             // 
             // btnAddUser
             // 
-            this.btnAddUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddUser.Location = new System.Drawing.Point(713, 12);
-            this.btnAddUser.Name = "btnAddUser";
-            this.btnAddUser.Size = new System.Drawing.Size(75, 23);
-            this.btnAddUser.TabIndex = 1;
-            this.btnAddUser.Text = "Add User";
-            this.btnAddUser.Click += new System.EventHandler(this.btnAddUser_Click);
+            btnAddUser.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAddUser.Location = new Point(711, 12);
+            btnAddUser.Name = "btnAddUser";
+            btnAddUser.Size = new Size(75, 23);
+            btnAddUser.TabIndex = 1;
+            btnAddUser.Text = "Add User";
+            btnAddUser.Click += btnAddUser_Click;
             // 
             // txtFilter
             // 
-            this.txtFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFilter.Location = new System.Drawing.Point(50, 12);
-            this.txtFilter.Name = "txtFilter";
-            this.txtFilter.Properties.NullText = "Filter by username...";
-            this.txtFilter.Size = new System.Drawing.Size(657, 20);
-            this.txtFilter.TabIndex = 2;
-            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
+            txtFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtFilter.Location = new Point(50, 12);
+            txtFilter.Name = "txtFilter";
+            txtFilter.Properties.NullText = "Filter by username...";
+            txtFilter.Size = new Size(655, 22);
+            txtFilter.TabIndex = 2;
+            txtFilter.TextChanged += txtFilter_TextChanged;
             // 
             // lblFilter
             // 
-            this.lblFilter.Location = new System.Drawing.Point(12, 15);
-            this.lblFilter.Name = "lblFilter";
-            this.lblFilter.Size = new System.Drawing.Size(32, 13);
-            this.lblFilter.TabIndex = 3;
-            this.lblFilter.Text = "Filter:";
+            lblFilter.Location = new Point(12, 15);
+            lblFilter.Name = "lblFilter";
+            lblFilter.Size = new Size(29, 13);
+            lblFilter.TabIndex = 3;
+            lblFilter.Text = "Filter:";
             // 
             // AllUsers
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.lblFilter);
-            this.Controls.Add(this.txtFilter);
-            this.Controls.Add(this.btnAddUser);
-            this.Controls.Add(this.gridControl1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "All Users";
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtFilter.Properties)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(798, 450);
+            Controls.Add(lblFilter);
+            Controls.Add(txtFilter);
+            Controls.Add(btnAddUser);
+            Controls.Add(gridControl1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "AllUsers";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "All Users";
+            ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtFilter.Properties).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

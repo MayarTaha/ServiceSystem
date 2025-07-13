@@ -15,11 +15,14 @@ namespace ServiveceSystem.PresentationLayer.Service
     {
         private readonly ServiceService _serviceService;
         private List<ServiceSystem.Models.Service> _services;
+        private RepositoryItemButtonEdit editButton;
+        private RepositoryItemButtonEdit deleteButton;
 
         public AllServices()
         {
             InitializeComponent();
             _serviceService = new ServiceService(new AppDBContext());
+            gridView1.RowCellClick += gridView1_RowCellClick;
             LoadServicesAsync();
         }
 
@@ -31,10 +34,9 @@ namespace ServiveceSystem.PresentationLayer.Service
 
         private void BindGrid(List<ServiceSystem.Models.Service> services)
         {
-            // Only show Name, Description, ServicePrice
             var displayList = services.Select(s => new
             {
-                s.ServiceId, // hidden
+                s.ServiceId, 
                 s.Name,
                 s.Description,
                 ServicePrice = s.ServicePrice
@@ -44,22 +46,23 @@ namespace ServiveceSystem.PresentationLayer.Service
             var col = gridView1.Columns["ServiceId"];
             if (col != null)
                 col.Visible = false;
-            InitGridButtons(); // Now called here
+            InitGridButtons(); 
         }
 
         private void InitGridButtons()
         {
-            // Only add if not already present
-            if (gridView1.Columns["Edit"] == null)
+            if (editButton == null)
             {
-                var editButton = new RepositoryItemButtonEdit();
+                editButton = new RepositoryItemButtonEdit();
                 editButton.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
                 editButton.Buttons[0].Caption = "Edit";
                 editButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
                 editButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Blue;
-                editButton.Click += EditButton_Click;
+                editButton.ButtonClick += EditButton_Click;
                 gridControl1.RepositoryItems.Add(editButton);
-
+            }
+            if (gridView1.Columns["Edit"] == null)
+            {
                 var editCol = gridView1.Columns.AddField("Edit");
                 editCol.Visible = true;
                 editCol.UnboundType = DevExpress.Data.UnboundColumnType.Object;
@@ -67,17 +70,18 @@ namespace ServiveceSystem.PresentationLayer.Service
                 editCol.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
                 editCol.VisibleIndex = 0;
             }
-
-            if (gridView1.Columns["Delete"] == null)
+            if (deleteButton == null)
             {
-                var deleteButton = new RepositoryItemButtonEdit();
+                deleteButton = new RepositoryItemButtonEdit();
                 deleteButton.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
                 deleteButton.Buttons[0].Caption = "Delete";
                 deleteButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
                 deleteButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Red;
-                deleteButton.Click += DeleteButton_Click;
+                deleteButton.ButtonClick += DeleteButton_Click;
                 gridControl1.RepositoryItems.Add(deleteButton);
-
+            }
+            if (gridView1.Columns["Delete"] == null)
+            {
                 var deleteCol = gridView1.Columns.AddField("Delete");
                 deleteCol.Visible = true;
                 deleteCol.UnboundType = DevExpress.Data.UnboundColumnType.Object;
@@ -97,6 +101,7 @@ namespace ServiveceSystem.PresentationLayer.Service
             {
                 LoadServicesAsync();
             }
+            
         }
 
         private async void DeleteButton_Click(object sender, EventArgs e)
@@ -126,6 +131,20 @@ namespace ServiveceSystem.PresentationLayer.Service
             string filter = txtFilter.Text.Trim().ToLower();
             var filtered = _services.Where(s => s.Name != null && s.Name.ToLower().Contains(filter)).ToList();
             BindGrid(filtered);
+        }
+
+        private void gridView1_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+            if (e.Column.FieldName == "Edit")
+            {
+                gridView1.FocusedRowHandle = e.RowHandle;
+                EditButton_Click(sender, EventArgs.Empty);
+            }
+            else if (e.Column.FieldName == "Delete")
+            {
+                gridView1.FocusedRowHandle = e.RowHandle;
+                DeleteButton_Click(sender, EventArgs.Empty);
+            }
         }
     }
 } 

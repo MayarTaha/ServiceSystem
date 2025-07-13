@@ -48,14 +48,15 @@ namespace ServiveceSystem.PresentationLayer.User
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(txtEmail.Text))
-                {
-                    MessageBox.Show("Please enter an email.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 _user.Username = txtUsername.Text.Trim();
                 _user.Permission = txtRole.Text.Trim();
+
+                // Change password if provided
+                if (!string.IsNullOrWhiteSpace(txtPassword.Text))
+                {
+                    _user.Password = txtPassword.Text;
+                    MessageBox.Show("Password changed successfully!", "Password Changed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
                 await _userService.UpdateAsync(_user);
                 MessageBox.Show("User updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

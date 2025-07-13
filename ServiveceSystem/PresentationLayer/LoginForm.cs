@@ -20,10 +20,11 @@ namespace ServiveceSystem.PresentationLayer
         {
             InitializeComponent();
             _context = new AppDBContext();
-            txtPassword.Properties.PasswordChar = '*';
+            txtPassword.Properties.UseSystemPasswordChar = true;
+            //txtPassword.Properties.PasswordChar = '*';
         }
 
-       
+
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
@@ -63,6 +64,19 @@ namespace ServiveceSystem.PresentationLayer
             {
                 MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnShowPassword_Click(object sender, EventArgs e)
+        {
+            txtPassword.Properties.UseSystemPasswordChar = !txtPassword.Properties.UseSystemPasswordChar;
+            btnShowPassword.Text = txtPassword.Properties.UseSystemPasswordChar ? "Show Password" : "Hide Password";
+          //  txtPassword.Properties.UseSystemPasswordChar = false; // Show password
+
         }
         //private void btnCancel_Click(object sender, EventArgs e)
         //{

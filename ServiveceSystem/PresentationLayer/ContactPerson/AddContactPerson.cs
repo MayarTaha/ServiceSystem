@@ -35,11 +35,11 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
 
             ClinicLookUpEdit.Properties.DataSource = clinics;
             ClinicLookUpEdit.Properties.DisplayMember = "ClinicName";
-            //ClinicLookUpEdit.Properties.ValueMember = "ClinicId";
+            ClinicLookUpEdit.Properties.ValueMember = "ClinicId";
             ClinicLookUpEdit.Properties.NullText = "Select Clinic";
         }
 
-        private void SaveContactButton_Click(object sender, EventArgs e)
+        private async void SaveContactButton_Click(object sender, EventArgs e)
         {
             if (!ValidateForm())
                 return;
@@ -56,16 +56,20 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
                     ContactName = nametextEdit.Text.Trim(),
                     ContactNumber = PhonetextEdit.Text.Trim(),
                     ContactEmail = EmailtextEdit.Text.Trim(),
-                    ClinicId = Convert.ToInt32(ClinicLookUpEdit.EditValue)
+                    ClinicId = Convert.ToInt32(ClinicLookUpEdit.EditValue),
+                    CreatedLog = "",
+                    UpdatedLog = "",
+                    DeletedLog = ""
                 };
 
-                _contactService.AddContactPerson(contact);
+                await _contactService.AddContactPerson(contact);
                 MessageBox.Show("Contact person added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error: " + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private bool ValidateForm()

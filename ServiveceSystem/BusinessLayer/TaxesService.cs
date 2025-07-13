@@ -44,13 +44,21 @@ namespace ServiveceSystem.BusinessLayer
 
         public async Task UpdateAsync(Taxes taxes)
         {
-            var exists = await _context.Taxeses.AnyAsync(s => s.Name.ToLower() == taxes.Name.ToLower() && !s.isDeleted);
+            // Check if another tax with the same name exists (excluding the current tax being updated)
+            var exists = await _context.Taxeses.AnyAsync(s => 
+                s.Name.ToLower() == taxes.Name.ToLower() && 
+                !s.isDeleted && 
+                s.TaxesID != taxes.TaxesID);
 
             if (!exists)
             {
                 taxes.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 _context.Taxeses.Update(taxes);
                 await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException($"A tax with the name '{taxes.Name}' already exists.");
             }
         }
 

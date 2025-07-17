@@ -1,6 +1,8 @@
 ﻿using DevExpress.XtraWaitForm;
 using Microsoft.EntityFrameworkCore;
 using ServiceSystem.Models;
+using ServiceSystem.PresentationLayer.InvoiceDetail;
+using ServiceSystem.PresentationLayer.QuotationHeader;
 using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
 using ServiveceSystem.PresentationLayer;
@@ -9,6 +11,7 @@ using ServiveceSystem.PresentationLayer.ContactPerson;
 using ServiveceSystem.PresentationLayer.InvoiceDetail;
 using ServiveceSystem.PresentationLayer.PaymentMethod;
 using ServiveceSystem.PresentationLayer.QuotationHeader;
+using ServiveceSystem.PresentationLayer.Service;
 
 namespace ServiveceSystem
 {
@@ -26,7 +29,7 @@ namespace ServiveceSystem
 
             // Enable DevExpress dark skin
             DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2019 Black"); 
-                    Application.Run(new AddInvoiceForm()); // ← your desired form here
+                    Application.Run(new AllQuotations()); // ← your desired form here
         }
 
         //static async Task Main(string[] args)

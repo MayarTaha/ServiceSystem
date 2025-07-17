@@ -492,6 +492,8 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
             UpdateGrandTotal();
 
             XtraMessageBox.Show("Invoice and detail added successfully!");
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void UpdateGrandTotal()

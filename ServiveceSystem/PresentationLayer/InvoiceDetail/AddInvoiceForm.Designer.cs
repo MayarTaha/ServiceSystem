@@ -388,7 +388,7 @@
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(149, 81);
+            txtEmail.Location = new Point(149, 67);
             txtEmail.Margin = new Padding(3, 4, 3, 4);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(250, 28);
@@ -396,7 +396,7 @@
             // 
             // txtLocation
             // 
-            txtLocation.Location = new Point(662, 75);
+            txtLocation.Location = new Point(662, 67);
             txtLocation.Margin = new Padding(3, 4, 3, 4);
             txtLocation.Name = "txtLocation";
             txtLocation.Size = new Size(250, 28);
@@ -414,7 +414,7 @@
             // 
             labelControl15.Appearance.Font = new Font("Segoe UI", 9F);
             labelControl15.Appearance.Options.UseFont = true;
-            labelControl15.Location = new Point(498, 37);
+            labelControl15.Location = new Point(498, 31);
             labelControl15.Margin = new Padding(3, 4, 3, 4);
             labelControl15.Name = "labelControl15";
             labelControl15.Size = new Size(60, 25);
@@ -425,7 +425,7 @@
             // 
             labelControl14.Appearance.Font = new Font("Segoe UI", 9F);
             labelControl14.Appearance.Options.UseFont = true;
-            labelControl14.Location = new Point(497, 78);
+            labelControl14.Location = new Point(497, 67);
             labelControl14.Margin = new Padding(3, 4, 3, 4);
             labelControl14.Name = "labelControl14";
             labelControl14.Size = new Size(76, 25);
@@ -436,7 +436,7 @@
             // 
             labelControl9.Appearance.Font = new Font("Segoe UI", 9F);
             labelControl9.Appearance.Options.UseFont = true;
-            labelControl9.Location = new Point(8, 78);
+            labelControl9.Location = new Point(8, 67);
             labelControl9.Margin = new Padding(3, 4, 3, 4);
             labelControl9.Name = "labelControl9";
             labelControl9.Size = new Size(51, 25);
@@ -570,7 +570,7 @@
             Appearance.Options.UseFont = true;
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1495, 752);
+            ClientSize = new Size(1495, 767);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(Invoice);

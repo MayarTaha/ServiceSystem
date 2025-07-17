@@ -14,6 +14,7 @@ namespace ServiceSystem.Models
         public int QuotationId { get; set; } // FK
         
         public QuotationHeader QuotationHeader { get; set; }
+
         [ForeignKey("Service")]
         public int ServiceId { get; set; } // fk
         public Service Service { get; set; }

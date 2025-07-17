@@ -8,7 +8,7 @@ using ServiveceSystem.Models;
 
 #nullable disable
 
-namespace ServiveceSystem.Migrations
+namespace ServiceSystem.Migrations
 {
     [DbContext(typeof(AppDBContext))]
     partial class AppDBContextModelSnapshot : ModelSnapshot

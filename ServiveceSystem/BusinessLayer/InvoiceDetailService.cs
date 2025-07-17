@@ -35,6 +35,8 @@ namespace ServiveceSystem.BusinessLayer
         //
 
 
+
+
         // Get InvoiceDetail by ID
         public InvoiceDetail? GetById(int id)
         {

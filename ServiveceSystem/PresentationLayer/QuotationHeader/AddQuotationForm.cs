@@ -236,6 +236,8 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
 
             XtraMessageBox.Show("Quotation header and detail added successfully!");
             ClearAllInputs();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private void ClearDetailFields()

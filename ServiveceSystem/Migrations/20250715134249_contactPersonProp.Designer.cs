@@ -9,11 +9,11 @@ using ServiveceSystem.Models;
 
 #nullable disable
 
-namespace ServiveceSystem.Migrations
+namespace ServiceSystem.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250713155621_updateQuotation")]
-    partial class updateQuotation
+    [Migration("20250715134249_contactPersonProp")]
+    partial class contactPersonProp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

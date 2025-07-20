@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraWaitForm;
 using Microsoft.EntityFrameworkCore;
 using ServiceSystem.Models;
+using ServiceSystem.PresentationLayer.InvoiceDetail;
 using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
 using ServiveceSystem.PresentationLayer;
@@ -38,8 +39,8 @@ namespace ServiveceSystem
                 Application.Exit();
             }
 
-            //Application.Run(new AllPaymentMethods()
-            // ); // ← your desired form here
+            Application.Run(new AllInvoices()
+             ); // ← your desired form here
         }
 
         //static async Task Main(string[] args)

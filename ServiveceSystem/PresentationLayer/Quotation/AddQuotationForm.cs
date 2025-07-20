@@ -14,62 +14,74 @@ using ServiceSystem.Models;
 using DevExpress.XtraGrid.Views.Grid;
 using Microsoft.EntityFrameworkCore;
 using DevExpress.XtraGrid.Columns;
-using ServiceSystem.PresentationLayer.InvoiceDetail;
-using DevExpress.XtraEditors.Controls;
+using ServiceSystem.PresentationLayer.QuotationHeader;
+using ServiceSystem.PresentationLayer.Quotation;
 
-namespace ServiveceSystem.PresentationLayer.InvoiceDetail
+
+namespace ServiveceSystem.PresentationLayer.QuotationHeader
 {
-    public partial class AddInvoiceForm : DevExpress.XtraEditors.XtraForm
-
+    public partial class AddQuotationForm : DevExpress.XtraEditors.XtraForm
     {
         private AppDBContext _context;
-        private InvoiceHeaderService _invoiceHeaderService;
-        private BindingList<ServiceSystem.Models.InvoiceDetail> invoiceDetailsList = new BindingList<ServiceSystem.Models.InvoiceDetail>();
-        private readonly InvoiceDetailService _invoiceDetailService;
+        private QuotationHeaderService _quotationHeaderService;
+        private BindingList<ServiceSystem.Models.QuotationDetail> quotationDetailsList = new BindingList<ServiceSystem.Models.QuotationDetail>();
+        private readonly QuotationDetailService _quotationDetailService;
 
-        public AddInvoiceForm()
+        public AddQuotationForm()
         {
             InitializeComponent();
-            this.Size = new Size(900, 400);
+            this.Size = new Size(935, 500);
             gridViewdet.GroupPanelText = " ";
             _context = new AppDBContext();
-            _invoiceHeaderService = new InvoiceHeaderService(_context);
-            _invoiceDetailService = new InvoiceDetailService(_context);
+            _quotationHeaderService = new QuotationHeaderService(_context);
+            _quotationDetailService = new QuotationDetailService(_context);
 
             // Set the GridControl's DataSource initially
-            gridcontrolDetails.DataSource = invoiceDetailsList;
+            gridcontrolDetails.DataSource = quotationDetailsList;
 
             LoadLookUps();
-            SetupGrid(); 
+            SetupGrid();
 
             // Event handlers for gridViewdet (the GridView)
             gridViewdet.CellValueChanged += (s, e) => UpdateGrandTotal();
             gridViewdet.RowCountChanged += (s, e) => UpdateGrandTotal();
-           
         }
 
         private void LoadLookUps()
         {
-            comboBoxDiscountType.Properties.Items.Clear();
-            comboBoxDiscountType.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
+            // Discount Type
+            comboBoxDiscountTypeDetail.Properties.Items.Clear();
+            comboBoxDiscountTypeDetail.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
+
+            // Discount Type header
+            //comboBoxDiscountTypeHeader.Properties.Items.Clear();
+            //comboBoxDiscountTypeHeader.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
+
+            //// Quotation Status
+            //comboBoxStatus.Properties.Items.Clear();
+            //comboBoxStatus.Properties.Items.AddRange(Enum.GetValues(typeof(QuotationStatus)));
+
             // Service
-            serviceLookUpEdit.Properties.DataSource = _context.Services.Where(s => !s.isDeleted).ToList(); ;
+            serviceLookUpEdit.Properties.DataSource = _context.Services.Where(s => !s.isDeleted).ToList();
             serviceLookUpEdit.Properties.DisplayMember = "Name";
             serviceLookUpEdit.Properties.ValueMember = "ServiceId";
             serviceLookUpEdit.Properties.Columns.Clear();
             serviceLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "Service Name"));
+
+
         }
+
         private void SetupGrid()
         {
-            
+
+            // Add only the columns you want to display
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "ServiceId", Caption = "Service" });
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "Quantity", Caption = "Quantity" });
-            gridViewdet.Columns.Add(new GridColumn() { FieldName = "ServicePrice", Caption = "Unit Price" });
-            gridViewdet.Columns.Add(new GridColumn() { FieldName = "Discount", Caption = "Discount" });
+            gridViewdet.Columns.Add(new GridColumn() { FieldName = "ServicePrice", Caption = "ServicePrice" });
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "DiscountType", Caption = "Discount Type" });
+            gridViewdet.Columns.Add(new GridColumn() { FieldName = "Discount", Caption = "Discount" });
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "TotalService", Caption = "Total" });
 
-            // Set up Service column as LookUpEdit
             var serviceCol = gridViewdet.Columns["ServiceId"];
             if (serviceCol != null)
             {
@@ -79,7 +91,6 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
                 repoService.ValueMember = "ServiceId";
                 serviceCol.ColumnEdit = repoService;
             }
-
             // Set up DiscountType column as ComboBox
             var discountTypeCol = gridViewdet.Columns["DiscountType"];
             if (discountTypeCol != null)
@@ -88,49 +99,59 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
                 repoDiscountType.Items.AddRange(Enum.GetValues(typeof(Discount)));
                 discountTypeCol.ColumnEdit = repoDiscountType;
             }
-
         }
+
         private void gridcontrolDetails_Click(object sender, EventArgs e)
         {
         }
-   
+
         private void UpdateGrandTotal()
         {
-           
-
             decimal sum = 0;
-            foreach (var item in invoiceDetailsList)
+            for (int i = 0; i < gridViewdet.RowCount; i++)
             {
-                sum += item.TotalService;
+                var totalValue = gridViewdet.GetRowCellValue(i, "TotalService");
+
+                if (totalValue != null && decimal.TryParse(totalValue.ToString(), out decimal rowTotal))
+                {
+                    sum += rowTotal;
+                }
             }
-            TotaltextEdit.Text = sum.ToString("0.##"); 
+            TotaltextEdit.Text = sum.ToString("0.##");
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        
+
         private void CompleteprocessButton_Click(object sender, EventArgs e)
         {
-           
             var total = decimal.TryParse(TotaltextEdit.Text, out var t) ? t : 0;
-            var addForm = new InvoicePayment(invoiceDetailsList.ToList(), total);
+            var addForm = new QuotationForm(quotationDetailsList.ToList(), total);
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                
+
             }
             this.Close();
-
         }
-        private void comboBoxDiscountType_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void comboBoxDiscountTypeDetail_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxDiscountType.EditValue == null)
+            if (comboBoxDiscountTypeDetail.EditValue == null)
                 return;
 
-            var selected = (Discount)comboBoxDiscountType.EditValue;
+            var selected = (Discount)comboBoxDiscountTypeDetail.EditValue;
             if (selected == Discount.NotSelected)
             {
-                discountValueTextEdit.Text = "0";
-                discountValueTextEdit.Enabled = false;
+                textEditDiscountDetail.Text = "0";
+                textEditDiscountDetail.Enabled = false;
             }
             else
             {
-                discountValueTextEdit.Enabled = true;
+                textEditDiscountDetail.Enabled = true;
             }
             CalculateTotalService();
         }
@@ -139,8 +160,8 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
         {
             decimal price = decimal.TryParse(textEditServicePrice.Text, out var p) ? p : 0;
             int qty = int.TryParse(quantityTextEdit.Text, out var q) ? q : 0;
-            decimal discount = decimal.TryParse(discountValueTextEdit.Text, out var d) ? d : 0;
-            var discountType = comboBoxDiscountType.EditValue != null ? (Discount)comboBoxDiscountType.EditValue : Discount.NotSelected;
+            decimal discount = decimal.TryParse(textEditDiscountDetail.Text, out var d) ? d : 0;
+            var discountType = comboBoxDiscountTypeDetail.EditValue != null ? (Discount)comboBoxDiscountTypeDetail.EditValue : Discount.NotSelected;
 
             decimal total = price * qty;
             if (discountType == Discount.Percentage)
@@ -156,9 +177,14 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
             CalculateTotalService();
         }
 
-        private void discountValueTextEdit_EditValueChanged(object sender, EventArgs e)
+        private void textEditDiscountDetail_EditValueChanged(object sender, EventArgs e)
         {
             CalculateTotalService();
+        }
+
+        private void totalServiceTextEdit_EditValueChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void textEditServicePrice_EditValueChanged(object sender, EventArgs e)
@@ -181,17 +207,29 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            var detail = new ServiceSystem.Models.InvoiceDetail
+            //Validate input for detail
+            if (serviceLookUpEdit.EditValue == null ||
+                string.IsNullOrWhiteSpace(textEditServicePrice.Text) ||
+                string.IsNullOrWhiteSpace(quantityTextEdit.Text) ||
+                comboBoxDiscountTypeDetail.EditValue == null || comboBoxDiscountTypeDetail.EditValue == null ||
+                string.IsNullOrWhiteSpace(textEditDiscountDetail.Text) || string.IsNullOrWhiteSpace(textEditDiscountDetail.Text))
+            {
+                XtraMessageBox.Show("Please fill in all required detail fields.");
+                return;
+            }
+
+
+            var detail = new ServiceSystem.Models.QuotationDetail
             {
                 ServiceId = Convert.ToInt32(serviceLookUpEdit.EditValue),
                 Quantity = int.TryParse(quantityTextEdit.Text, out var q) ? q : 0,
-                Discount = decimal.TryParse(discountValueTextEdit.Text, out var d) ? d : 0,
-                DiscountType = (Discount)comboBoxDiscountType.EditValue,
+                Discount = decimal.TryParse(textEditDiscountDetail.Text, out var d) ? d : 0,
+                DiscountType = (Discount)comboBoxDiscountTypeDetail.EditValue,
                 ServicePrice = decimal.TryParse(textEditServicePrice.Text, out var p) ? p : 0,
                 TotalService = decimal.TryParse(totalServiceTextEdit.Text, out var t) ? t : 0,
             };
 
-            invoiceDetailsList.Add(detail);
+            quotationDetailsList.Add(detail);
             gridcontrolDetails.RefreshDataSource();
             UpdateGrandTotal();
 
@@ -199,9 +237,28 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
             serviceLookUpEdit.EditValue = null;
             textEditServicePrice.Text = "";
             quantityTextEdit.Text = "";
-            comboBoxDiscountType.EditValue = null;
-            discountValueTextEdit.Text = "";
+            comboBoxDiscountTypeDetail.EditValue = null;
+            textEditDiscountDetail.Text = "";
             totalServiceTextEdit.Text = "";
+        }
+
+        private void AddQuotationForm_Load(object sender, EventArgs e)
+        {
+            gridViewdet.Columns["ServiceId"].Visible = false;
+            gridViewdet.Columns["QuotationDetailId"].Visible = false;
+
+            var column = gridViewdet.Columns["Quotation Header"];
+            if (column != null)
+            {
+                column.Visible = false;
+            }
+            
+           
+            gridViewdet.Columns["QuotationId"].Visible = false;
+            gridViewdet.Columns["CreatedLog"].Visible = false;
+            gridViewdet.Columns["UpdatedLog"].Visible = false;
+            gridViewdet.Columns["DeletedLog"].Visible = false;
+            gridViewdet.Columns["isDeleted"].Visible = false;
         }
     }
 }

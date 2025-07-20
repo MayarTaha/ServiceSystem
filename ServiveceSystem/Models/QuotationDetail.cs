@@ -14,6 +14,7 @@ namespace ServiceSystem.Models
         public int QuotationId { get; set; } // FK
         
         public QuotationHeader QuotationHeader { get; set; }
+
         [ForeignKey("Service")]
         public int ServiceId { get; set; } // fk
         public Service Service { get; set; }
@@ -33,5 +34,9 @@ namespace ServiceSystem.Models
         public string DeletedLog { get; set; }
         public bool isDeleted { get; set; }
 
+        //[NotMapped]
+        //public string ServiceName => Service?.Name ?? string.Empty;
+        //[NotMapped]
+        //public string QuotationNote => QuotationHeader?.Note ?? string.Empty;
     }
 }

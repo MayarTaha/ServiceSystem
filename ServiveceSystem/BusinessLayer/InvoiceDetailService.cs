@@ -35,6 +35,8 @@ namespace ServiveceSystem.BusinessLayer
         //
 
 
+
+
         // Get InvoiceDetail by ID
         public InvoiceDetail? GetById(int id)
         {
@@ -96,7 +98,7 @@ namespace ServiveceSystem.BusinessLayer
 
                 
                 existingDetail.TotalService = CalculateTotalService(detail);
-                existingDetail.TotalDuo = detail.TotalDuo;
+                //existingDetail.TotalDuo = detail.TotalDuo;
                 existingDetail.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
                 _context.SaveChanges();
@@ -105,19 +107,39 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         // Delete
-        public void Delete(int id)
+        //public void Delete(int id)
+        //{
+        //    var detail = _context.InvoiceDetails.Find(id);
+        //    if (detail != null)
+        //    {
+        //        _context.InvoiceDetails.Remove(detail);
+        //        _context.SaveChanges();
+        //    }
+        //}
+
+        // Example: Soft Delete InvoiceDetail (you might have this already)
+        public async Task<bool> Delete(int id)
         {
-            var detail = _context.InvoiceDetails.Find(id);
+            var detail = await _context.InvoiceDetails.FindAsync(id);
             if (detail != null)
             {
-                detail.DeletedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 detail.isDeleted = true;
-                _context.InvoiceDetails.Remove(detail);
-                _context.SaveChanges();
+                detail.DeletedLog = System.DateTime.Now.ToString();
+                await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
 
-        
+        //// THIS IS THE MISSING FUNCTION
+        //public async Task<List<InvoiceDetail>> GetDetailsByInvoiceHeaderIdAsync(int invoiceHeaderId)
+        //{
+        //    return await _context.InvoiceDetails
+        //                         .Where(d => d.InvoiceHeaderId == invoiceHeaderId && !d.isDeleted)
+        //                         .ToListAsync();
+        //}
+
+
         private decimal CalculateTotalService(InvoiceDetail detail)
         {
             decimal total = detail.ServicePrice * detail.Quantity;

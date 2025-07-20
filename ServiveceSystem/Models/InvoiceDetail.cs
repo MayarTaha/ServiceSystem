@@ -12,6 +12,14 @@ namespace ServiceSystem.Models
     {
         public int InvoiceDetailId { get; set; }
 
+        // ==> the change 
+        public int InvoiceHeaderId { get; set; }
+
+        [ForeignKey("InvoiceHeaderId")]
+        public virtual InvoiceHeader InvoiceHeader { get; set; }
+
+        // ==> end of change 
+
         [ForeignKey("Service")]
         public int ServiceId { get; set; } // FK
         public virtual Service Service { get; set; }
@@ -25,7 +33,6 @@ namespace ServiceSystem.Models
         public Discount DiscountType { get; set; }
         public decimal ServicePrice { get; set; } 
         public decimal TotalService { get; set; } // Calculated: ServicePrice * Quantity - Discount
-        public decimal TotalDuo { get; set; } // Calculated: sum of all total service
         public string CreatedLog { get; set; }
         public string UpdatedLog { get; set; }
         public string DeletedLog { get; set; }

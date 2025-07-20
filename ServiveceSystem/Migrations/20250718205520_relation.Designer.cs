@@ -9,11 +9,11 @@ using ServiveceSystem.Models;
 
 #nullable disable
 
-namespace ServiveceSystem.Migrations
+namespace ServiceSystem.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250701140606_init")]
-    partial class init
+    [Migration("20250718205520_relation")]
+    partial class relation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,6 +95,21 @@ namespace ServiveceSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedLog")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedLog")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedLog")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("ContactId");
 
                     b.HasIndex("ClinicId");
@@ -124,7 +139,7 @@ namespace ServiveceSystem.Migrations
                     b.Property<int>("DiscountType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InvoiceHeaderId")
+                    b.Property<int>("InvoiceHeaderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -298,6 +313,9 @@ namespace ServiveceSystem.Migrations
                     b.Property<int>("QuotationId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("ServicePrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -314,6 +332,8 @@ namespace ServiveceSystem.Migrations
                     b.HasKey("QuotationDetailId");
 
                     b.HasIndex("QuotationId");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("QuotationDetails");
                 });
@@ -369,6 +389,9 @@ namespace ServiveceSystem.Migrations
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("priority")
+                        .HasColumnType("int");
+
                     b.HasKey("QuotationId");
 
                     b.HasIndex("ClinicId");
@@ -414,7 +437,7 @@ namespace ServiveceSystem.Migrations
 
                     b.HasKey("ServiceId");
 
-                    b.ToTable("services");
+                    b.ToTable("Services");
                 });
 
             modelBuilder.Entity("ServiceSystem.Models.Taxes", b =>
@@ -532,9 +555,11 @@ namespace ServiveceSystem.Migrations
 
             modelBuilder.Entity("ServiceSystem.Models.InvoiceDetail", b =>
                 {
-                    b.HasOne("ServiceSystem.Models.InvoiceHeader", null)
-                        .WithMany()
-                        .HasForeignKey("InvoiceHeaderId");
+                    b.HasOne("ServiceSystem.Models.InvoiceHeader", "InvoiceHeader")
+                        .WithMany("InvoiceDetails")
+                        .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ServiceSystem.Models.QuotationHeader", "QuotationHeader")
                         .WithMany()
@@ -547,6 +572,8 @@ namespace ServiveceSystem.Migrations
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("InvoiceHeader");
 
                     b.Navigation("QuotationHeader");
 
@@ -601,13 +628,21 @@ namespace ServiveceSystem.Migrations
 
             modelBuilder.Entity("ServiceSystem.Models.QuotationDetail", b =>
                 {
-                    b.HasOne("ServiceSystem.Models.QuotationHeader", "quotationHeader")
+                    b.HasOne("ServiceSystem.Models.QuotationHeader", "QuotationHeader")
                         .WithMany("QuotationDetails")
                         .HasForeignKey("QuotationId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("quotationHeader");
+                    b.HasOne("ServiceSystem.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuotationHeader");
+
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("ServiceSystem.Models.QuotationHeader", b =>
@@ -647,6 +682,8 @@ namespace ServiveceSystem.Migrations
 
             modelBuilder.Entity("ServiceSystem.Models.InvoiceHeader", b =>
                 {
+                    b.Navigation("InvoiceDetails");
+
                     b.Navigation("Taxes");
                 });
 

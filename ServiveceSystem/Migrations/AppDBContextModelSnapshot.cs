@@ -8,7 +8,7 @@ using ServiveceSystem.Models;
 
 #nullable disable
 
-namespace ServiveceSystem.Migrations
+namespace ServiceSystem.Migrations
 {
     [DbContext(typeof(AppDBContext))]
     partial class AppDBContextModelSnapshot : ModelSnapshot
@@ -136,7 +136,7 @@ namespace ServiveceSystem.Migrations
                     b.Property<int>("DiscountType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InvoiceHeaderId")
+                    b.Property<int>("InvoiceHeaderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -149,9 +149,6 @@ namespace ServiveceSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("ServicePrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalDuo")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalService")
@@ -194,7 +191,17 @@ namespace ServiveceSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
+
                     b.Property<string>("InvoiceDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -373,6 +380,10 @@ namespace ServiveceSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("QuotationNaMe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -385,6 +396,9 @@ namespace ServiveceSystem.Migrations
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("priority")
+                        .HasColumnType("int");
 
                     b.HasKey("QuotationId");
 
@@ -549,9 +563,11 @@ namespace ServiveceSystem.Migrations
 
             modelBuilder.Entity("ServiceSystem.Models.InvoiceDetail", b =>
                 {
-                    b.HasOne("ServiceSystem.Models.InvoiceHeader", null)
-                        .WithMany()
-                        .HasForeignKey("InvoiceHeaderId");
+                    b.HasOne("ServiceSystem.Models.InvoiceHeader", "InvoiceHeader")
+                        .WithMany("InvoiceDetails")
+                        .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ServiceSystem.Models.QuotationHeader", "QuotationHeader")
                         .WithMany()
@@ -564,6 +580,8 @@ namespace ServiveceSystem.Migrations
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("InvoiceHeader");
 
                     b.Navigation("QuotationHeader");
 
@@ -672,6 +690,8 @@ namespace ServiveceSystem.Migrations
 
             modelBuilder.Entity("ServiceSystem.Models.InvoiceHeader", b =>
                 {
+                    b.Navigation("InvoiceDetails");
+
                     b.Navigation("Taxes");
                 });
 

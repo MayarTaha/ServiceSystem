@@ -19,6 +19,10 @@ namespace ServiceSystem.Models
         public string InvoiceDate { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal Payment { get; set; }
+        public string Note { get; set; }
+
+        public decimal Discount { get; set; }
+        public Discount DiscountType { get; set; }
 
 
         [ForeignKey("PaymentMethod")]
@@ -30,6 +34,8 @@ namespace ServiceSystem.Models
         public virtual ContactPerson? Contact { get; set; }
 
         public virtual List<Taxes>? Taxes { get; set; }
+
+        public virtual List<InvoiceDetail>? InvoiceDetails { get; set; }
 
 
         public string CreatedLog { get; set; }

@@ -9,11 +9,11 @@ using ServiveceSystem.Models;
 
 #nullable disable
 
-namespace ServiveceSystem.Migrations
+namespace ServiceSystem.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20250710021454_updateContact")]
-    partial class updateContact
+    [Migration("20250719150658_updata")]
+    partial class updata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,7 +139,7 @@ namespace ServiveceSystem.Migrations
                     b.Property<int>("DiscountType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InvoiceHeaderId")
+                    b.Property<int>("InvoiceHeaderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -152,9 +152,6 @@ namespace ServiveceSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("ServicePrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalDuo")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalService")
@@ -197,7 +194,17 @@ namespace ServiveceSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("DiscountType")
+                        .HasColumnType("int");
+
                     b.Property<string>("InvoiceDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Note")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -313,6 +320,9 @@ namespace ServiveceSystem.Migrations
                     b.Property<int>("QuotationId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("ServicePrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -329,6 +339,8 @@ namespace ServiveceSystem.Migrations
                     b.HasKey("QuotationDetailId");
 
                     b.HasIndex("QuotationId");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("QuotationDetails");
                 });
@@ -371,6 +383,10 @@ namespace ServiveceSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("QuotationNaMe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -383,6 +399,9 @@ namespace ServiveceSystem.Migrations
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("priority")
+                        .HasColumnType("int");
 
                     b.HasKey("QuotationId");
 
@@ -547,9 +566,11 @@ namespace ServiveceSystem.Migrations
 
             modelBuilder.Entity("ServiceSystem.Models.InvoiceDetail", b =>
                 {
-                    b.HasOne("ServiceSystem.Models.InvoiceHeader", null)
-                        .WithMany()
-                        .HasForeignKey("InvoiceHeaderId");
+                    b.HasOne("ServiceSystem.Models.InvoiceHeader", "InvoiceHeader")
+                        .WithMany("InvoiceDetails")
+                        .HasForeignKey("InvoiceHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ServiceSystem.Models.QuotationHeader", "QuotationHeader")
                         .WithMany()
@@ -562,6 +583,8 @@ namespace ServiveceSystem.Migrations
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("InvoiceHeader");
 
                     b.Navigation("QuotationHeader");
 
@@ -622,7 +645,15 @@ namespace ServiveceSystem.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("ServiceSystem.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("QuotationHeader");
+
+                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("ServiceSystem.Models.QuotationHeader", b =>
@@ -662,6 +693,8 @@ namespace ServiveceSystem.Migrations
 
             modelBuilder.Entity("ServiceSystem.Models.InvoiceHeader", b =>
                 {
+                    b.Navigation("InvoiceDetails");
+
                     b.Navigation("Taxes");
                 });
 

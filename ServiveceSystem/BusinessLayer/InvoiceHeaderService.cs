@@ -16,15 +16,24 @@ namespace ServiveceSystem.BusinessLayer
 
         public InvoiceHeaderService(AppDBContext context)
         {
-           // var invoiceHeaderService = App.ServiceProvider.GetRequiredService<InvoiceHeaderService>();
+            // var invoiceHeaderService = App.ServiceProvider.GetRequiredService<InvoiceHeaderService>();
 
             _context = context;
         }
 
         // Get all InvoiceHeaders
-        public List<InvoiceHeader> GetAll()
+        //public List<InvoiceHeader> GetAll()
+        //{
+        //    return _context.invoiceHeaders.ToList();
+        //}
+
+        public async Task<List<InvoiceHeader>> GetAllAsync()
         {
-            return _context.invoiceHeaders.ToList();
+            return await _context.invoiceHeaders.Include(i => i.QuotationHeader)
+        .Include(i => i.PaymentMethod)
+        .Include(i => i.Contact)
+        .Where(i => !i.isDeleted)
+        .ToListAsync();
         }
 
         // Get InvoiceHeader by ID
@@ -37,7 +46,7 @@ namespace ServiveceSystem.BusinessLayer
         public async Task<bool> AddInvoiceHeader(InvoiceHeader invoice)
         {
             var quotationExists = await _context.QuotationHeaders.AnyAsync(q => q.QuotationId == invoice.QuotationId && !q.isDeleted);
-            var paymentMethodExists = await _context.PaymentMethods.AnyAsync(pm => pm.PaymentMethodId == invoice.PaymentMethodId );
+            var paymentMethodExists = await _context.PaymentMethods.AnyAsync(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
             //
             if (!quotationExists || !paymentMethodExists)
                 return false;
@@ -51,20 +60,11 @@ namespace ServiveceSystem.BusinessLayer
             if (!quotationExists || !paymentMethodExists || exists)
                 return false;
 
-            //  bool quotationExists = _context.QuotationHeaders.Any(q => q.QuotationId == invoice.QuotationId);
-            //if (!quotationExists)
-            //    throw new Exception("Quotation not found");
-
-
-            // bool paymentMethodExists = _context.PaymentMethods.Any(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
-            //if (!paymentMethodExists)
-            //    throw new Exception("Payment method not found");
+            
 
             invoice.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
             invoice.UpdatedLog = DateTime.Now.ToString();
 
-            //_context.invoiceHeaders.Add(invoice);
-            //_context.SaveChanges();
             _context.invoiceHeaders.Add(invoice);
             await _context.SaveChangesAsync();
             return true;
@@ -76,10 +76,10 @@ namespace ServiveceSystem.BusinessLayer
             var existingInvoice = _context.invoiceHeaders.Find(invoice.InvoiceHeaderId);
             if (existingInvoice != null)
             {
-                
+
                 bool quotationExists = _context.QuotationHeaders.Any(q => q.QuotationId == invoice.QuotationId);
                 bool paymentMethodExists = _context.PaymentMethods.Any(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
-               
+
 
                 if (!quotationExists)
                     throw new Exception("Quotation not found");
@@ -87,7 +87,7 @@ namespace ServiveceSystem.BusinessLayer
                 if (!paymentMethodExists)
                     throw new Exception("Payment method not found");
 
-                
+
                 existingInvoice.QuotationId = invoice.QuotationId;
                 existingInvoice.InvoiceDate = invoice.InvoiceDate;
                 existingInvoice.TotalPrice = invoice.TotalPrice;
@@ -97,23 +97,35 @@ namespace ServiveceSystem.BusinessLayer
                 existingInvoice.ContactId = invoice.ContactId;
                 existingInvoice.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
+
+                existingInvoice.UpdatedLog = DateTime.Now.ToString();
+
                 _context.SaveChanges();
             }
-          
+
         }
 
         // Delete 
-        public void Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var invoice = _context.invoiceHeaders.Find(id);
+            var invoice = await _context.invoiceHeaders.FindAsync(id);
             if (invoice != null)
             {
-                invoice.DeletedLog = $"{CurrentUser.Username} - {DateTime.Now}";
                 invoice.isDeleted = true;
-                _context.invoiceHeaders.Remove(invoice);
-                _context.SaveChanges();
+                invoice.DeletedLog = DateTime.Now.ToString();
+                // _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
+
+
 
     }
 }
+
+
+
+
+

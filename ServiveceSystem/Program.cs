@@ -7,11 +7,8 @@ using ServiveceSystem.PresentationLayer;
 using ServiveceSystem.PresentationLayer.Clinic;
 using ServiveceSystem.PresentationLayer.ContactPerson;
 using ServiveceSystem.PresentationLayer.InvoiceDetail;
-using ServiveceSystem.PresentationLayer.Payment;
 using ServiveceSystem.PresentationLayer.PaymentMethod;
-using ServiveceSystem.PresentationLayer.Service;
-using ServiveceSystem.PresentationLayer.Taxes;
-using ServiveceSystem.PresentationLayer.User;
+using ServiveceSystem.PresentationLayer.QuotationHeader;
 
 namespace ServiveceSystem
 {
@@ -26,17 +23,6 @@ namespace ServiveceSystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = "Office 2019 Black";
-            var login = new LoginForm();
-            if (login.ShowDialog() == DialogResult.OK)
-            {
-                Application.Run(new Home());
-            }
-            else
-            {
-                // Exit if login fails or canceled
-                Application.Exit();
-            }
 
             //Application.Run(new AllPaymentMethods()
             // ); // ← your desired form here
@@ -49,14 +35,14 @@ namespace ServiveceSystem
 
         //    var newQuotation = new QuotationHeader
         //    {
-        //        ClinicId = 7, // نفس العيادة ممكن، لكن غيري التواريخ
-        //        ContactId = 3,
+        //        ClinicId = 6, // نفس العيادة ممكن، لكن غيري التواريخ
+        //        ContactId = 1,
         //        InitialDate = DateTime.Today.AddDays(1), // غيري التاريخ علشان يكون سطر جديد
-        //        ExpireDate = DateTime.Today.AddDays(10),
-        //        Note = "الحمدلله",
+        //        ExpireDate = DateTime.Today.AddDays(6),
+        //        Note = "الحقونا  ",
         //        Status = QuotationStatus.Pending,
         //        DiscountType = Discount.Percentage,
-        //        Discount = 70, // خصم مختلف
+        //        Discount = 90, // خصم مختلف
         //        TotalDuo = 850, // قيمة مختلفة
         //        CreatedLog = "", // هيتعدل داخل Add
         //        UpdatedLog = "",

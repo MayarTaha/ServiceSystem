@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ServiveceSystem.Migrations
+namespace ServiceSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class relation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,7 +46,7 @@ namespace ServiveceSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "services",
+                name: "Services",
                 columns: table => new
                 {
                     ServiceId = table.Column<int>(type: "int", nullable: false)
@@ -61,7 +61,7 @@ namespace ServiveceSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_services", x => x.ServiceId);
+                    table.PrimaryKey("PK_Services", x => x.ServiceId);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,7 +92,11 @@ namespace ServiveceSystem.Migrations
                     ContactName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClinicId = table.Column<int>(type: "int", nullable: false)
+                    ClinicId = table.Column<int>(type: "int", nullable: false),
+                    CreatedLog = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedLog = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeletedLog = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,6 +119,7 @@ namespace ServiveceSystem.Migrations
                     ExpireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    priority = table.Column<int>(type: "int", nullable: false),
                     DiscountType = table.Column<int>(type: "int", nullable: false),
                     Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalDuo = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -184,6 +189,7 @@ namespace ServiveceSystem.Migrations
                     QuotationDetailId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QuotationId = table.Column<int>(type: "int", nullable: false),
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     DiscountType = table.Column<int>(type: "int", nullable: false),
                     Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -202,6 +208,12 @@ namespace ServiveceSystem.Migrations
                         column: x => x.QuotationId,
                         principalTable: "QuotationHeaders",
                         principalColumn: "QuotationId");
+                    table.ForeignKey(
+                        name: "FK_QuotationDetails_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "ServiceId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,6 +222,7 @@ namespace ServiveceSystem.Migrations
                 {
                     InvoiceDetailId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    InvoiceHeaderId = table.Column<int>(type: "int", nullable: false),
                     ServiceId = table.Column<int>(type: "int", nullable: false),
                     QuotationId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
@@ -221,8 +234,7 @@ namespace ServiveceSystem.Migrations
                     CreatedLog = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedLog = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DeletedLog = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    isDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    InvoiceHeaderId = table.Column<int>(type: "int", nullable: true)
+                    isDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -233,15 +245,16 @@ namespace ServiveceSystem.Migrations
                         principalTable: "QuotationHeaders",
                         principalColumn: "QuotationId");
                     table.ForeignKey(
+                        name: "FK_InvoiceDetails_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "ServiceId");
+                    table.ForeignKey(
                         name: "FK_InvoiceDetails_invoiceHeaders_InvoiceHeaderId",
                         column: x => x.InvoiceHeaderId,
                         principalTable: "invoiceHeaders",
-                        principalColumn: "InvoiceHeaderId");
-                    table.ForeignKey(
-                        name: "FK_InvoiceDetails_services_ServiceId",
-                        column: x => x.ServiceId,
-                        principalTable: "services",
-                        principalColumn: "ServiceId");
+                        principalColumn: "InvoiceHeaderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -357,6 +370,11 @@ namespace ServiveceSystem.Migrations
                 column: "QuotationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_QuotationDetails_ServiceId",
+                table: "QuotationDetails",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_QuotationHeaders_ClinicId",
                 table: "QuotationHeaders",
                 column: "ClinicId");
@@ -396,7 +414,7 @@ namespace ServiveceSystem.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "services");
+                name: "Services");
 
             migrationBuilder.DropTable(
                 name: "invoiceHeaders");

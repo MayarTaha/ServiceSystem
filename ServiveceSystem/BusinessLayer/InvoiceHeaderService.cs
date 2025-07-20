@@ -22,9 +22,18 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         // Get all InvoiceHeaders
-        public List<InvoiceHeader> GetAll()
+        //public List<InvoiceHeader> GetAll()
+        //{
+        //    return _context.invoiceHeaders.ToList();
+        //}
+
+        public async Task<List<InvoiceHeader>> GetAllAsync()
         {
-            return _context.invoiceHeaders.ToList();
+            return await _context.invoiceHeaders.Include(i => i.QuotationHeader)
+        .Include(i => i.PaymentMethod)
+        .Include(i => i.Contact)
+        .Where(i => !i.isDeleted)
+        .ToListAsync();
         }
 
         // Get InvoiceHeader by ID
@@ -51,20 +60,11 @@ namespace ServiveceSystem.BusinessLayer
             if (!quotationExists || !paymentMethodExists || exists)
                 return false;
 
-            //  bool quotationExists = _context.QuotationHeaders.Any(q => q.QuotationId == invoice.QuotationId);
-            //if (!quotationExists)
-            //    throw new Exception("Quotation not found");
-
-
-            // bool paymentMethodExists = _context.PaymentMethods.Any(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
-            //if (!paymentMethodExists)
-            //    throw new Exception("Payment method not found");
+            
 
             invoice.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
             invoice.UpdatedLog = DateTime.Now.ToString();
 
-            //_context.invoiceHeaders.Add(invoice);
-            //_context.SaveChanges();
             _context.invoiceHeaders.Add(invoice);
             await _context.SaveChangesAsync();
             return true;
@@ -106,15 +106,18 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         // Delete 
-        public async Task DeleteInvoice(int id)
+        public async Task<bool> Delete(int id)
         {
             var invoice = await _context.invoiceHeaders.FindAsync(id);
             if (invoice != null)
             {
                 invoice.isDeleted = true;
                 invoice.DeletedLog = DateTime.Now.ToString();
-                _context.SaveChanges();
+                // _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
 
 

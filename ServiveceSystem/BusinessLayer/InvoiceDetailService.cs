@@ -35,6 +35,8 @@ namespace ServiveceSystem.BusinessLayer
         //
 
 
+
+
         // Get InvoiceDetail by ID
         public InvoiceDetail? GetById(int id)
         {
@@ -96,7 +98,7 @@ namespace ServiveceSystem.BusinessLayer
 
                 
                 existingDetail.TotalService = CalculateTotalService(detail);
-                existingDetail.TotalDuo = detail.TotalDuo;
+                //existingDetail.TotalDuo = detail.TotalDuo;
                 existingDetail.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
                 _context.SaveChanges();

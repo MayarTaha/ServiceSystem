@@ -82,6 +82,9 @@ namespace ServiveceSystem.Models
                 .HasForeignKey(ih => ih.QuotationId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+
+
+
             // --- InvoiceHeader and PaymentMethod --- //
             modelBuilder.Entity<InvoiceHeader>()
                 .HasOne(ih => ih.PaymentMethod)
@@ -96,12 +99,21 @@ namespace ServiveceSystem.Models
                 .HasForeignKey(ih => ih.ContactId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+
+            modelBuilder.Entity<InvoiceDetail>()
+            .HasOne(d => d.InvoiceHeader)
+            .WithMany(h => h.InvoiceDetails)
+            .HasForeignKey(d => d.InvoiceHeaderId)
+            .OnDelete(DeleteBehavior.Cascade); // أو Restrict حسب المطلوب
+
+
             // --- InvoiceHeader and InvoiceDetail (One-to-Many) --- //
             // Assuming InvoiceHeader has a List<InvoiceDetail> navigation property
-            modelBuilder.Entity<InvoiceHeader>()
-                .HasMany<InvoiceDetail>() // InvoiceHeader has many InvoiceDetails
-                .WithOne() // Each InvoiceDetail has one InvoiceHeader
-                .HasForeignKey("InvoiceHeaderId"); // Assuming InvoiceDetail has InvoiceHeaderId as FK
+            //modelBuilder.Entity<InvoiceHeader>()
+            //    .HasMany<InvoiceDetail>() // InvoiceHeader has many InvoiceDetails
+            //    .WithOne() // Each InvoiceDetail has one InvoiceHeader
+            //    .HasForeignKey(d => d.InvoiceHeaderId)
+            //    .OnDelete(DeleteBehavior.NoAction);  // Assuming InvoiceDetail has InvoiceHeaderId as FK
             // Note: If InvoiceDetail does not have a direct InvoiceHeaderId, you might need to add it
             // or configure a many-to-many if that's the intent.
             // Based on your InvoiceDetail, it links to QuotationHeader, not InvoiceHeader directly.

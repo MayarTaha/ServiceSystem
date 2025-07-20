@@ -16,8 +16,8 @@ namespace ServiveceSystem.PresentationLayer.InvoiceHeader
     {
         public EditInvoiceHeaderForm()
         {
-            InitializeComponent();
-            PaymentMethodcomboBox.DataSource = Enum.GetValues(typeof(PaymentStatus));
+            //InitializeComponent();
+            //PaymentMethodcomboBox.DataSource = Enum.GetValues(typeof(PaymentStatus));
             using (var context = new AppDBContext())
             {
                 var paymentMethods = context.PaymentMethods
@@ -28,9 +28,9 @@ namespace ServiveceSystem.PresentationLayer.InvoiceHeader
                     })
                     .ToList();
 
-                PaymentMethodcomboBox.DataSource = paymentMethods;
-                PaymentMethodcomboBox.DisplayMember = "PaymentType"; 
-                PaymentMethodcomboBox.ValueMember = "PaymentMethodId";     
+                //PaymentMethodcomboBox.DataSource = paymentMethods;
+                //PaymentMethodcomboBox.DisplayMember = "PaymentType"; 
+                //PaymentMethodcomboBox.ValueMember = "PaymentMethodId";     
             }
 
         }

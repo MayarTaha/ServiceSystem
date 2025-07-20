@@ -38,7 +38,7 @@ namespace ServiveceSystem
                 Application.Exit();
             }
 
-            //Application.Run(new AddService()
+            //Application.Run(new AllPaymentMethods()
             // ); // ← your desired form here
         }
 

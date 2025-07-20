@@ -50,6 +50,9 @@ namespace ServiveceSystem.PresentationLayer
                 case "taxesElement":
                     ShowFormInPanel(new Taxes.AllTaxes());
                     break;
+                case "paymentMethodsElement":
+                    ShowFormInPanel(new PaymentMethod.AllPaymentMethods());
+                    break;
             }
         }
 

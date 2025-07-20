@@ -42,7 +42,7 @@ namespace ServiveceSystem.BusinessLayer
             username ??= CurrentUser.Username ?? "system";
 
             var clientExists = await _context.Clinics.AnyAsync(c => c.ClinicId == qout.ClinicId && !c.isDeleted);
-            var contactExists = await _context.ContactPersons.AnyAsync(cp => cp.ContactId == qout.ContactId );
+            var contactExists = await _context.ContactPersons.AnyAsync(cp => cp.ContactId == qout.ContactId);
 
             if (!clientExists || !contactExists)
                 return false;
@@ -97,7 +97,5 @@ namespace ServiveceSystem.BusinessLayer
             }
         }
     }
-}}
-=========
+
 }
->>>>>>>>> Temporary merge branch 2

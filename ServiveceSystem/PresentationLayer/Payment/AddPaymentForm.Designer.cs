@@ -41,12 +41,14 @@
             label2 = new Label();
             label1 = new Label();
             PaymentMethodcomboBox = new ComboBox();
+            groupBox1 = new GroupBox();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // PaymentStatuscomboBox
             // 
             PaymentStatuscomboBox.FormattingEnabled = true;
-            PaymentStatuscomboBox.Location = new Point(156, 192);
+            PaymentStatuscomboBox.Location = new Point(146, 191);
             PaymentStatuscomboBox.Margin = new Padding(2);
             PaymentStatuscomboBox.Name = "PaymentStatuscomboBox";
             PaymentStatuscomboBox.Size = new Size(118, 21);
@@ -56,7 +58,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(15, 53);
+            label7.Location = new Point(5, 52);
             label7.Name = "label7";
             label7.Size = new Size(95, 21);
             label7.TabIndex = 42;
@@ -67,10 +69,11 @@
             Savebtn.BackColor = Color.White;
             Savebtn.FlatAppearance.BorderColor = Color.White;
             Savebtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Savebtn.Location = new Point(99, 229);
+            Savebtn.ForeColor = Color.Black;
+            Savebtn.Location = new Point(11, 229);
             Savebtn.Margin = new Padding(2);
             Savebtn.Name = "Savebtn";
-            Savebtn.Size = new Size(75, 32);
+            Savebtn.Size = new Size(273, 32);
             Savebtn.TabIndex = 40;
             Savebtn.Text = "Add";
             Savebtn.UseVisualStyleBackColor = false;
@@ -80,7 +83,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(14, 193);
+            label5.Location = new Point(4, 192);
             label5.Name = "label5";
             label5.Size = new Size(112, 21);
             label5.TabIndex = 38;
@@ -88,7 +91,7 @@
             // 
             // InvoiceIdtextBox
             // 
-            InvoiceIdtextBox.Location = new Point(156, 21);
+            InvoiceIdtextBox.Location = new Point(146, 20);
             InvoiceIdtextBox.Margin = new Padding(3, 2, 3, 2);
             InvoiceIdtextBox.Name = "InvoiceIdtextBox";
             InvoiceIdtextBox.Size = new Size(118, 22);
@@ -96,7 +99,7 @@
             // 
             // PaymentDatetextBox
             // 
-            PaymentDatetextBox.Location = new Point(156, 127);
+            PaymentDatetextBox.Location = new Point(146, 126);
             PaymentDatetextBox.Margin = new Padding(3, 2, 3, 2);
             PaymentDatetextBox.Name = "PaymentDatetextBox";
             PaymentDatetextBox.Size = new Size(118, 22);
@@ -104,7 +107,7 @@
             // 
             // AmountPaidtextBox
             // 
-            AmountPaidtextBox.Location = new Point(156, 89);
+            AmountPaidtextBox.Location = new Point(146, 88);
             AmountPaidtextBox.Margin = new Padding(3, 2, 3, 2);
             AmountPaidtextBox.Name = "AmountPaidtextBox";
             AmountPaidtextBox.Size = new Size(118, 22);
@@ -112,7 +115,7 @@
             // 
             // RemainingAmounttextBox
             // 
-            RemainingAmounttextBox.Location = new Point(156, 53);
+            RemainingAmounttextBox.Location = new Point(146, 52);
             RemainingAmounttextBox.Margin = new Padding(3, 2, 3, 2);
             RemainingAmounttextBox.Name = "RemainingAmounttextBox";
             RemainingAmounttextBox.Size = new Size(118, 22);
@@ -122,7 +125,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(15, 157);
+            label4.Location = new Point(5, 156);
             label4.Name = "label4";
             label4.Size = new Size(124, 21);
             label4.TabIndex = 33;
@@ -132,7 +135,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(14, 127);
+            label3.Location = new Point(4, 126);
             label3.Name = "label3";
             label3.Size = new Size(102, 21);
             label3.TabIndex = 32;
@@ -142,7 +145,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(21, 21);
+            label2.Location = new Point(11, 20);
             label2.Name = "label2";
             label2.Size = new Size(72, 21);
             label2.TabIndex = 31;
@@ -152,7 +155,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(14, 88);
+            label1.Location = new Point(4, 87);
             label1.Name = "label1";
             label1.Size = new Size(141, 21);
             label1.TabIndex = 30;
@@ -161,38 +164,50 @@
             // PaymentMethodcomboBox
             // 
             PaymentMethodcomboBox.FormattingEnabled = true;
-            PaymentMethodcomboBox.Location = new Point(156, 159);
+            PaymentMethodcomboBox.Location = new Point(146, 158);
             PaymentMethodcomboBox.Margin = new Padding(2);
             PaymentMethodcomboBox.Name = "PaymentMethodcomboBox";
             PaymentMethodcomboBox.Size = new Size(118, 21);
             PaymentMethodcomboBox.TabIndex = 45;
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(InvoiceIdtextBox);
+            groupBox1.Controls.Add(PaymentMethodcomboBox);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(PaymentStatuscomboBox);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(label7);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(label5);
+            groupBox1.Controls.Add(RemainingAmounttextBox);
+            groupBox1.Controls.Add(AmountPaidtextBox);
+            groupBox1.Controls.Add(PaymentDatetextBox);
+            groupBox1.Location = new Point(12, 1);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(272, 223);
+            groupBox1.TabIndex = 46;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Data";
+            // 
             // AddPaymentForm
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(282, 268);
-            Controls.Add(PaymentMethodcomboBox);
-            Controls.Add(PaymentStatuscomboBox);
-            Controls.Add(label7);
+            ClientSize = new Size(288, 265);
+            Controls.Add(groupBox1);
             Controls.Add(Savebtn);
-            Controls.Add(label5);
-            Controls.Add(InvoiceIdtextBox);
-            Controls.Add(PaymentDatetextBox);
-            Controls.Add(AmountPaidtextBox);
-            Controls.Add(RemainingAmounttextBox);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(2);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "AddPaymentForm";
-            Text = "AddPaymentMethodForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Add Payment Method";
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -210,5 +225,6 @@
         private Label label2;
         private Label label1;
         private ComboBox PaymentMethodcomboBox;
+        private GroupBox groupBox1;
     }
 }

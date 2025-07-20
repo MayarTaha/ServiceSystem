@@ -35,96 +35,110 @@
             txtPassword = new DevExpress.XtraEditors.TextEdit();
             labelControl4 = new DevExpress.XtraEditors.LabelControl();
             txtPermission = new DevExpress.XtraEditors.TextEdit();
+            groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)txtUsername.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtPassword.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtPermission.Properties).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // btnSave
             // 
-            btnSave.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSave.Appearance.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSave.Appearance.Options.UseFont = true;
-            btnSave.Location = new Point(87, 160);
+            btnSave.Location = new Point(12, 129);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(75, 36);
+            btnSave.Size = new Size(315, 27);
             btnSave.TabIndex = 12;
             btnSave.Text = "Add";
             btnSave.Click += btnSave_Click;
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(129, 21);
+            txtUsername.Location = new Point(96, 26);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(132, 20);
+            txtUsername.Size = new Size(202, 22);
             txtUsername.TabIndex = 10;
             // 
             // labelControl3
             // 
-            labelControl3.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelControl3.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl3.Appearance.Options.UseFont = true;
-            labelControl3.Location = new Point(13, 62);
+            labelControl3.Location = new Point(6, 54);
             labelControl3.Name = "labelControl3";
-            labelControl3.Size = new Size(85, 25);
+            labelControl3.Size = new Size(70, 21);
             labelControl3.TabIndex = 9;
-            labelControl3.Text = "Password";
+            labelControl3.Text = "Password:";
             // 
             // labelControl2
             // 
-            labelControl2.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelControl2.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl2.Appearance.Options.UseFont = true;
-            labelControl2.Location = new Point(13, 16);
+            labelControl2.Location = new Point(6, 23);
             labelControl2.Name = "labelControl2";
-            labelControl2.Size = new Size(92, 25);
+            labelControl2.Size = new Size(77, 21);
             labelControl2.TabIndex = 8;
-            labelControl2.Text = "UserName";
+            labelControl2.Text = "UserName:";
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(129, 67);
+            txtPassword.Location = new Point(96, 54);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(132, 20);
+            txtPassword.Size = new Size(202, 22);
             txtPassword.TabIndex = 14;
             // 
             // labelControl4
             // 
-            labelControl4.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelControl4.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl4.Appearance.Options.UseFont = true;
-            labelControl4.Location = new Point(13, 108);
+            labelControl4.Location = new Point(6, 83);
             labelControl4.Name = "labelControl4";
-            labelControl4.Size = new Size(97, 25);
+            labelControl4.Size = new Size(80, 21);
             labelControl4.TabIndex = 15;
-            labelControl4.Text = "Permission";
+            labelControl4.Text = "Permission:";
             // 
             // txtPermission
             // 
             txtPermission.EditValue = "";
-            txtPermission.Location = new Point(129, 113);
+            txtPermission.Location = new Point(96, 88);
             txtPermission.Name = "txtPermission";
-            txtPermission.Size = new Size(132, 20);
+            txtPermission.Size = new Size(202, 22);
             txtPermission.TabIndex = 16;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(labelControl2);
+            groupBox1.Controls.Add(txtPermission);
+            groupBox1.Controls.Add(labelControl3);
+            groupBox1.Controls.Add(labelControl4);
+            groupBox1.Controls.Add(txtUsername);
+            groupBox1.Controls.Add(txtPassword);
+            groupBox1.Location = new Point(12, 1);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(315, 122);
+            groupBox1.TabIndex = 17;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Data";
             // 
             // AddUser
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(281, 215);
-            Controls.Add(txtPermission);
-            Controls.Add(labelControl4);
-            Controls.Add(txtPassword);
+            ClientSize = new Size(337, 161);
+            Controls.Add(groupBox1);
             Controls.Add(btnSave);
-            Controls.Add(txtUsername);
-            Controls.Add(labelControl3);
-            Controls.Add(labelControl2);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "AddUser";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "AddUser";
             ((System.ComponentModel.ISupportInitialize)txtUsername.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtPassword.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtPermission.Properties).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -138,5 +152,6 @@
         private DevExpress.XtraEditors.TextEdit txtPassword;
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraEditors.TextEdit txtPermission;
+        private GroupBox groupBox1;
     }
 }

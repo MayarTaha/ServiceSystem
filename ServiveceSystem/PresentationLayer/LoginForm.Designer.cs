@@ -61,6 +61,7 @@
             groupBox1.Controls.Add(labelControl3);
             groupBox1.Controls.Add(txtUsername);
             groupBox1.Controls.Add(btnShowPassword);
+            groupBox1.ForeColor = Color.White;
             groupBox1.Location = new Point(12, 159);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(284, 141);
@@ -126,7 +127,7 @@
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(309, 370);
+            ClientSize = new Size(309, 355);
             Controls.Add(pictureEdit1);
             Controls.Add(groupBox1);
             Controls.Add(btnLogin);
@@ -135,6 +136,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "LoginForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
             Load += LoginForm_Load;
             groupBox1.ResumeLayout(false);

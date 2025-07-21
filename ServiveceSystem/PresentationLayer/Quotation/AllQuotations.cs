@@ -39,26 +39,7 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             }
         }
 
-        //private void BindGrid(List<ServiceSystem.Models.QuotationHeader> quotations)
-        //{
-        //    var displayList = quotations.Select(q => new
-        //    {
-        //        q.QuotationId,
-        //        q.Note,
-        //        q.InitialDate,
-        //        q.ExpireDate,
-        //        q.ClinicId,
-        //        q.ContactId,
-        //        q.CreatedLog,
-        //        q.UpdatedLog
-        //    }).ToList();
-        //    gridControl1.DataSource = displayList;
-        //    gridControl1.ForceInitialize();
-        //    var col = gridView1.Columns["QuotationId"];
-        //    if (col != null)
-        //        col.Visible = false;
-        //    InitGridButtons();
-        //}
+       
 
         private void BindGrid(List<ServiceSystem.Models.QuotationHeader> quotations)
         {
@@ -190,12 +171,12 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             }
         }
 
-        private void btnAddQuotation_Click(object sender, EventArgs e)
+        private  void btnAddQuotation_Click(object sender, EventArgs e)
         {
             var addForm = new AddQuotationForm();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                 LoadQuotations();
+                 LoadQuotationsAsync();
             }
         }
 

@@ -199,13 +199,12 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             }
         }
 
-        private async void btnAddInvoice_Click(object sender, EventArgs e)
+        private  void btnAddInvoice_Click(object sender, EventArgs e)
         {
-
             var addForm = new AddInvoiceForm();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                 LoadInvoices();
+                 LoadInvoicesAsync();
             }
         }
     }

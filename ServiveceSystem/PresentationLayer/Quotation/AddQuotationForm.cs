@@ -133,7 +133,7 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
             var addForm = new QuotationForm(quotationDetailsList.ToList(), total);
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-
+                this.DialogResult = DialogResult.OK;
             }
             this.Close();
         }

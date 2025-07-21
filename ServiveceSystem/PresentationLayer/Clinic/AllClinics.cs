@@ -118,12 +118,12 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             }
         }
 
-        private async void btnAddClinic_Click(object sender, EventArgs e)
+        private  void btnAddClinic_Click(object sender, EventArgs e)
         {
             var addForm = new AddClinic();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                await LoadClinicsAsync();
+                 LoadClinicsAsync();
             }
         }
 

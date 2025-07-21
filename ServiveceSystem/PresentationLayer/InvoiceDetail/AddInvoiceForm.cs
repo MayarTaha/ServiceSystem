@@ -112,7 +112,7 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
             var addForm = new InvoicePayment(invoiceDetailsList.ToList(), total);
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                
+                this.DialogResult = DialogResult.OK;
             }
             this.Close();
 

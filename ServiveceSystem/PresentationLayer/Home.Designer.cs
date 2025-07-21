@@ -31,8 +31,8 @@ namespace ServiveceSystem.PresentationLayer
             configurationElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             usersElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             paymentsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            taxesElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             paymentMethodsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            taxesElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             topPanel = new DevExpress.XtraEditors.PanelControl();
             btnMinimize = new DevExpress.XtraEditors.SimpleButton();
             btnMaximize = new DevExpress.XtraEditors.SimpleButton();
@@ -131,14 +131,6 @@ namespace ServiveceSystem.PresentationLayer
             paymentsElement.Name = "paymentsElement";
             paymentsElement.Text = "Payments";
             // 
-            // taxesElement
-            // 
-            taxesElement.Height = 40;
-            taxesElement.ImageOptions.Image = ServiceSystem.Properties.Resources.icons8_taxes_64;
-            taxesElement.ImageOptions.ImageLayoutMode = DevExpress.XtraBars.Navigation.ImageLayoutMode.Squeeze;
-            taxesElement.Name = "taxesElement";
-            taxesElement.Text = "Taxes";
-            // 
             // paymentMethodsElement
             // 
             paymentMethodsElement.Height = 40;
@@ -146,6 +138,14 @@ namespace ServiveceSystem.PresentationLayer
             paymentMethodsElement.ImageOptions.ImageLayoutMode = DevExpress.XtraBars.Navigation.ImageLayoutMode.Squeeze;
             paymentMethodsElement.Name = "paymentMethodsElement";
             paymentMethodsElement.Text = "Payment Methods";
+            // 
+            // taxesElement
+            // 
+            taxesElement.Height = 40;
+            taxesElement.ImageOptions.Image = ServiceSystem.Properties.Resources.icons8_taxes_64;
+            taxesElement.ImageOptions.ImageLayoutMode = DevExpress.XtraBars.Navigation.ImageLayoutMode.Squeeze;
+            taxesElement.Name = "taxesElement";
+            taxesElement.Text = "Taxes";
             // 
             // topPanel
             // 
@@ -216,11 +216,11 @@ namespace ServiveceSystem.PresentationLayer
             Controls.Add(mainPanel);
             Controls.Add(topPanel);
             Controls.Add(accordionControl);
-            Font = new Font("Segoe UI", 8.25F);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Home";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Home";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)accordionControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)topPanel).EndInit();
             topPanel.ResumeLayout(false);

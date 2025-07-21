@@ -128,7 +128,7 @@
             // AddService
             // 
             Appearance.Options.UseFont = true;
-            ClientSize = new Size(304, 192);
+            ClientSize = new Size(314, 197);
             Controls.Add(groupBoxAddService);
             Controls.Add(btnSave);
             FormBorderStyle = FormBorderStyle.FixedDialog;

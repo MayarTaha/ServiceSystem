@@ -36,10 +36,10 @@ namespace ServiveceSystem.PresentationLayer
                     ShowFormInPanel(new ContactPerson.AllContactPersons());
                     break;
                 case "quotationsElement":
-                    // ShowFormInPanel(new Quotation.AllQuotations()); // Uncomment when available
+                    ShowFormInPanel(new ServiceSystem.PresentationLayer.QuotationHeader.AllQuotations());
                     break;
                 case "invoicesElement":
-                    // ShowFormInPanel(new InvoiceHeader.AllInvoices()); // Uncomment when available
+                    ShowFormInPanel(new ServiceSystem.PresentationLayer.InvoiceDetail.AllInvoices());
                     break;
                 case "usersElement":
                     ShowFormInPanel(new User.AllUsers());

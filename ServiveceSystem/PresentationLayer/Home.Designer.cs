@@ -12,6 +12,7 @@ namespace ServiveceSystem.PresentationLayer
         private DevExpress.XtraBars.Navigation.AccordionControlElement usersElement;
         private DevExpress.XtraBars.Navigation.AccordionControlElement paymentsElement;
         private DevExpress.XtraBars.Navigation.AccordionControlElement taxesElement;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement paymentMethodsElement;
         private DevExpress.XtraEditors.PanelControl topPanel;
         private DevExpress.XtraEditors.SimpleButton btnMinimize;
         private DevExpress.XtraEditors.SimpleButton btnClose;
@@ -30,6 +31,7 @@ namespace ServiveceSystem.PresentationLayer
             configurationElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             usersElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             paymentsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            paymentMethodsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             taxesElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             topPanel = new DevExpress.XtraEditors.PanelControl();
             btnMinimize = new DevExpress.XtraEditors.SimpleButton();
@@ -105,7 +107,7 @@ namespace ServiveceSystem.PresentationLayer
             // 
             // configurationElement
             // 
-            configurationElement.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { usersElement, paymentsElement, taxesElement });
+            configurationElement.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { usersElement, paymentsElement, paymentMethodsElement, taxesElement });
             configurationElement.Expanded = true;
             configurationElement.Height = 50;
             configurationElement.ImageOptions.Image = ServiceSystem.Properties.Resources.icons8_settings_80;
@@ -128,6 +130,14 @@ namespace ServiveceSystem.PresentationLayer
             paymentsElement.ImageOptions.ImageLayoutMode = DevExpress.XtraBars.Navigation.ImageLayoutMode.Squeeze;
             paymentsElement.Name = "paymentsElement";
             paymentsElement.Text = "Payments";
+            // 
+            // paymentMethodsElement
+            // 
+            paymentMethodsElement.Height = 40;
+            paymentMethodsElement.ImageOptions.Image = ServiceSystem.Properties.Resources.icons8_payment_100;
+            paymentMethodsElement.ImageOptions.ImageLayoutMode = DevExpress.XtraBars.Navigation.ImageLayoutMode.Squeeze;
+            paymentMethodsElement.Name = "paymentMethodsElement";
+            paymentMethodsElement.Text = "Payment Methods";
             // 
             // taxesElement
             // 
@@ -206,11 +216,11 @@ namespace ServiveceSystem.PresentationLayer
             Controls.Add(mainPanel);
             Controls.Add(topPanel);
             Controls.Add(accordionControl);
-            Font = new Font("Segoe UI", 8.25F);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Home";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Home";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)accordionControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)topPanel).EndInit();
             topPanel.ResumeLayout(false);

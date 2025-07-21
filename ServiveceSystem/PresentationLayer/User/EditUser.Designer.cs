@@ -28,96 +28,115 @@ namespace ServiveceSystem.PresentationLayer.User
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblUsername = new DevExpress.XtraEditors.LabelControl();
-            this.txtUsername = new DevExpress.XtraEditors.TextEdit();
-            this.lblRole = new DevExpress.XtraEditors.LabelControl();
-            this.txtRole = new DevExpress.XtraEditors.TextEdit();
-            this.lblPassword = new DevExpress.XtraEditors.LabelControl();
-            this.txtPassword = new DevExpress.XtraEditors.TextEdit();
-            this.btnSave = new DevExpress.XtraEditors.SimpleButton();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUsername.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRole.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).BeginInit();
-            this.SuspendLayout();
+            lblUsername = new DevExpress.XtraEditors.LabelControl();
+            txtUsername = new DevExpress.XtraEditors.TextEdit();
+            lblRole = new DevExpress.XtraEditors.LabelControl();
+            txtRole = new DevExpress.XtraEditors.TextEdit();
+            lblPassword = new DevExpress.XtraEditors.LabelControl();
+            txtPassword = new DevExpress.XtraEditors.TextEdit();
+            btnSave = new DevExpress.XtraEditors.SimpleButton();
+            groupBox1 = new GroupBox();
+            ((System.ComponentModel.ISupportInitialize)txtUsername.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtRole.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtPassword.Properties).BeginInit();
+            groupBox1.SuspendLayout();
+            SuspendLayout();
             // 
             // lblUsername
             // 
-            this.lblUsername.Location = new System.Drawing.Point(12, 15);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(52, 13);
-            this.lblUsername.TabIndex = 0;
-            this.lblUsername.Text = "Username:";
+            lblUsername.Appearance.Font = new Font("Segoe UI", 12F);
+            lblUsername.Appearance.Options.UseFont = true;
+            lblUsername.Location = new Point(6, 21);
+            lblUsername.Name = "lblUsername";
+            lblUsername.Size = new Size(74, 21);
+            lblUsername.TabIndex = 0;
+            lblUsername.Text = "Username:";
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(120, 12);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(200, 20);
-            this.txtUsername.TabIndex = 1;
+            txtUsername.Location = new Point(139, 20);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(200, 22);
+            txtUsername.TabIndex = 1;
             // 
             // lblRole
             // 
-            this.lblRole.Location = new System.Drawing.Point(12, 41);
-            this.lblRole.Name = "lblRole";
-            this.lblRole.Size = new System.Drawing.Size(23, 13);
-            this.lblRole.TabIndex = 4;
-            this.lblRole.Text = "Role:";
+            lblRole.Appearance.Font = new Font("Segoe UI", 12F);
+            lblRole.Appearance.Options.UseFont = true;
+            lblRole.Location = new Point(6, 79);
+            lblRole.Name = "lblRole";
+            lblRole.Size = new Size(80, 21);
+            lblRole.TabIndex = 4;
+            lblRole.Text = "Permission:";
             // 
             // txtRole
             // 
-            this.txtRole.Location = new System.Drawing.Point(120, 38);
-            this.txtRole.Name = "txtRole";
-            this.txtRole.Size = new System.Drawing.Size(200, 20);
-            this.txtRole.TabIndex = 5;
+            txtRole.Location = new Point(139, 84);
+            txtRole.Name = "txtRole";
+            txtRole.Size = new Size(200, 22);
+            txtRole.TabIndex = 7;
             // 
             // lblPassword
             // 
-            this.lblPassword.Location = new System.Drawing.Point(12, 67);
-            this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(82, 13);
-            this.lblPassword.TabIndex = 6;
-            this.lblPassword.Text = "Change Password:";
+            lblPassword.Appearance.Font = new Font("Segoe UI", 12F);
+            lblPassword.Appearance.Options.UseFont = true;
+            lblPassword.Location = new Point(6, 52);
+            lblPassword.Name = "lblPassword";
+            lblPassword.Size = new Size(127, 21);
+            lblPassword.TabIndex = 6;
+            lblPassword.Text = "Change Password:";
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(120, 64);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(200, 20);
-            this.txtPassword.TabIndex = 7;
-            this.txtPassword.Properties.UseSystemPasswordChar = true;
+            txtPassword.Location = new Point(139, 51);
+            txtPassword.Name = "txtPassword";
+            txtPassword.Properties.UseSystemPasswordChar = true;
+            txtPassword.Size = new Size(200, 22);
+            txtPassword.TabIndex = 5;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(120, 96);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 8;
-            this.btnSave.Text = "Update";
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            btnSave.Location = new Point(12, 127);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(349, 23);
+            btnSave.TabIndex = 8;
+            btnSave.Text = "Update";
+            btnSave.Click += btnSave_Click;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(lblUsername);
+            groupBox1.Controls.Add(txtUsername);
+            groupBox1.Controls.Add(txtPassword);
+            groupBox1.Controls.Add(lblRole);
+            groupBox1.Controls.Add(lblPassword);
+            groupBox1.Controls.Add(txtRole);
+            groupBox1.Location = new Point(12, 3);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(349, 118);
+            groupBox1.TabIndex = 9;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Data";
             // 
             // EditUser
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 131);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.lblPassword);
-            this.Controls.Add(this.txtRole);
-            this.Controls.Add(this.lblRole);
-            this.Controls.Add(this.txtUsername);
-            this.Controls.Add(this.lblUsername);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "EditUser";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Edit User";
-            ((System.ComponentModel.ISupportInitialize)(this.txtUsername.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtRole.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(367, 161);
+            Controls.Add(groupBox1);
+            Controls.Add(btnSave);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "EditUser";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Edit User";
+            ((System.ComponentModel.ISupportInitialize)txtUsername.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtRole.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtPassword.Properties).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -129,5 +148,6 @@ namespace ServiveceSystem.PresentationLayer.User
         private DevExpress.XtraEditors.LabelControl lblPassword;
         private DevExpress.XtraEditors.TextEdit txtPassword;
         private DevExpress.XtraEditors.SimpleButton btnSave;
+        private GroupBox groupBox1;
     }
 } 

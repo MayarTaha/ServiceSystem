@@ -30,7 +30,7 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
         public AddInvoiceForm()
         {
             InitializeComponent();
-            this.Size = new Size(900, 400);
+            //this.Size = new Size(900, 400);
             gridViewdet.GroupPanelText = " ";
             _context = new AppDBContext();
             _invoiceHeaderService = new InvoiceHeaderService(_context);

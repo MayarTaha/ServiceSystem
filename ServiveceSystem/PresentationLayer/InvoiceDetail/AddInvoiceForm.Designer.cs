@@ -34,6 +34,7 @@
             labelControl8 = new DevExpress.XtraEditors.LabelControl();
             textEditServicePrice = new DevExpress.XtraEditors.TextEdit();
             labelControl7 = new DevExpress.XtraEditors.LabelControl();
+            btnSubmit = new DevExpress.XtraEditors.SimpleButton();
             labelControl6 = new DevExpress.XtraEditors.LabelControl();
             serviceLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             labelControl5 = new DevExpress.XtraEditors.LabelControl();
@@ -42,8 +43,9 @@
             labelControl2 = new DevExpress.XtraEditors.LabelControl();
             quantityTextEdit = new DevExpress.XtraEditors.TextEdit();
             totalServiceTextEdit = new DevExpress.XtraEditors.TextEdit();
-            btnSubmit = new DevExpress.XtraEditors.SimpleButton();
-            gridcontrolDetails = new DevExpress.XtraGrid.GridControl();
+            CompleteprocessButton = new DevExpress.XtraEditors.SimpleButton();
+            labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            TotaltextEdit = new DevExpress.XtraEditors.TextEdit();
             gridViewdet = new DevExpress.XtraGrid.Views.Grid.GridView();
             gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -51,9 +53,7 @@
             gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
-            CompleteprocessButton = new DevExpress.XtraEditors.SimpleButton();
-            labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            TotaltextEdit = new DevExpress.XtraEditors.TextEdit();
+            gridcontrolDetails = new DevExpress.XtraGrid.GridControl();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)comboBoxDiscountType.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)textEditServicePrice.Properties).BeginInit();
@@ -61,9 +61,9 @@
             ((System.ComponentModel.ISupportInitialize)discountValueTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)totalServiceTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridViewdet).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridViewdet).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).BeginInit();
             SuspendLayout();
             // 
             // groupBox2
@@ -72,6 +72,7 @@
             groupBox2.Controls.Add(labelControl8);
             groupBox2.Controls.Add(textEditServicePrice);
             groupBox2.Controls.Add(labelControl7);
+            groupBox2.Controls.Add(btnSubmit);
             groupBox2.Controls.Add(labelControl6);
             groupBox2.Controls.Add(serviceLookUpEdit);
             groupBox2.Controls.Add(labelControl5);
@@ -80,160 +81,193 @@
             groupBox2.Controls.Add(labelControl2);
             groupBox2.Controls.Add(quantityTextEdit);
             groupBox2.Controls.Add(totalServiceTextEdit);
-            groupBox2.Location = new Point(37, 73);
+            groupBox2.ForeColor = Color.White;
+            groupBox2.Location = new Point(7, 8);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(1004, 181);
+            groupBox2.Size = new Size(920, 207);
             groupBox2.TabIndex = 31;
             groupBox2.TabStop = false;
             groupBox2.Text = "Service";
             // 
             // comboBoxDiscountType
             // 
-            comboBoxDiscountType.Location = new Point(183, 79);
+            comboBoxDiscountType.Location = new Point(158, 90);
             comboBoxDiscountType.Name = "comboBoxDiscountType";
+            comboBoxDiscountType.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
+            comboBoxDiscountType.Properties.Appearance.Options.UseFont = true;
             comboBoxDiscountType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            comboBoxDiscountType.Size = new Size(250, 28);
+            comboBoxDiscountType.Size = new Size(250, 30);
             comboBoxDiscountType.TabIndex = 28;
             comboBoxDiscountType.SelectedIndexChanged += comboBoxDiscountType_SelectedIndexChanged;
             // 
             // labelControl8
             // 
-            labelControl8.Appearance.Font = new Font("Segoe UI", 9F);
+            labelControl8.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             labelControl8.Appearance.Options.UseFont = true;
-            labelControl8.Location = new Point(531, 34);
+            labelControl8.Location = new Point(458, 37);
             labelControl8.Margin = new Padding(3, 4, 3, 4);
             labelControl8.Name = "labelControl8";
-            labelControl8.Size = new Size(106, 25);
+            labelControl8.Size = new Size(121, 24);
             labelControl8.TabIndex = 22;
             labelControl8.Text = "Service Price :";
             // 
             // textEditServicePrice
             // 
-            textEditServicePrice.Location = new Point(696, 34);
+            textEditServicePrice.Location = new Point(623, 37);
             textEditServicePrice.Margin = new Padding(3, 4, 3, 4);
             textEditServicePrice.Name = "textEditServicePrice";
-            textEditServicePrice.Size = new Size(250, 28);
+            textEditServicePrice.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
+            textEditServicePrice.Properties.Appearance.Options.UseFont = true;
+            textEditServicePrice.Size = new Size(250, 30);
             textEditServicePrice.TabIndex = 6;
             textEditServicePrice.EditValueChanged += textEditServicePrice_EditValueChanged;
             // 
             // labelControl7
             // 
-            labelControl7.Appearance.Font = new Font("Segoe UI", 9F);
+            labelControl7.Appearance.Font = new Font("Segoe UI", 14.25F);
             labelControl7.Appearance.Options.UseFont = true;
-            labelControl7.Location = new Point(42, 34);
+            labelControl7.Location = new Point(16, 33);
             labelControl7.Margin = new Padding(3, 4, 3, 4);
             labelControl7.Name = "labelControl7";
-            labelControl7.Size = new Size(64, 25);
+            labelControl7.Size = new Size(69, 25);
             labelControl7.TabIndex = 21;
             labelControl7.Text = "Service :";
             // 
+            // btnSubmit
+            // 
+            btnSubmit.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSubmit.Appearance.Options.UseFont = true;
+            btnSubmit.Location = new Point(623, 157);
+            btnSubmit.Margin = new Padding(3, 4, 3, 4);
+            btnSubmit.Name = "btnSubmit";
+            btnSubmit.Size = new Size(250, 35);
+            btnSubmit.TabIndex = 28;
+            btnSubmit.Text = "Add";
+            btnSubmit.Click += btnSubmit_Click;
+            // 
             // labelControl6
             // 
-            labelControl6.Appearance.Font = new Font("Segoe UI", 9F);
+            labelControl6.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             labelControl6.Appearance.Options.UseFont = true;
-            labelControl6.Location = new Point(531, 119);
+            labelControl6.Location = new Point(458, 122);
             labelControl6.Margin = new Padding(3, 4, 3, 4);
             labelControl6.Name = "labelControl6";
-            labelControl6.Size = new Size(108, 25);
+            labelControl6.Size = new Size(119, 24);
             labelControl6.TabIndex = 20;
             labelControl6.Text = "Total Service :";
             // 
             // serviceLookUpEdit
             // 
-            serviceLookUpEdit.Location = new Point(183, 31);
+            serviceLookUpEdit.Location = new Point(158, 31);
             serviceLookUpEdit.Margin = new Padding(3, 4, 3, 4);
             serviceLookUpEdit.Name = "serviceLookUpEdit";
-            serviceLookUpEdit.Properties.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            serviceLookUpEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             serviceLookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
             serviceLookUpEdit.Properties.Appearance.Options.UseFont = true;
             serviceLookUpEdit.Properties.Appearance.Options.UseForeColor = true;
             serviceLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             serviceLookUpEdit.Properties.NullText = "Select Service";
-            serviceLookUpEdit.Size = new Size(250, 28);
+            serviceLookUpEdit.Size = new Size(250, 30);
             serviceLookUpEdit.TabIndex = 4;
             serviceLookUpEdit.EditValueChanged += serviceLookUpEdit_EditValueChanged;
             // 
             // labelControl5
             // 
-            labelControl5.Appearance.Font = new Font("Segoe UI", 9F);
+            labelControl5.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             labelControl5.Appearance.Options.UseFont = true;
-            labelControl5.Location = new Point(531, 76);
+            labelControl5.Location = new Point(458, 79);
             labelControl5.Margin = new Padding(3, 4, 3, 4);
             labelControl5.Name = "labelControl5";
-            labelControl5.Size = new Size(79, 25);
+            labelControl5.Size = new Size(83, 24);
             labelControl5.TabIndex = 19;
             labelControl5.Text = "Discount :";
             // 
             // labelControl3
             // 
-            labelControl3.Appearance.Font = new Font("Segoe UI", 9F);
+            labelControl3.Appearance.Font = new Font("Segoe UI", 14.25F);
             labelControl3.Appearance.Options.UseFont = true;
-            labelControl3.Location = new Point(42, 119);
+            labelControl3.Location = new Point(16, 156);
             labelControl3.Margin = new Padding(3, 4, 3, 4);
             labelControl3.Name = "labelControl3";
-            labelControl3.Size = new Size(77, 25);
+            labelControl3.Size = new Size(81, 25);
             labelControl3.TabIndex = 17;
             labelControl3.Text = "Quantity :";
             // 
             // discountValueTextEdit
             // 
-            discountValueTextEdit.Location = new Point(696, 76);
+            discountValueTextEdit.Location = new Point(623, 79);
             discountValueTextEdit.Margin = new Padding(3, 4, 3, 4);
             discountValueTextEdit.Name = "discountValueTextEdit";
-            discountValueTextEdit.Size = new Size(250, 28);
+            discountValueTextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
+            discountValueTextEdit.Properties.Appearance.Options.UseFont = true;
+            discountValueTextEdit.Size = new Size(250, 30);
             discountValueTextEdit.TabIndex = 5;
             discountValueTextEdit.EditValueChanged += discountValueTextEdit_EditValueChanged;
             // 
             // labelControl2
             // 
-            labelControl2.Appearance.Font = new Font("Segoe UI", 9F);
+            labelControl2.Appearance.Font = new Font("Segoe UI", 14.25F);
             labelControl2.Appearance.Options.UseFont = true;
-            labelControl2.Location = new Point(42, 79);
+            labelControl2.Location = new Point(16, 95);
             labelControl2.Margin = new Padding(3, 4, 3, 4);
             labelControl2.Name = "labelControl2";
-            labelControl2.Size = new Size(122, 25);
+            labelControl2.Size = new Size(128, 25);
             labelControl2.TabIndex = 16;
             labelControl2.Text = "Discount Type :";
             // 
             // quantityTextEdit
             // 
-            quantityTextEdit.Location = new Point(183, 119);
+            quantityTextEdit.Location = new Point(158, 151);
             quantityTextEdit.Margin = new Padding(3, 4, 3, 4);
             quantityTextEdit.Name = "quantityTextEdit";
-            quantityTextEdit.Size = new Size(250, 28);
+            quantityTextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
+            quantityTextEdit.Properties.Appearance.Options.UseFont = true;
+            quantityTextEdit.Size = new Size(250, 30);
             quantityTextEdit.TabIndex = 7;
             quantityTextEdit.EditValueChanged += quantityTextEdit_EditValueChanged;
             // 
             // totalServiceTextEdit
             // 
-            totalServiceTextEdit.Location = new Point(696, 116);
+            totalServiceTextEdit.Location = new Point(623, 119);
             totalServiceTextEdit.Margin = new Padding(3, 4, 3, 4);
             totalServiceTextEdit.Name = "totalServiceTextEdit";
-            totalServiceTextEdit.Size = new Size(250, 28);
+            totalServiceTextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
+            totalServiceTextEdit.Properties.Appearance.Options.UseFont = true;
+            totalServiceTextEdit.Size = new Size(250, 30);
             totalServiceTextEdit.TabIndex = 9;
             // 
-            // btnSubmit
+            // CompleteprocessButton
             // 
-            btnSubmit.Location = new Point(1065, 203);
-            btnSubmit.Margin = new Padding(3, 4, 3, 4);
-            btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(117, 35);
-            btnSubmit.TabIndex = 28;
-            btnSubmit.Text = "Add";
-            btnSubmit.Click += btnSubmit_Click;
+            CompleteprocessButton.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            CompleteprocessButton.Appearance.Options.UseFont = true;
+            CompleteprocessButton.Location = new Point(963, 164);
+            CompleteprocessButton.Margin = new Padding(3, 4, 3, 4);
+            CompleteprocessButton.Name = "CompleteprocessButton";
+            CompleteprocessButton.Size = new Size(187, 50);
+            CompleteprocessButton.TabIndex = 32;
+            CompleteprocessButton.Text = "Complete process";
+            CompleteprocessButton.Click += CompleteprocessButton_Click;
             // 
-            // gridcontrolDetails
+            // labelControl1
             // 
-            gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(3, 2, 3, 2);
-            gridLevelNode1.RelationName = "Level1";
-            gridcontrolDetails.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode1 });
-            gridcontrolDetails.Location = new Point(22, 281);
-            gridcontrolDetails.MainView = gridViewdet;
-            gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);
-            gridcontrolDetails.Name = "gridcontrolDetails";
-            gridcontrolDetails.Size = new Size(1472, 455);
-            gridcontrolDetails.TabIndex = 27;
-            gridcontrolDetails.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewdet });
+            labelControl1.Appearance.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelControl1.Appearance.Options.UseFont = true;
+            labelControl1.Location = new Point(968, 24);
+            labelControl1.Margin = new Padding(3, 4, 3, 4);
+            labelControl1.Name = "labelControl1";
+            labelControl1.Size = new Size(107, 37);
+            labelControl1.TabIndex = 33;
+            labelControl1.Text = "Total  :";
+            // 
+            // TotaltextEdit
+            // 
+            TotaltextEdit.Location = new Point(963, 83);
+            TotaltextEdit.Margin = new Padding(3, 4, 3, 4);
+            TotaltextEdit.Name = "TotaltextEdit";
+            TotaltextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TotaltextEdit.Properties.Appearance.Options.UseFont = true;
+            TotaltextEdit.Size = new Size(187, 62);
+            TotaltextEdit.TabIndex = 34;
             // 
             // gridViewdet
             // 
@@ -245,6 +279,7 @@
             gridViewdet.DetailHeight = 417;
             gridViewdet.GridControl = gridcontrolDetails;
             gridViewdet.Name = "gridViewdet";
+            gridViewdet.OptionsView.ShowGroupPanel = false;
             // 
             // gridColumn1
             // 
@@ -312,51 +347,34 @@
             gridColumn6.VisibleIndex = 5;
             gridColumn6.Width = 112;
             // 
-            // CompleteprocessButton
+            // gridcontrolDetails
             // 
-            CompleteprocessButton.Location = new Point(1244, 195);
-            CompleteprocessButton.Margin = new Padding(3, 4, 3, 4);
-            CompleteprocessButton.Name = "CompleteprocessButton";
-            CompleteprocessButton.Size = new Size(198, 46);
-            CompleteprocessButton.TabIndex = 32;
-            CompleteprocessButton.Text = "Complete process";
-            CompleteprocessButton.Click += CompleteprocessButton_Click;
-            // 
-            // labelControl1
-            // 
-            labelControl1.Appearance.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl1.Appearance.Options.UseFont = true;
-            labelControl1.Location = new Point(1244, 73);
-            labelControl1.Margin = new Padding(3, 4, 3, 4);
-            labelControl1.Name = "labelControl1";
-            labelControl1.Size = new Size(91, 38);
-            labelControl1.TabIndex = 33;
-            labelControl1.Text = "Total  :";
-            // 
-            // TotaltextEdit
-            // 
-            TotaltextEdit.Location = new Point(1244, 127);
-            TotaltextEdit.Margin = new Padding(3, 4, 3, 4);
-            TotaltextEdit.Name = "TotaltextEdit";
-            TotaltextEdit.Size = new Size(250, 28);
-            TotaltextEdit.TabIndex = 34;
+            gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(1);
+            gridLevelNode1.RelationName = "Level1";
+            gridcontrolDetails.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode1 });
+            gridcontrolDetails.Location = new Point(7, 222);
+            gridcontrolDetails.MainView = gridViewdet;
+            gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);
+            gridcontrolDetails.Name = "gridcontrolDetails";
+            gridcontrolDetails.Size = new Size(1148, 290);
+            gridcontrolDetails.TabIndex = 27;
+            gridcontrolDetails.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewdet });
             // 
             // AddInvoiceForm
             // 
-            Appearance.BackColor = SystemColors.InactiveCaptionText;
+            Appearance.BackColor = SystemColors.ControlText;
             Appearance.Options.UseBackColor = true;
             Appearance.Options.UseFont = true;
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1529, 782);
+            ClientSize = new Size(1173, 517);
             Controls.Add(TotaltextEdit);
             Controls.Add(labelControl1);
             Controls.Add(CompleteprocessButton);
             Controls.Add(groupBox2);
-            Controls.Add(btnSubmit);
             Controls.Add(gridcontrolDetails);
             Font = new Font("Segoe UI", 9F);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             LookAndFeel.SkinName = "Office 2019 Black";
             LookAndFeel.UseDefaultLookAndFeel = false;
             Margin = new Padding(3, 4, 3, 4);
@@ -376,9 +394,9 @@
             ((System.ComponentModel.ISupportInitialize)discountValueTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)totalServiceTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridViewdet).EndInit();
             ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridViewdet).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -399,7 +417,10 @@
         private DevExpress.XtraEditors.TextEdit quantityTextEdit;
         private DevExpress.XtraEditors.TextEdit totalServiceTextEdit;
         private DevExpress.XtraEditors.SimpleButton btnSubmit;
-        private DevExpress.XtraGrid.GridControl gridcontrolDetails;
+        private DevExpress.XtraEditors.SimpleButton CompleteprocessButton;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
+        private DevExpress.XtraEditors.TextEdit TotaltextEdit;
+        private DevExpress.XtraEditors.ComboBoxEdit comboBoxDiscountType;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewdet;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
@@ -407,9 +428,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
-        private DevExpress.XtraEditors.SimpleButton CompleteprocessButton;
-        private DevExpress.XtraEditors.LabelControl labelControl1;
-        private DevExpress.XtraEditors.TextEdit TotaltextEdit;
-        private DevExpress.XtraEditors.ComboBoxEdit comboBoxDiscountType;
+        private DevExpress.XtraGrid.GridControl gridcontrolDetails;
     }
 }

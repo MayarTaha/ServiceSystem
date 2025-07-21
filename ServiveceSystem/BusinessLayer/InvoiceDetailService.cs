@@ -26,6 +26,7 @@ namespace ServiveceSystem.BusinessLayer
 
 
         public async Task<List<InvoiceDetail>> GetAllAsync()
+
         {
             return await _context.InvoiceDetails.Include(d => d.Service)
         .Include(d => d.QuotationHeader)
@@ -158,3 +159,4 @@ namespace ServiveceSystem.BusinessLayer
 
     }
 }
+

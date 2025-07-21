@@ -44,12 +44,11 @@ namespace ServiveceSystem.PresentationLayer.Taxes
             // txtFilter
             // 
             txtFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtFilter.EditValue = "Filter by Name...";
-            txtFilter.Location = new Point(47, 12);
+            txtFilter.Location = new Point(46, 11);
             txtFilter.Name = "txtFilter";
-            txtFilter.Properties.NullValuePrompt = "Filter by name...";
-            txtFilter.Size = new Size(658, 22);
-            txtFilter.TabIndex = 2;
+            txtFilter.Properties.NullText = "Filter by tax name...";
+            txtFilter.Size = new Size(648, 22);
+            txtFilter.TabIndex = 0;
             txtFilter.TextChanged += txtFilter_TextChanged;
             // 
             // btnAddTaxes

@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using ServiceSystem.Models;
 using ServiceSystem.PresentationLayer.InvoiceDetail;
-using ServiceSystem.PresentationLayer.QuotationHeader;
 using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
 using ServiveceSystem.PresentationLayer;
@@ -11,7 +10,6 @@ using ServiveceSystem.PresentationLayer.ContactPerson;
 using ServiveceSystem.PresentationLayer.InvoiceDetail;
 using ServiveceSystem.PresentationLayer.PaymentMethod;
 using ServiveceSystem.PresentationLayer.QuotationHeader;
-using ServiveceSystem.PresentationLayer.Service;
 using ServiveceSystem.PresentationLayer.User;
 
 namespace ServiveceSystem
@@ -25,12 +23,20 @@ namespace ServiveceSystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = "Office 2019 Black";
+            var login = new LoginForm();
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new Home());
+            }
+            else
+            {
+                // Exit if login fails or canceled
+                Application.Exit();
+            }
 
-            // Enable DevExpress dark skin
-            DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2019 Black");
-             Application.Run(new AllInvoices());
-           // Application.Run(new AllQuotations()); // ← your desired form here
-          //  Application.Run(new AllContactPersons());
+            //Application.Run(new AddUser()
+            // );  // ← your desired form here
         }
 
     }

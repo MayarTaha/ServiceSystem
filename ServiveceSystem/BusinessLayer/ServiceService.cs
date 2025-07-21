@@ -24,7 +24,7 @@ namespace ServiveceSystem.BusinessLayer
                 .ToListAsync();
         }
 
-        public async Task<Service> GetById(int id)
+        public async Task<Service?> GetById(int id)
         {
             return await _context.Services.FindAsync(id);
         }

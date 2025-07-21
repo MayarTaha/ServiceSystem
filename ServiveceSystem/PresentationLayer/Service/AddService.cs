@@ -24,7 +24,7 @@ namespace ServiveceSystem.PresentationLayer.Service
 
         }
 
-        private async void btnSave_Click(object sender, EventArgs e)
+        private  void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtName.Text))
             {
@@ -51,7 +51,7 @@ namespace ServiveceSystem.PresentationLayer.Service
                 DeletedLog = ""
             };
 
-            await _serviceService.AddService(service);
+             _serviceService.AddService(service);
             MessageBox.Show("Service added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.DialogResult = DialogResult.OK;
             this.Close();

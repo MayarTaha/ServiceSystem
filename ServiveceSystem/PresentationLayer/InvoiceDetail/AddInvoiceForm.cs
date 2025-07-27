@@ -52,6 +52,7 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
         {
             comboBoxDiscountType.Properties.Items.Clear();
             comboBoxDiscountType.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
+            comboBoxDiscountType.EditValue = Discount.NotSelected;
             // Service
             serviceLookUpEdit.Properties.DataSource = _context.Services.Where(s => !s.isDeleted).ToList(); ;
             serviceLookUpEdit.Properties.DisplayMember = "Name";
@@ -107,7 +108,11 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
         }
         private void CompleteprocessButton_Click(object sender, EventArgs e)
         {
-           
+            if (invoiceDetailsList.Count == 0)
+            {
+                XtraMessageBox.Show("Please add at least one service before continuing.");
+                return;
+            }
             var total = decimal.TryParse(TotaltextEdit.Text, out var t) ? t : 0;
             var addForm = new InvoicePayment(invoiceDetailsList.ToList(), total);
             if (addForm.ShowDialog() == DialogResult.OK)
@@ -195,12 +200,12 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
             gridcontrolDetails.RefreshDataSource();
             UpdateGrandTotal();
 
-            // امسح الحقول
+            // Reset fields to default values
             serviceLookUpEdit.EditValue = null;
             textEditServicePrice.Text = "";
             quantityTextEdit.Text = "";
-            comboBoxDiscountType.EditValue = null;
-            discountValueTextEdit.Text = "";
+            comboBoxDiscountType.EditValue = Discount.NotSelected;
+            discountValueTextEdit.Text = "0";
             totalServiceTextEdit.Text = "";
         }
     }

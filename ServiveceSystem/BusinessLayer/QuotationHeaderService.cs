@@ -66,7 +66,6 @@ namespace ServiveceSystem.BusinessLayer
             username ??= CurrentUser.Username ?? "system";
 
             var contactExists = await _context.ContactPersons.AnyAsync(cp => cp.ContactId == qout.ContactId);
-
             if (!contactExists)
                 return false;
             var exists = await _context.QuotationHeaders
@@ -74,12 +73,28 @@ namespace ServiveceSystem.BusinessLayer
                                q.ClinicId == qout.ClinicId &&
                                q.InitialDate == qout.InitialDate &&
                 !q.isDeleted);
-
             if (exists)
                 return false;
 
-            qout.UpdatedLog = $"{username} - {DateTime.Now}";
-            _context.QuotationHeaders.Update(qout);
+            var tracked = await _context.QuotationHeaders.FirstOrDefaultAsync(q => q.QuotationId == qout.QuotationId);
+            if (tracked == null)
+                return false;
+
+            // Update properties
+            tracked.ClinicId = qout.ClinicId;
+            tracked.InitialDate = qout.InitialDate;
+            tracked.ExpireDate = qout.ExpireDate;
+            tracked.Note = qout.Note;
+            tracked.QuotationNaMe = qout.QuotationNaMe;
+            tracked.Status = qout.Status;
+            tracked.priority = qout.priority;
+            tracked.DiscountType = qout.DiscountType;
+            tracked.Discount = qout.Discount;
+            tracked.TotalDuo = qout.TotalDuo;
+            tracked.ContactId = qout.ContactId;
+            tracked.UpdatedLog = $"{username} - {DateTime.Now}";
+            // ... any other fields
+
             await _context.SaveChangesAsync();
             return true;
         }

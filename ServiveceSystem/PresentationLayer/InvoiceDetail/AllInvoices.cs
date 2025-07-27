@@ -66,7 +66,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             var displayList = invoices.Select(i => new
             {
                 i.InvoiceHeaderId,
-                Name = i.QuotationHeader != null ? i.QuotationHeader.Note : "", // Show Quotation Note as "Name"
+                Name = i.QuotationHeader != null ? i.QuotationHeader.QuotationNaMe : "", // Show Quotation Note as "Name"
                 i.InvoiceDate,
                 PaymentMethod = i.PaymentMethod != null ? i.PaymentMethod.PaymentType : "", // Show Payment Method Type
                 i.Reminder,
@@ -137,12 +137,11 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
             int invoiceHeaderId = (int)gridView1.GetRowCellValue(rowHandle, "InvoiceHeaderId");
-            // TODO: Implement EditInvoiceForm and show it here
-            // var editForm = new EditInvoiceForm(invoiceHeaderId);
-            // if (editForm.ShowDialog() == DialogResult.OK)
-            // {
-            //     await LoadInvoicesAsync();
-            // }
+            var editForm = new EditInvoiceForm(invoiceHeaderId);
+            if (editForm.ShowDialog() == DialogResult.OK)
+            {
+                await LoadInvoicesAsync();
+            }
         }
 
         private async void DeleteButton_Click(object sender, EventArgs e)
@@ -151,7 +150,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             if (rowHandle < 0) return;
             int invoiceHeaderId = (int)gridView1.GetRowCellValue(rowHandle, "InvoiceHeaderId");
             var invoice = _invoices.FirstOrDefault(i => i.InvoiceHeaderId == invoiceHeaderId);
-            if (invoice != null && MessageBox.Show($"Delete invoice '{invoice.InvoiceHeaderId}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            string invoiceName = invoice?.QuotationHeader?.QuotationNaMe ?? invoiceHeaderId.ToString();
+            if (invoice != null && MessageBox.Show($"Delete invoice '{invoiceName}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 await _invoiceHeaderService.Delete(invoiceHeaderId);
                 await LoadInvoicesAsync();

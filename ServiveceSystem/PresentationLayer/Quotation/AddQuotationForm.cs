@@ -52,6 +52,7 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
             // Discount Type
             comboBoxDiscountTypeDetail.Properties.Items.Clear();
             comboBoxDiscountTypeDetail.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
+            comboBoxDiscountTypeDetail.EditValue = Discount.NotSelected;
 
             // Discount Type header
             //comboBoxDiscountTypeHeader.Properties.Items.Clear();
@@ -129,6 +130,11 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
 
         private void CompleteprocessButton_Click(object sender, EventArgs e)
         {
+            if (quotationDetailsList.Count == 0)
+            {
+                XtraMessageBox.Show("Please add at least one service before continuing.");
+                return;
+            }
             var total = decimal.TryParse(TotaltextEdit.Text, out var t) ? t : 0;
             var addForm = new QuotationForm(quotationDetailsList.ToList(), total);
             if (addForm.ShowDialog() == DialogResult.OK)
@@ -233,12 +239,12 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
             gridcontrolDetails.RefreshDataSource();
             UpdateGrandTotal();
 
-            // امسح الحقول
+            // Reset fields to default values
             serviceLookUpEdit.EditValue = null;
             textEditServicePrice.Text = "";
             quantityTextEdit.Text = "";
-            comboBoxDiscountTypeDetail.EditValue = null;
-            textEditDiscountDetail.Text = "";
+            comboBoxDiscountTypeDetail.EditValue = Discount.NotSelected;
+            textEditDiscountDetail.Text = "0";
             totalServiceTextEdit.Text = "";
         }
 

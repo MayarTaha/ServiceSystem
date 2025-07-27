@@ -8,6 +8,13 @@ using ServiveceSystem.Models;
 
 namespace ServiceSystem.Models
 {
+    public enum InvoiceStatus
+    {
+        Pending,
+        Approved,
+        Rejected,
+        Expired
+    }
     public class InvoiceHeader
     {
         public int InvoiceHeaderId { get; set; }
@@ -23,6 +30,7 @@ namespace ServiceSystem.Models
 
         public decimal Discount { get; set; }
         public Discount DiscountType { get; set; }
+        public InvoiceStatus Status { get; set; }
 
 
         [ForeignKey("PaymentMethod")]

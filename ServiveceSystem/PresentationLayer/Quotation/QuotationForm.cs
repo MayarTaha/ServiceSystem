@@ -22,10 +22,15 @@ namespace ServiceSystem.PresentationLayer.Quotation
         private decimal _finalTotal;
         private readonly QuotationDetailService _quotationDetailService;
         private QuotationHeaderService _quotationHeaderService;
+        private int? _editQuotationHeaderId = null;
 
         public QuotationForm(List<ServiceSystem.Models.QuotationDetail> quotationDetails, decimal total)
         {
             InitializeComponent();
+            noteRichTextBox.BackColor = this.BackColor;
+            noteRichTextBox.ForeColor = Color.White;
+            initialDateEdit.DateTime = DateTime.Now;
+            expireDateEdit.DateTime = DateTime.Now.AddMonths(1);
             _context = new AppDBContext();
             _quotationHeaderService = new QuotationHeaderService(_context);
             _quotationDetailService = new QuotationDetailService(_context);
@@ -33,6 +38,39 @@ namespace ServiceSystem.PresentationLayer.Quotation
             _total = total;
             _finalTotal = _total;
             LoadLookUps();
+            checkedListBoxControltax.ItemCheck += (s, e) => CalculateTotalWithDiscount();
+        }
+
+        public QuotationForm(int quotationHeaderId)
+        {
+            InitializeComponent();
+            _editQuotationHeaderId = quotationHeaderId;
+            _context = new AppDBContext();
+            _quotationHeaderService = new QuotationHeaderService(_context);
+            _quotationDetailService = new QuotationDetailService(_context);
+            // Load header and details
+            var header = _context.QuotationHeaders.FirstOrDefault(q => q.QuotationId == quotationHeaderId);
+            if (header != null)
+            {
+                clinicLookUpEdit.EditValue = header.ClinicId;
+                initialDateEdit.DateTime = header.InitialDate;
+                expireDateEdit.DateTime = header.ExpireDate;
+                noteRichTextBox.Text = header.Note;
+                quotationNameTextEdit.Text = header.QuotationNaMe;
+                comboBoxStatus.EditValue = header.Status;
+                prioritycomboBoxEdit.EditValue = header.priority;
+                comboBoxDiscountType.EditValue = header.DiscountType;
+                textEditDiscountHeader.Text = header.Discount.ToString();
+                totaltextEdit.Text = header.TotalDuo.ToString();
+                contactLookUpEdit.EditValue = header.ContactId;
+                // Load taxes, etc. as needed
+            }
+            // Load details
+            _quotationDetails = _context.QuotationDetails.Where(d => d.QuotationId == quotationHeaderId && !d.isDeleted).ToList();
+            _total = _quotationDetails.Sum(d => d.TotalService);
+            _finalTotal = _total;
+            LoadLookUps();
+            checkedListBoxControltax.ItemCheck += (s, e) => CalculateTotalWithDiscount();
         }
 
         private void LoadLookUps()
@@ -53,14 +91,25 @@ namespace ServiceSystem.PresentationLayer.Quotation
             // 5. نوع الخصم
             comboBoxDiscountType.Properties.Items.Clear();
             comboBoxDiscountType.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
+            comboBoxDiscountType.EditValue = Discount.NotSelected;
 
             //Status
             comboBoxStatus.Properties.Items.Clear();
             comboBoxStatus.Properties.Items.AddRange(Enum.GetValues(typeof(QuotationStatus)));
+            comboBoxStatus.EditValue = QuotationStatus.Pending;
 
             //priority
             prioritycomboBoxEdit.Properties.Items.Clear();
             prioritycomboBoxEdit.Properties.Items.AddRange(Enum.GetValues(typeof(priorityStatus)));
+            prioritycomboBoxEdit.EditValue = priorityStatus.LowLevel;
+
+            // Taxes
+            checkedListBoxControltax.Items.Clear();
+            var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+            foreach (var tax in taxes)
+            {
+                checkedListBoxControltax.Items.Add($"{tax.Name} ({tax.TaxRate}%)");
+            }
         }
 
         private void clinicLookUpEdit_EditValueChanged(object sender, EventArgs e)
@@ -92,10 +141,21 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 total -= total * (discount / 100m);
             else if (discountType == Discount.Value)
                 total -= discount;
-            _finalTotal = total; // خزّن القيمة النهائية هنا
 
+            // Add taxes
+            decimal totalTax = 0;
+            var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+            foreach (var checkedItem in checkedListBoxControltax.CheckedItems)
+            {
+                string itemStr = checkedItem.ToString();
+                var tax = taxes.FirstOrDefault(t => itemStr.StartsWith(t.Name + " ("));
+                if (tax != null)
+                {
+                    totalTax += total * (tax.TaxRate / 100m);
+                }
+            }
+            _finalTotal = total + totalTax;
             totaltextEdit.Text = _finalTotal.ToString("0.##");
-
         }
 
         private void comboBoxDiscountType_SelectedIndexChanged(object sender, EventArgs e)
@@ -123,9 +183,34 @@ namespace ServiceSystem.PresentationLayer.Quotation
 
         private async void savebutton_Click(object sender, EventArgs e)
         {
-           
+            if (_editQuotationHeaderId.HasValue)
+            {
+                // Edit mode: update existing quotation using business layer
+                var updatedHeader = new ServiceSystem.Models.QuotationHeader
+                {
+                    QuotationId = _editQuotationHeaderId.Value,
+                    ClinicId = Convert.ToInt32(clinicLookUpEdit.EditValue),
+                    InitialDate = initialDateEdit.DateTime,
+                    ExpireDate = expireDateEdit.DateTime,
+                    Note = noteRichTextBox.Text,
+                    QuotationNaMe = quotationNameTextEdit.Text,
+                    Status = (QuotationStatus)comboBoxStatus.EditValue,
+                    priority = (priorityStatus)prioritycomboBoxEdit.EditValue,
+                    DiscountType = (Discount)comboBoxDiscountType.EditValue,
+                    Discount = decimal.TryParse(textEditDiscountHeader.Text, out var d) ? d : 0,
+                    TotalDuo = decimal.TryParse(totaltextEdit.Text, out var t) ? t : 0,
+                    ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
+                    UpdatedLog = DateTime.Now.ToString(),
+                    // Add other fields as needed
+                };
+                await _quotationHeaderService.UpdateQuotationHeader(updatedHeader);
+                XtraMessageBox.Show("Quotation updated successfully!");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+                return;
+            }
             // 1. أنشئ QuotationHeader
-            var header = new ServiceSystem.Models.QuotationHeader
+            var newHeader = new ServiceSystem.Models.QuotationHeader
             {
                 ClinicId = Convert.ToInt32(clinicLookUpEdit.EditValue),
                 InitialDate = initialDateEdit.DateTime,
@@ -135,17 +220,16 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 Status = (QuotationStatus)comboBoxStatus.EditValue,
                 priority = (priorityStatus)prioritycomboBoxEdit.EditValue,
                 DiscountType = (Discount)comboBoxDiscountType.EditValue,
-                Discount = decimal.TryParse(textEditDiscountHeader.Text, out var d) ? d : 0,
-                TotalDuo = decimal.TryParse(totaltextEdit.Text, out var t) ? t : 0,
+                Discount = decimal.TryParse(textEditDiscountHeader.Text, out var d2) ? d2 : 0,
+                TotalDuo = decimal.TryParse(totaltextEdit.Text, out var t2) ? t2 : 0,
                 ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
                 CreatedLog = DateTime.Now.ToString(),
                 UpdatedLog = DateTime.Now.ToString(),
                 DeletedLog = "",
                 isDeleted = false
             };
-
             // 2. أضف QuotationHeader أولاً
-            var headerAdded = await _quotationHeaderService.AddQuotationHeader(header);
+            var headerAdded = await _quotationHeaderService.AddQuotationHeader(newHeader);
             if (!headerAdded)
             {
                 XtraMessageBox.Show("Failed to add quotation header.");
@@ -155,7 +239,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
             // 3. أضف QuotationDetails مع ربطها بالـ QuotationId الجديد
             foreach (var detail in _quotationDetails)
             {
-                detail.QuotationId = header.QuotationId;
+                detail.QuotationId = newHeader.QuotationId;
                 detail.CreatedLog = DateTime.Now.ToString();
                 detail.UpdatedLog = DateTime.Now.ToString();
                 detail.DeletedLog = "";

@@ -55,7 +55,7 @@ namespace ServiveceSystem.BusinessLayer
                               q.PaymentMethodId == invoice.PaymentMethodId &&
                               q.ContactId == invoice.ContactId &&
                               !q.isDeleted);
-            MessageBox.Show($"QuotationId Exists: {quotationExists}\nPayment Exists: {paymentMethodExists}\nAlready Exists: {exists}");
+            DevExpress.XtraEditors.XtraMessageBox.Show($"QuotationId Exists: {quotationExists}\nPayment Exists: {paymentMethodExists}\nAlready Exists: {exists}");
 
             if (!quotationExists || !paymentMethodExists || exists)
                 return false;

@@ -56,18 +56,21 @@ namespace ServiveceSystem.BusinessLayer
         {
             username ??= CurrentUser.Username ?? "system";
 
-            var exists = await _context.QuotationDetails
-                .AnyAsync(q => q.QuotationDetailId != qout.QuotationDetailId &&
-                               q.QuotationId == qout.QuotationId &&
-                               !q.isDeleted);
-
-            if (!exists)
+            var tracked = await _context.QuotationDetails.FirstOrDefaultAsync(q => q.QuotationDetailId == qout.QuotationDetailId);
+            if (tracked == null)
                 return false;
 
-            qout.TotalService = (qout.ServicePrice * qout.Quantity) - qout.Discount;
-            qout.UpdatedLog = $"{username} - {DateTime.Now}";
+            // Update properties
+            tracked.ServiceId = qout.ServiceId;
+            tracked.QuotationId = qout.QuotationId;
+            tracked.Quantity = qout.Quantity;
+            tracked.Discount = qout.Discount;
+            tracked.DiscountType = qout.DiscountType;
+            tracked.ServicePrice = qout.ServicePrice;
+            tracked.TotalService = (qout.ServicePrice * qout.Quantity) - qout.Discount;
+            tracked.UpdatedLog = $"{username} - {DateTime.Now}";
+            // ... any other fields
 
-            _context.QuotationDetails.Update(qout);
             await _context.SaveChangesAsync();
             return true;
         }

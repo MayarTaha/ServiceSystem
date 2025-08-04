@@ -63,26 +63,11 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
+            if (!ValidateForm())
+                return;
+
             try
             {
-                if (string.IsNullOrWhiteSpace(txtContactName.Text))
-                {
-                    MessageBox.Show("Please enter a contact name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(txtContactEmail.Text))
-                {
-                    MessageBox.Show("Please enter an email.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                if (cmbClinic.SelectedItem == null)
-                {
-                    MessageBox.Show("Please select a clinic.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 var selectedClinicName = cmbClinic.SelectedItem.ToString();
                 var selectedClinic = _clinics.FirstOrDefault(c => c.ClinicName == selectedClinicName);
 
@@ -101,5 +86,76 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
                 MessageBox.Show($"Error updating contact person: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private bool ValidateForm()
+        {
+            bool isValid = true;
+
+            labelNameError.Visible = false;
+            labelPhoneError.Visible = false;
+            labelemailerror.Visible = false;
+            ClinicLookUpEditErrorlabel.Visible = false;
+
+            if (string.IsNullOrWhiteSpace(txtContactName.Text))
+            {
+                labelNameError.Visible = true;
+                labelNameError.Text = "Name is required.";
+                isValid = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtContactNumber.Text))
+            {
+                labelPhoneError.Visible = true;
+                labelPhoneError.Text = "Phone is required.";
+                isValid = false;
+            }
+            else
+            {
+                var phoneRegex = new System.Text.RegularExpressions.Regex(@"^05[0-9]{8}$");
+                if (!phoneRegex.IsMatch(txtContactNumber.Text))
+                {
+                    labelPhoneError.Visible = true;
+                    labelPhoneError.Text = "Invalid UAE phone number format.";
+                    isValid = false;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(txtContactEmail.Text))
+            {
+                labelemailerror.Visible = true;
+                labelemailerror.Text = "Email is required.";
+                isValid = false;
+            }
+            else if (!IsValidEmail(txtContactEmail.Text))
+            {
+                labelemailerror.Visible = true;
+                labelemailerror.Text = "Invalid email format.";
+                isValid = false;
+            }
+
+            if (cmbClinic.SelectedItem == null)
+            {
+                ClinicLookUpEditErrorlabel.Visible = true;
+                ClinicLookUpEditErrorlabel.Text = "You must choose a clinic.";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
     }
 } 

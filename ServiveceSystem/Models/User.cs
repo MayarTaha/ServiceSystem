@@ -11,6 +11,7 @@ namespace ServiceSystem.Models
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Title { get; set; }
         public string Permission { get; set; }
         public string CreatedLog { get; set; }
         public string UpdatedLog { get; set; }

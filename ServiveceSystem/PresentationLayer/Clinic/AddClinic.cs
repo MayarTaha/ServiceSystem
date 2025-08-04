@@ -49,6 +49,7 @@ namespace ServiveceSystem.PresentationLayer.Clinic
                 _clinicService.AddClinic(clinic);
 
                 MessageBox.Show("Clinic added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
@@ -100,8 +101,25 @@ namespace ServiveceSystem.PresentationLayer.Clinic
                 labelPhoneError.Text = "Phone is required.";
                 isValid = false;
             }
+            else
+            {
+                // UAE mobile number regex: starts with 05 and 8 digits after
+                var phoneRegex = new System.Text.RegularExpressions.Regex(@"^05[0-9]{8}$");
 
-            
+                if (!phoneRegex.IsMatch(PhonetextEdit.Text))
+                {
+                    labelPhoneError.Visible = true;
+                    labelPhoneError.Text = "Invalid UAE phone number format.";
+                    isValid = false;
+                }
+                else
+                {
+                    labelPhoneError.Visible = false;
+                }
+            }
+
+
+
 
             if (string.IsNullOrWhiteSpace(LocationtextEdit.Text))
             {

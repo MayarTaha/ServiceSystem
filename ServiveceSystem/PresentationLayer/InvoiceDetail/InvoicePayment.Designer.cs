@@ -98,9 +98,9 @@
             groupBox1.Controls.Add(clinicLookUpEdit);
             groupBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.Location = new Point(8, 1);
-            groupBox1.Margin = new Padding(2, 2, 2, 2);
+            groupBox1.Margin = new Padding(2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(2, 2, 2, 2);
+            groupBox1.Padding = new Padding(2);
             groupBox1.Size = new Size(641, 114);
             groupBox1.TabIndex = 26;
             groupBox1.TabStop = false;
@@ -109,7 +109,7 @@
             // emailTextEdit
             // 
             emailTextEdit.Location = new Point(106, 57);
-            emailTextEdit.Margin = new Padding(2, 2, 2, 2);
+            emailTextEdit.Margin = new Padding(2);
             emailTextEdit.Name = "emailTextEdit";
             emailTextEdit.Size = new Size(167, 22);
             emailTextEdit.TabIndex = 28;
@@ -117,7 +117,7 @@
             // locationTextEdit
             // 
             locationTextEdit.Location = new Point(421, 59);
-            locationTextEdit.Margin = new Padding(2, 2, 2, 2);
+            locationTextEdit.Margin = new Padding(2);
             locationTextEdit.Name = "locationTextEdit";
             locationTextEdit.Size = new Size(167, 22);
             locationTextEdit.TabIndex = 27;
@@ -125,7 +125,7 @@
             // phoneTextEdit
             // 
             phoneTextEdit.Location = new Point(421, 28);
-            phoneTextEdit.Margin = new Padding(2, 2, 2, 2);
+            phoneTextEdit.Margin = new Padding(2);
             phoneTextEdit.Name = "phoneTextEdit";
             phoneTextEdit.Size = new Size(167, 22);
             phoneTextEdit.TabIndex = 26;
@@ -133,7 +133,7 @@
             // contactLookUpEdit
             // 
             contactLookUpEdit.Location = new Point(106, 82);
-            contactLookUpEdit.Margin = new Padding(2, 2, 2, 2);
+            contactLookUpEdit.Margin = new Padding(2);
             contactLookUpEdit.Name = "contactLookUpEdit";
             contactLookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
             contactLookUpEdit.Properties.Appearance.Options.UseForeColor = true;
@@ -147,7 +147,7 @@
             labelControl15.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl15.Appearance.Options.UseFont = true;
             labelControl15.Location = new Point(321, 26);
-            labelControl15.Margin = new Padding(2, 2, 2, 2);
+            labelControl15.Margin = new Padding(2);
             labelControl15.Name = "labelControl15";
             labelControl15.Size = new Size(51, 21);
             labelControl15.TabIndex = 25;
@@ -158,7 +158,7 @@
             labelControl13.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             labelControl13.Appearance.Options.UseFont = true;
             labelControl13.Location = new Point(10, 82);
-            labelControl13.Margin = new Padding(2, 2, 2, 2);
+            labelControl13.Margin = new Padding(2);
             labelControl13.Name = "labelControl13";
             labelControl13.Size = new Size(64, 20);
             labelControl13.TabIndex = 22;
@@ -169,7 +169,7 @@
             labelControl14.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl14.Appearance.Options.UseFont = true;
             labelControl14.Location = new Point(321, 58);
-            labelControl14.Margin = new Padding(2, 2, 2, 2);
+            labelControl14.Margin = new Padding(2);
             labelControl14.Name = "labelControl14";
             labelControl14.Size = new Size(66, 21);
             labelControl14.TabIndex = 24;
@@ -180,7 +180,7 @@
             labelControl9.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             labelControl9.Appearance.Options.UseFont = true;
             labelControl9.Location = new Point(10, 59);
-            labelControl9.Margin = new Padding(2, 2, 2, 2);
+            labelControl9.Margin = new Padding(2);
             labelControl9.Name = "labelControl9";
             labelControl9.Size = new Size(47, 20);
             labelControl9.TabIndex = 23;
@@ -191,7 +191,7 @@
             labelControl1.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             labelControl1.Appearance.Options.UseFont = true;
             labelControl1.Location = new Point(10, 29);
-            labelControl1.Margin = new Padding(2, 2, 2, 2);
+            labelControl1.Margin = new Padding(2);
             labelControl1.Name = "labelControl1";
             labelControl1.Size = new Size(91, 20);
             labelControl1.TabIndex = 15;
@@ -200,7 +200,7 @@
             // clinicLookUpEdit
             // 
             clinicLookUpEdit.Location = new Point(106, 28);
-            clinicLookUpEdit.Margin = new Padding(2, 2, 2, 2);
+            clinicLookUpEdit.Margin = new Padding(2);
             clinicLookUpEdit.Name = "clinicLookUpEdit";
             clinicLookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
             clinicLookUpEdit.Properties.Appearance.Options.UseForeColor = true;
@@ -220,9 +220,9 @@
             Invoice.Controls.Add(labelControl4);
             Invoice.Controls.Add(quotationLookUpEdit);
             Invoice.Location = new Point(8, 121);
-            Invoice.Margin = new Padding(2, 2, 2, 2);
+            Invoice.Margin = new Padding(2);
             Invoice.Name = "Invoice";
-            Invoice.Padding = new Padding(2, 2, 2, 2);
+            Invoice.Padding = new Padding(2);
             Invoice.Size = new Size(305, 178);
             Invoice.TabIndex = 30;
             Invoice.TabStop = false;
@@ -233,7 +233,7 @@
             labelControl11.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl11.Appearance.Options.UseFont = true;
             labelControl11.Location = new Point(13, 28);
-            labelControl11.Margin = new Padding(2, 2, 2, 2);
+            labelControl11.Margin = new Padding(2);
             labelControl11.Name = "labelControl11";
             labelControl11.Size = new Size(123, 21);
             labelControl11.TabIndex = 29;
@@ -242,7 +242,7 @@
             // noterichTextBox
             // 
             noterichTextBox.Location = new Point(138, 85);
-            noterichTextBox.Margin = new Padding(2, 2, 2, 2);
+            noterichTextBox.Margin = new Padding(2);
             noterichTextBox.Name = "noterichTextBox";
             noterichTextBox.Size = new Size(163, 82);
             noterichTextBox.TabIndex = 28;
@@ -253,7 +253,7 @@
             labelControl2.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl2.Appearance.Options.UseFont = true;
             labelControl2.Location = new Point(13, 95);
-            labelControl2.Margin = new Padding(2, 2, 2, 2);
+            labelControl2.Margin = new Padding(2);
             labelControl2.Name = "labelControl2";
             labelControl2.Size = new Size(41, 21);
             labelControl2.TabIndex = 27;
@@ -263,7 +263,7 @@
             // 
             invoiceDateEdit.EditValue = null;
             invoiceDateEdit.Location = new Point(138, 56);
-            invoiceDateEdit.Margin = new Padding(2, 2, 2, 2);
+            invoiceDateEdit.Margin = new Padding(2);
             invoiceDateEdit.Name = "invoiceDateEdit";
             invoiceDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             invoiceDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
@@ -276,7 +276,7 @@
             labelControl10.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl10.Appearance.Options.UseFont = true;
             labelControl10.Location = new Point(13, 57);
-            labelControl10.Margin = new Padding(2, 2, 2, 2);
+            labelControl10.Margin = new Padding(2);
             labelControl10.Name = "labelControl10";
             labelControl10.Size = new Size(92, 21);
             labelControl10.TabIndex = 19;
@@ -285,7 +285,7 @@
             // labelControl4
             // 
             labelControl4.Location = new Point(0, 0);
-            labelControl4.Margin = new Padding(2, 2, 2, 2);
+            labelControl4.Margin = new Padding(2);
             labelControl4.Name = "labelControl4";
             labelControl4.Size = new Size(0, 13);
             labelControl4.TabIndex = 26;
@@ -293,7 +293,7 @@
             // quotationLookUpEdit
             // 
             quotationLookUpEdit.Location = new Point(138, 30);
-            quotationLookUpEdit.Margin = new Padding(2, 2, 2, 2);
+            quotationLookUpEdit.Margin = new Padding(2);
             quotationLookUpEdit.Name = "quotationLookUpEdit";
             quotationLookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
             quotationLookUpEdit.Properties.Appearance.Options.UseForeColor = true;
@@ -308,7 +308,7 @@
             savebutton.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             savebutton.Appearance.Options.UseFont = true;
             savebutton.Location = new Point(8, 303);
-            savebutton.Margin = new Padding(2, 2, 2, 2);
+            savebutton.Margin = new Padding(2);
             savebutton.Name = "savebutton";
             savebutton.Size = new Size(641, 30);
             savebutton.TabIndex = 31;
@@ -333,9 +333,9 @@
             Payment.Controls.Add(labelControl5);
             Payment.Controls.Add(labelControl7);
             Payment.Location = new Point(329, 121);
-            Payment.Margin = new Padding(2, 2, 2, 2);
+            Payment.Margin = new Padding(2);
             Payment.Name = "Payment";
-            Payment.Padding = new Padding(2, 2, 2, 2);
+            Payment.Padding = new Padding(2);
             Payment.Size = new Size(320, 178);
             Payment.TabIndex = 32;
             Payment.TabStop = false;
@@ -347,7 +347,7 @@
             labelControl12.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl12.Appearance.Options.UseFont = true;
             labelControl12.Location = new Point(13, 128);
-            labelControl12.Margin = new Padding(2, 2, 2, 2);
+            labelControl12.Margin = new Padding(2);
             labelControl12.Name = "labelControl12";
             labelControl12.Size = new Size(68, 21);
             labelControl12.TabIndex = 36;
@@ -356,7 +356,7 @@
             // Discounttextedit
             // 
             Discounttextedit.Location = new Point(149, 125);
-            Discounttextedit.Margin = new Padding(2, 2, 2, 2);
+            Discounttextedit.Margin = new Padding(2);
             Discounttextedit.Name = "Discounttextedit";
             Discounttextedit.Size = new Size(167, 22);
             Discounttextedit.TabIndex = 35;
@@ -365,7 +365,7 @@
             // comboBoxDiscountType
             // 
             comboBoxDiscountType.Location = new Point(149, 102);
-            comboBoxDiscountType.Margin = new Padding(2, 2, 2, 2);
+            comboBoxDiscountType.Margin = new Padding(2);
             comboBoxDiscountType.Name = "comboBoxDiscountType";
             comboBoxDiscountType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             comboBoxDiscountType.Size = new Size(167, 22);
@@ -377,7 +377,7 @@
             labelControl16.Appearance.Font = new Font("Segoe UI", 9F);
             labelControl16.Appearance.Options.UseFont = true;
             labelControl16.Location = new Point(337, 101);
-            labelControl16.Margin = new Padding(2, 2, 2, 2);
+            labelControl16.Margin = new Padding(2);
             labelControl16.Name = "labelControl16";
             labelControl16.Size = new Size(53, 15);
             labelControl16.TabIndex = 33;
@@ -386,7 +386,7 @@
             // discountValueTextEdit
             // 
             discountValueTextEdit.Location = new Point(447, 101);
-            discountValueTextEdit.Margin = new Padding(2, 2, 2, 2);
+            discountValueTextEdit.Margin = new Padding(2);
             discountValueTextEdit.Name = "discountValueTextEdit";
             discountValueTextEdit.Size = new Size(167, 22);
             discountValueTextEdit.TabIndex = 31;
@@ -396,7 +396,7 @@
             labelControl17.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl17.Appearance.Options.UseFont = true;
             labelControl17.Location = new Point(13, 103);
-            labelControl17.Margin = new Padding(2, 2, 2, 2);
+            labelControl17.Margin = new Padding(2);
             labelControl17.Name = "labelControl17";
             labelControl17.Size = new Size(105, 21);
             labelControl17.TabIndex = 32;
@@ -405,7 +405,7 @@
             // TotalPricetextEdit
             // 
             TotalPricetextEdit.Location = new Point(149, 149);
-            TotalPricetextEdit.Margin = new Padding(2, 2, 2, 2);
+            TotalPricetextEdit.Margin = new Padding(2);
             TotalPricetextEdit.Name = "TotalPricetextEdit";
             TotalPricetextEdit.Size = new Size(167, 22);
             TotalPricetextEdit.TabIndex = 30;
@@ -415,7 +415,7 @@
             labelControl6.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl6.Appearance.Options.UseFont = true;
             labelControl6.Location = new Point(13, 152);
-            labelControl6.Margin = new Padding(2, 2, 2, 2);
+            labelControl6.Margin = new Padding(2);
             labelControl6.Name = "labelControl6";
             labelControl6.Size = new Size(79, 21);
             labelControl6.TabIndex = 29;
@@ -424,7 +424,7 @@
             // PaymenttextEdit
             // 
             PaymenttextEdit.Location = new Point(149, 24);
-            PaymenttextEdit.Margin = new Padding(2, 2, 2, 2);
+            PaymenttextEdit.Margin = new Padding(2);
             PaymenttextEdit.Name = "PaymenttextEdit";
             PaymenttextEdit.Size = new Size(167, 22);
             PaymenttextEdit.TabIndex = 28;
@@ -435,7 +435,7 @@
             labelControl8.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl8.Appearance.Options.UseFont = true;
             labelControl8.Location = new Point(13, 28);
-            labelControl8.Margin = new Padding(2, 2, 2, 2);
+            labelControl8.Margin = new Padding(2);
             labelControl8.Name = "labelControl8";
             labelControl8.Size = new Size(68, 21);
             labelControl8.TabIndex = 27;
@@ -444,7 +444,7 @@
             // reminderTextEdit
             // 
             reminderTextEdit.Location = new Point(149, 76);
-            reminderTextEdit.Margin = new Padding(2, 2, 2, 2);
+            reminderTextEdit.Margin = new Padding(2);
             reminderTextEdit.Name = "reminderTextEdit";
             reminderTextEdit.Size = new Size(167, 22);
             reminderTextEdit.TabIndex = 24;
@@ -452,7 +452,7 @@
             // paymentmethodlookupedit
             // 
             paymentmethodlookupedit.Location = new Point(149, 50);
-            paymentmethodlookupedit.Margin = new Padding(2, 2, 2, 2);
+            paymentmethodlookupedit.Margin = new Padding(2);
             paymentmethodlookupedit.Name = "paymentmethodlookupedit";
             paymentmethodlookupedit.Properties.Appearance.ForeColor = Color.Silver;
             paymentmethodlookupedit.Properties.Appearance.Options.UseForeColor = true;
@@ -466,7 +466,7 @@
             labelControl3.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl3.Appearance.Options.UseFont = true;
             labelControl3.Location = new Point(13, 79);
-            labelControl3.Margin = new Padding(2, 2, 2, 2);
+            labelControl3.Margin = new Padding(2);
             labelControl3.Name = "labelControl3";
             labelControl3.Size = new Size(75, 21);
             labelControl3.TabIndex = 21;
@@ -477,7 +477,7 @@
             labelControl5.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl5.Appearance.Options.UseFont = true;
             labelControl5.Location = new Point(13, 54);
-            labelControl5.Margin = new Padding(2, 2, 2, 2);
+            labelControl5.Margin = new Padding(2);
             labelControl5.Name = "labelControl5";
             labelControl5.Size = new Size(126, 21);
             labelControl5.TabIndex = 20;
@@ -486,7 +486,7 @@
             // labelControl7
             // 
             labelControl7.Location = new Point(0, 0);
-            labelControl7.Margin = new Padding(2, 2, 2, 2);
+            labelControl7.Margin = new Padding(2);
             labelControl7.Name = "labelControl7";
             labelControl7.Size = new Size(0, 13);
             labelControl7.TabIndex = 26;
@@ -500,10 +500,12 @@
             Controls.Add(savebutton);
             Controls.Add(Invoice);
             Controls.Add(groupBox1);
-            Margin = new Padding(2, 2, 2, 2);
+            IconOptions.Image = Properties.Resources.icons8_invoice_64;
+            Margin = new Padding(2);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "InvoicePayment";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "InvoicePayment";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

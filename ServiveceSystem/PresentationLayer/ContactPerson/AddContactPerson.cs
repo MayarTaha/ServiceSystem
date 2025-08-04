@@ -92,9 +92,26 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             if (string.IsNullOrWhiteSpace(PhonetextEdit.Text))
             {
                 labelPhoneError.Visible = true;
-                labelPhoneError.Text = "Phone is required";
+                labelPhoneError.Text = "Phone is required.";
                 isValid = false;
             }
+            else
+            {
+                // UAE mobile number regex: starts with 05 and 8 digits after
+                var phoneRegex = new System.Text.RegularExpressions.Regex(@"^05[0-9]{8}$");
+
+                if (!phoneRegex.IsMatch(PhonetextEdit.Text))
+                {
+                    labelPhoneError.Visible = true;
+                    labelPhoneError.Text = "Invalid UAE phone number format.";
+                    isValid = false;
+                }
+                else
+                {
+                    labelPhoneError.Visible = false;
+                }
+            }
+
 
             if (string.IsNullOrWhiteSpace(EmailtextEdit.Text))
             {
@@ -102,7 +119,12 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
                 labelemailerror.Text = "Email is required";
                 isValid = false;
             }
-
+            else if (!IsValidEmail(EmailtextEdit.Text))
+            {
+                labelemailerror.Visible = true;
+                labelemailerror.Text = "Invalid email format.";
+                isValid = false;
+            }
             if (ClinicLookUpEdit.EditValue == null)
             {
                 ClinicLookUpEditErrorlabel.Visible = true;
@@ -111,6 +133,18 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             }
 
             return isValid;
+        }
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }

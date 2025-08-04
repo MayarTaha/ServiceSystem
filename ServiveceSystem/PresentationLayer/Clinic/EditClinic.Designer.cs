@@ -14,7 +14,6 @@ namespace ServiveceSystem.PresentationLayer.Clinic
         #region Windows Form Designer generated code
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             ClinicnametextEdit = new DevExpress.XtraEditors.TextEdit();
             PhonetextEdit = new DevExpress.XtraEditors.TextEdit();
             EmailtextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -26,8 +25,6 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             labelControl5 = new DevExpress.XtraEditors.LabelControl();
             labelControl6 = new DevExpress.XtraEditors.LabelControl();
             SaveButton = new DevExpress.XtraEditors.SimpleButton();
-            errorProvider1 = new ErrorProvider(components);
-            dxErrorProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider(components);
             labelClinicNameError = new DevExpress.XtraEditors.LabelControl();
             labelCompanynameError = new DevExpress.XtraEditors.LabelControl();
             labelPhoneError = new DevExpress.XtraEditors.LabelControl();
@@ -39,8 +36,6 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             ((System.ComponentModel.ISupportInitialize)EmailtextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)LocationtextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CompanyNametextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).BeginInit();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -150,14 +145,6 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             SaveButton.Text = "Save";
             SaveButton.Click += SaveButton_Click;
             // 
-            // errorProvider1
-            // 
-            errorProvider1.ContainerControl = this;
-            // 
-            // dxErrorProvider1
-            // 
-            dxErrorProvider1.ContainerControl = this;
-            // 
             // labelClinicNameError
             // 
             labelClinicNameError.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
@@ -266,8 +253,6 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             ((System.ComponentModel.ISupportInitialize)EmailtextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)LocationtextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)CompanyNametextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dxErrorProvider1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
@@ -284,8 +269,6 @@ namespace ServiveceSystem.PresentationLayer.Clinic
         private DevExpress.XtraEditors.LabelControl labelControl5;
         private DevExpress.XtraEditors.LabelControl labelControl6;
         private DevExpress.XtraEditors.SimpleButton SaveButton;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
-        private DevExpress.XtraEditors.DXErrorProvider.DXErrorProvider dxErrorProvider1;
         private DevExpress.XtraEditors.LabelControl labelClinicNameError;
         private DevExpress.XtraEditors.LabelControl labelCompanynameError;
         private DevExpress.XtraEditors.LabelControl labelPhoneError;

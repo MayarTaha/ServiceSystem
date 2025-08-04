@@ -45,13 +45,16 @@ namespace ServiveceSystem.PresentationLayer
                     ShowFormInPanel(new User.AllUsers());
                     break;
                 case "paymentsElement":
-                    ShowFormInPanel(new Payment.AllPayments());
+                    ShowFormInPanel(new Payment.PayInvoiceRemainderForm());
                     break;
                 case "taxesElement":
                     ShowFormInPanel(new Taxes.AllTaxes());
                     break;
                 case "paymentMethodsElement":
                     ShowFormInPanel(new PaymentMethod.AllPaymentMethods());
+                    break;
+                case "clientReportElement":
+                    ShowFormInPanel(new Reports.ClientReportForm());
                     break;
             }
         }

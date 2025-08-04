@@ -38,6 +38,10 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             cmbClinic = new DevExpress.XtraEditors.ComboBoxEdit();
             btnSave = new DevExpress.XtraEditors.SimpleButton();
             groupBox1 = new GroupBox();
+            ClinicLookUpEditErrorlabel = new DevExpress.XtraEditors.LabelControl();
+            labelemailerror = new DevExpress.XtraEditors.LabelControl();
+            labelPhoneError = new DevExpress.XtraEditors.LabelControl();
+            labelNameError = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)txtContactName.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtContactNumber.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtContactEmail.Properties).BeginInit();
@@ -62,7 +66,7 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             // 
             // lblContactNumber
             // 
-            lblContactNumber.Location = new Point(8, 50);
+            lblContactNumber.Location = new Point(8, 67);
             lblContactNumber.Name = "lblContactNumber";
             lblContactNumber.Size = new Size(87, 13);
             lblContactNumber.TabIndex = 2;
@@ -70,14 +74,14 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             // 
             // txtContactNumber
             // 
-            txtContactNumber.Location = new Point(116, 47);
+            txtContactNumber.Location = new Point(116, 64);
             txtContactNumber.Name = "txtContactNumber";
             txtContactNumber.Size = new Size(200, 22);
             txtContactNumber.TabIndex = 3;
             // 
             // lblContactEmail
             // 
-            lblContactEmail.Location = new Point(8, 76);
+            lblContactEmail.Location = new Point(7, 107);
             lblContactEmail.Name = "lblContactEmail";
             lblContactEmail.Size = new Size(73, 13);
             lblContactEmail.TabIndex = 4;
@@ -85,14 +89,14 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             // 
             // txtContactEmail
             // 
-            txtContactEmail.Location = new Point(116, 73);
+            txtContactEmail.Location = new Point(115, 104);
             txtContactEmail.Name = "txtContactEmail";
             txtContactEmail.Size = new Size(200, 22);
             txtContactEmail.TabIndex = 5;
             // 
             // lblClinic
             // 
-            lblClinic.Location = new Point(8, 102);
+            lblClinic.Location = new Point(7, 148);
             lblClinic.Name = "lblClinic";
             lblClinic.Size = new Size(31, 13);
             lblClinic.TabIndex = 6;
@@ -100,7 +104,7 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             // 
             // cmbClinic
             // 
-            cmbClinic.Location = new Point(116, 99);
+            cmbClinic.Location = new Point(115, 145);
             cmbClinic.Name = "cmbClinic";
             cmbClinic.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             cmbClinic.Size = new Size(200, 22);
@@ -108,7 +112,7 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(12, 132);
+            btnSave.Location = new Point(12, 198);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(321, 23);
             btnSave.TabIndex = 8;
@@ -117,6 +121,10 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(ClinicLookUpEditErrorlabel);
+            groupBox1.Controls.Add(labelemailerror);
+            groupBox1.Controls.Add(labelPhoneError);
+            groupBox1.Controls.Add(labelNameError);
             groupBox1.Controls.Add(txtContactName);
             groupBox1.Controls.Add(lblContactName);
             groupBox1.Controls.Add(cmbClinic);
@@ -128,16 +136,72 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             groupBox1.ForeColor = Color.White;
             groupBox1.Location = new Point(12, 3);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(321, 123);
+            groupBox1.Size = new Size(321, 189);
             groupBox1.TabIndex = 9;
             groupBox1.TabStop = false;
             groupBox1.Text = "Data";
+            // 
+            // ClinicLookUpEditErrorlabel
+            // 
+            ClinicLookUpEditErrorlabel.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            ClinicLookUpEditErrorlabel.Appearance.ForeColor = Color.Red;
+            ClinicLookUpEditErrorlabel.Appearance.Options.UseFont = true;
+            ClinicLookUpEditErrorlabel.Appearance.Options.UseForeColor = true;
+            ClinicLookUpEditErrorlabel.Location = new Point(128, 171);
+            ClinicLookUpEditErrorlabel.Margin = new Padding(2);
+            ClinicLookUpEditErrorlabel.Name = "ClinicLookUpEditErrorlabel";
+            ClinicLookUpEditErrorlabel.Size = new Size(70, 13);
+            ClinicLookUpEditErrorlabel.TabIndex = 38;
+            ClinicLookUpEditErrorlabel.Text = "labelControl7";
+            ClinicLookUpEditErrorlabel.Visible = false;
+            // 
+            // labelemailerror
+            // 
+            labelemailerror.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            labelemailerror.Appearance.ForeColor = Color.Red;
+            labelemailerror.Appearance.Options.UseFont = true;
+            labelemailerror.Appearance.Options.UseForeColor = true;
+            labelemailerror.Location = new Point(128, 131);
+            labelemailerror.Margin = new Padding(2);
+            labelemailerror.Name = "labelemailerror";
+            labelemailerror.Size = new Size(70, 13);
+            labelemailerror.TabIndex = 35;
+            labelemailerror.Text = "labelControl7";
+            labelemailerror.Visible = false;
+            // 
+            // labelPhoneError
+            // 
+            labelPhoneError.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            labelPhoneError.Appearance.ForeColor = Color.Red;
+            labelPhoneError.Appearance.Options.UseFont = true;
+            labelPhoneError.Appearance.Options.UseForeColor = true;
+            labelPhoneError.Location = new Point(128, 91);
+            labelPhoneError.Margin = new Padding(2);
+            labelPhoneError.Name = "labelPhoneError";
+            labelPhoneError.Size = new Size(70, 13);
+            labelPhoneError.TabIndex = 34;
+            labelPhoneError.Text = "labelControl7";
+            labelPhoneError.Visible = false;
+            // 
+            // labelNameError
+            // 
+            labelNameError.Appearance.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelNameError.Appearance.ForeColor = Color.Red;
+            labelNameError.Appearance.Options.UseFont = true;
+            labelNameError.Appearance.Options.UseForeColor = true;
+            labelNameError.Location = new Point(128, 48);
+            labelNameError.Margin = new Padding(2);
+            labelNameError.Name = "labelNameError";
+            labelNameError.Size = new Size(70, 13);
+            labelNameError.TabIndex = 32;
+            labelNameError.Text = "labelControl7";
+            labelNameError.Visible = false;
             // 
             // EditContactPerson
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(338, 161);
+            ClientSize = new Size(337, 224);
             Controls.Add(groupBox1);
             Controls.Add(btnSave);
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -167,5 +231,9 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
         private DevExpress.XtraEditors.ComboBoxEdit cmbClinic;
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private GroupBox groupBox1;
+        private DevExpress.XtraEditors.LabelControl labelNameError;
+        private DevExpress.XtraEditors.LabelControl labelPhoneError;
+        private DevExpress.XtraEditors.LabelControl labelemailerror;
+        private DevExpress.XtraEditors.LabelControl ClinicLookUpEditErrorlabel;
     }
 } 

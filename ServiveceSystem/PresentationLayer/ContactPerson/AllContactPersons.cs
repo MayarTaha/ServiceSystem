@@ -13,16 +13,12 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
 {
     public partial class AllContactPersons : DevExpress.XtraEditors.XtraForm
     {
-        private readonly ContactPersonService _contactPersonService;
-        private readonly ClinicService _clinicService;
         private List<ServiceSystem.Models.ContactPerson> _contactPersons;
         private List<ServiceSystem.Models.Clinic> _clinics;
 
         public AllContactPersons()
         {
             InitializeComponent();
-            _contactPersonService = new ContactPersonService(new AppDBContext());
-            _clinicService = new ClinicService(new AppDBContext());
             gridView1.RowCellClick += gridView1_RowCellClick;
             LoadData();
         }
@@ -31,8 +27,10 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
         {
             try
             {
-                _contactPersons = await _contactPersonService.GetAll();
-                _clinics = await _clinicService.GetAll();
+                var contactPersonService = new ContactPersonService(new AppDBContext());
+                var clinicService = new ClinicService(new AppDBContext());
+                _contactPersons = await contactPersonService.GetAll();
+                _clinics = await clinicService.GetAll();
                 BindGrid(_contactPersons);
             }
             catch (Exception ex)
@@ -113,10 +111,11 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
             int contactId = (int)gridView1.GetRowCellValue(rowHandle, "ContactId");
-            var contactPerson = _contactPersons.FirstOrDefault(cp => cp.ContactId == contactId);
-            if (contactPerson != null && MessageBox.Show($"Delete contact person '{contactPerson.ContactName}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            var contact = _contactPersons.FirstOrDefault(c => c.ContactId == contactId);
+            if (contact != null && MessageBox.Show($"Delete contact '{contact.ContactName}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                await _contactPersonService.DeleteAsync(contactId);
+                var contactPersonService = new ContactPersonService(new AppDBContext());
+                await contactPersonService.DeleteAsync(contactId);
                 await LoadDataAsync();
             }
         }
@@ -141,8 +140,10 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
         {
             try
             {
-                _contactPersons = await _contactPersonService.GetAll();
-                _clinics = await _clinicService.GetAll();
+                var contactPersonService = new ContactPersonService(new AppDBContext());
+                var clinicService = new ClinicService(new AppDBContext());
+                _contactPersons = await contactPersonService.GetAll();
+                _clinics = await clinicService.GetAll();
                 BindGrid(_contactPersons);
             }
             catch (Exception ex)

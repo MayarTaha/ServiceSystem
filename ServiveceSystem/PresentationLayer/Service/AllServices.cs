@@ -13,7 +13,6 @@ namespace ServiveceSystem.PresentationLayer.Service
 {
     public partial class AllServices : Form
     {
-        private readonly ServiceService _serviceService;
         private List<ServiceSystem.Models.Service> _services;
         private RepositoryItemButtonEdit editButton;
         private RepositoryItemButtonEdit deleteButton;
@@ -21,14 +20,14 @@ namespace ServiveceSystem.PresentationLayer.Service
         public AllServices()
         {
             InitializeComponent();
-            _serviceService = new ServiceService(new AppDBContext());
             gridView1.RowCellClick += gridView1_RowCellClick;
             LoadServicesAsync();
         }
 
-        private async void LoadServicesAsync()
+        private async Task LoadServicesAsync()
         {
-            _services = await _serviceService.GetAll();
+            var serviceService = new ServiceService(new AppDBContext());
+            _services = await serviceService.GetAll();
             BindGrid(_services);
         }
 
@@ -58,7 +57,7 @@ namespace ServiveceSystem.PresentationLayer.Service
                 editButton.Buttons[0].Caption = "Edit";
                 editButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
                 editButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Blue;
-                editButton.ButtonClick += EditButton_Click;
+                editButton.ButtonClick += EditButton_ClickAsync;
                 gridControl1.RepositoryItems.Add(editButton);
             }
             if (gridView1.Columns["Edit"] == null)
@@ -91,7 +90,7 @@ namespace ServiveceSystem.PresentationLayer.Service
             }
         }
 
-        private void EditButton_Click(object sender, EventArgs e)
+        private async void EditButton_ClickAsync(object sender, EventArgs e)
         {
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
@@ -99,7 +98,7 @@ namespace ServiveceSystem.PresentationLayer.Service
             var editForm = new EditService(serviceId);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                LoadServicesAsync();
+                await LoadServicesAsync();
             }
             
         }
@@ -112,17 +111,18 @@ namespace ServiveceSystem.PresentationLayer.Service
             var service = _services.FirstOrDefault(s => s.ServiceId == serviceId);
             if (service != null && MessageBox.Show($"Delete service '{service.Name}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                await _serviceService.DeleteService(serviceId);
-                LoadServicesAsync();
+                var serviceService = new ServiceService(new AppDBContext());
+                await serviceService.DeleteService(serviceId);
+                await LoadServicesAsync();
             }
         }
 
-        private void btnAddService_Click(object sender, EventArgs e)
+        private async void btnAddService_Click(object sender, EventArgs e)
         {
             var addForm = new AddService();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                LoadServicesAsync();
+               await LoadServicesAsync();
             }
         }
 
@@ -138,7 +138,7 @@ namespace ServiveceSystem.PresentationLayer.Service
             if (e.Column.FieldName == "Edit")
             {
                 gridView1.FocusedRowHandle = e.RowHandle;
-                EditButton_Click(sender, EventArgs.Empty);
+                EditButton_ClickAsync(sender, EventArgs.Empty);
             }
             else if (e.Column.FieldName == "Delete")
             {

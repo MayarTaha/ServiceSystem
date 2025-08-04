@@ -51,11 +51,9 @@ namespace ServiveceSystem.PresentationLayer.User
                 _user.Username = txtUsername.Text.Trim();
                 _user.Permission = txtRole.Text.Trim();
 
-                // Change password if provided
                 if (!string.IsNullOrWhiteSpace(txtPassword.Text))
                 {
                     _user.Password = txtPassword.Text;
-                    MessageBox.Show("Password changed successfully!", "Password Changed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 await _userService.UpdateAsync(_user);
@@ -68,5 +66,6 @@ namespace ServiveceSystem.PresentationLayer.User
                 MessageBox.Show($"Error updating user: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 } 

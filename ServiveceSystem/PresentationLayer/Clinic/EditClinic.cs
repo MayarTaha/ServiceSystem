@@ -9,48 +9,59 @@ namespace ServiveceSystem.PresentationLayer.Clinic
     public partial class EditClinic : DevExpress.XtraEditors.XtraForm
     {
         private readonly ClinicService _clinicService;
-        private readonly AppDBContext _context;
         private ServiceSystem.Models.Clinic _clinic;
         private readonly int _clinicId;
 
         public EditClinic(int clinicId)
         {
             InitializeComponent();
-            _context = new AppDBContext();
-            _clinicService = new ClinicService(_context);
+            _clinicService = new ClinicService(new AppDBContext());
             _clinicId = clinicId;
             LoadClinic();
+            //this.SaveButton.Click += new EventHandler(SaveButton_Click); // Ensure event is hooked
         }
 
         private void LoadClinic()
         {
-            _clinic = _context.Clinics.Find(_clinicId);
-            if (_clinic == null)
+            using (var context = new AppDBContext())
             {
-                MessageBox.Show("Clinic not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-                return;
+                _clinic = context.Clinics.Find(_clinicId);
+                if (_clinic == null)
+                {
+                    MessageBox.Show("Clinic not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+                ClinicnametextEdit.Text = _clinic.ClinicName;
+                CompanyNametextEdit.Text = _clinic.CompanyName;
+                PhonetextEdit.Text = _clinic.Phone;
+                EmailtextEdit.Text = _clinic.Email;
+                LocationtextEdit.Text = _clinic.Location;
             }
-            ClinicnametextEdit.Text = _clinic.ClinicName;
-            CompanyNametextEdit.Text = _clinic.CompanyName;
-            PhonetextEdit.Text = _clinic.Phone;
-            EmailtextEdit.Text = _clinic.Email;
-            LocationtextEdit.Text = _clinic.Location;
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
+        private async void SaveButton_Click(object sender, EventArgs e)
         {
             if (!ValidateForm())
                 return;
             try
             {
-                _clinic.ClinicName = ClinicnametextEdit.Text.Trim();
-                _clinic.CompanyName = CompanyNametextEdit.Text.Trim();
-                _clinic.Phone = PhonetextEdit.Text.Trim();
-                _clinic.Email = EmailtextEdit.Text.Trim();
-                _clinic.Location = LocationtextEdit.Text.Trim();
-                _clinic.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
-                _clinicService.UpdateAsync(_clinic);
+                using (var context = new AppDBContext())
+                {
+                    var clinic = context.Clinics.Find(_clinicId);
+                    if (clinic == null)
+                    {
+                        MessageBox.Show("Clinic not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    clinic.ClinicName = ClinicnametextEdit.Text.Trim();
+                    clinic.CompanyName = CompanyNametextEdit.Text.Trim();
+                    clinic.Phone = PhonetextEdit.Text.Trim();
+                    clinic.Email = EmailtextEdit.Text.Trim();
+                    clinic.Location = LocationtextEdit.Text.Trim();
+                    clinic.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
+                    await context.SaveChangesAsync();
+                }
                 MessageBox.Show("Clinic updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -100,6 +111,23 @@ namespace ServiveceSystem.PresentationLayer.Clinic
                 labelPhoneError.Text = "Phone is required.";
                 isValid = false;
             }
+            else
+            {
+                // UAE mobile number regex: starts with 05 and 8 digits after
+                var phoneRegex = new System.Text.RegularExpressions.Regex(@"^05[0-9]{8}$");
+
+                if (!phoneRegex.IsMatch(PhonetextEdit.Text))
+                {
+                    labelPhoneError.Visible = true;
+                    labelPhoneError.Text = "Invalid UAE phone number format.";
+                    isValid = false;
+                }
+                else
+                {
+                    labelPhoneError.Visible = false;
+                }
+            }
+
             if (string.IsNullOrWhiteSpace(LocationtextEdit.Text))
             {
                 labelLocationError.Visible = true;

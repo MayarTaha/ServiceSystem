@@ -20,17 +20,17 @@ namespace ServiveceSystem.PresentationLayer.Service
         private void InitializeComponent()
         {
             txtName = new DevExpress.XtraEditors.TextEdit();
-            txtDescription = new DevExpress.XtraEditors.MemoEdit();
             spinPrice = new DevExpress.XtraEditors.SpinEdit();
             btnSave = new DevExpress.XtraEditors.SimpleButton();
             labelControl4 = new DevExpress.XtraEditors.LabelControl();
             labelControl3 = new DevExpress.XtraEditors.LabelControl();
             labelControl2 = new DevExpress.XtraEditors.LabelControl();
             groupBoxEditService = new GroupBox();
+            txtDescription = new DevExpress.XtraEditors.MemoEdit();
             ((System.ComponentModel.ISupportInitialize)txtName.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtDescription.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)spinPrice.Properties).BeginInit();
             groupBoxEditService.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)txtDescription.Properties).BeginInit();
             SuspendLayout();
             // 
             // txtName
@@ -39,15 +39,6 @@ namespace ServiveceSystem.PresentationLayer.Service
             txtName.Name = "txtName";
             txtName.Size = new Size(171, 22);
             txtName.TabIndex = 0;
-            // 
-            // txtDescription
-            // 
-            txtDescription.Location = new Point(107, 78);
-            txtDescription.Name = "txtDescription";
-            txtDescription.Properties.Appearance.BackColor = Color.Transparent;
-            txtDescription.Properties.Appearance.Options.UseBackColor = true;
-            txtDescription.Size = new Size(171, 52);
-            txtDescription.TabIndex = 1;
             // 
             // spinPrice
             // 
@@ -100,9 +91,9 @@ namespace ServiveceSystem.PresentationLayer.Service
             // 
             // groupBoxEditService
             // 
+            groupBoxEditService.Controls.Add(txtDescription);
             groupBoxEditService.Controls.Add(txtName);
             groupBoxEditService.Controls.Add(labelControl4);
-            groupBoxEditService.Controls.Add(txtDescription);
             groupBoxEditService.Controls.Add(spinPrice);
             groupBoxEditService.Controls.Add(labelControl3);
             groupBoxEditService.Controls.Add(labelControl2);
@@ -114,13 +105,21 @@ namespace ServiveceSystem.PresentationLayer.Service
             groupBoxEditService.TabStop = false;
             groupBoxEditService.Text = "Data";
             // 
+            // txtDescription
+            // 
+            txtDescription.Location = new Point(107, 82);
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(164, 52);
+            txtDescription.TabIndex = 28;
+            // 
             // EditService
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(304, 192);
+            ClientSize = new Size(304, 194);
             Controls.Add(groupBoxEditService);
             Controls.Add(btnSave);
+            Font = new Font("Segoe UI", 8.25F);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -128,10 +127,10 @@ namespace ServiveceSystem.PresentationLayer.Service
             StartPosition = FormStartPosition.CenterParent;
             Text = "Edit Service";
             ((System.ComponentModel.ISupportInitialize)txtName.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtDescription.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)spinPrice.Properties).EndInit();
             groupBoxEditService.ResumeLayout(false);
             groupBoxEditService.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)txtDescription.Properties).EndInit();
             ResumeLayout(false);
         }
         private DevExpress.XtraEditors.LabelControl labelControl4;

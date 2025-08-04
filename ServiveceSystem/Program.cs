@@ -8,6 +8,7 @@ using ServiveceSystem.PresentationLayer;
 using ServiveceSystem.PresentationLayer.Clinic;
 using ServiveceSystem.PresentationLayer.ContactPerson;
 using ServiveceSystem.PresentationLayer.InvoiceDetail;
+using ServiveceSystem.PresentationLayer.Payment;
 using ServiveceSystem.PresentationLayer.PaymentMethod;
 using ServiveceSystem.PresentationLayer.QuotationHeader;
 using ServiveceSystem.PresentationLayer.User;
@@ -26,6 +27,7 @@ namespace ServiveceSystem
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = "Office 2019 Black";
+
             var login = new LoginForm();
             if (login.ShowDialog() == DialogResult.OK)
             {
@@ -37,7 +39,7 @@ namespace ServiveceSystem
                 Application.Exit();
             }
 
-            //Application.Run(new AddUser()
+            //Application.Run(new PayInvoiceRemainderForm()
             // );  // ← your desired form here
         }
 

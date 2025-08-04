@@ -11,6 +11,7 @@ using DevExpress.XtraEditors;
 using ServiceSystem.Models;
 using ServiveceSystem.Models;
 using ServiveceSystem.BusinessLayer;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServiceSystem.PresentationLayer.InvoiceDetail
 {
@@ -159,43 +160,80 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         private async void savebutton_Click(object sender, EventArgs e)
         {
-            var header = new InvoiceHeader
+            try
             {
-                QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue),
-                InvoiceDate = invoiceDateEdit.DateTime.ToString("yyyy-MM-dd"),
-                PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue),
-                Reminder = reminderTextEdit.Text,
-                Note = noterichTextBox.Text,
-                ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
-                CreatedLog = DateTime.Now.ToString(),
-                UpdatedLog = DateTime.Now.ToString(),
-                DeletedLog = "",
-                isDeleted = false
-            };
-            //await _invoiceHeaderService.AddInvoiceHeader(header);
-            var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(header);
-            if (!headerAdded)
-            {
-                XtraMessageBox.Show("Failed to add invoice header.");
-                return;
-            }
+                // 1. Create Invoice Header
+                var header = new InvoiceHeader
+                {
+                    QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue),
+                    InvoiceDate = invoiceDateEdit.DateTime.ToString("yyyy-MM-dd"),
+                    TotalPrice = _finalTotal,
+                    Payment = decimal.TryParse(PaymenttextEdit.Text, out var payment) ? payment : 0,
+                    PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue),
+                    Reminder = reminderTextEdit.Text,
+                    Note = noterichTextBox.Text,
+                    ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
+                    Discount = decimal.TryParse(Discounttextedit.Text, out var discount) ? discount : 0,
+                    DiscountType = comboBoxDiscountType.EditValue != null ? (Discount)comboBoxDiscountType.EditValue : Discount.NotSelected,
+                    CreatedLog = DateTime.Now.ToString(),
+                    UpdatedLog = DateTime.Now.ToString(),
+                    DeletedLog = "",
+                    isDeleted = false
+                };
 
-            // 2. أضف InvoiceDetails
-            foreach (var detail in _invoiceDetails)
-            {
-                detail.InvoiceHeaderId = header.InvoiceHeaderId;
-                detail.QuotationId = header.QuotationId;
-                detail.CreatedLog = DateTime.Now.ToString();
-                detail.UpdatedLog = DateTime.Now.ToString();
-                detail.DeletedLog = "";
-                detail.isDeleted = false;
-                await _invoiceDetailService.AddInvoiceDetail(detail);
-            }
+                var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(header);
+                if (!headerAdded)
+                {
+                    XtraMessageBox.Show("Failed to add invoice header.");
+                    return;
+                }
 
-            // 3. أظهر الفاتورة في AllInvoices (يمكنك عمل تحديث للـ DataGrid هناك)
-            XtraMessageBox.Show("Invoice saved successfully!");
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+                // 2. Add Invoice Details
+                foreach (var detail in _invoiceDetails)
+                {
+                    detail.InvoiceHeaderId = header.InvoiceHeaderId;
+                    detail.QuotationId = header.QuotationId;
+                    detail.CreatedLog = DateTime.Now.ToString();
+                    detail.UpdatedLog = DateTime.Now.ToString();
+                    detail.DeletedLog = "";
+                    detail.isDeleted = false;
+                    await _invoiceDetailService.AddInvoiceDetail(detail);
+                }
+
+                // 3. Create Initial Payment Record (Payment History)
+                decimal initialPayment = decimal.TryParse(PaymenttextEdit.Text, out var pay) ? pay : 0;
+                if (initialPayment > 0)
+                {
+                    var paymentRecord = new Payment
+                    {
+                        InvoiceId = header.InvoiceHeaderId,
+                        AmountPaid = initialPayment,
+                        RemainingAmount = decimal.TryParse(reminderTextEdit.Text, out var rem) ? rem : _finalTotal - initialPayment,
+                        PaymentDate = DateTime.Now,
+                        PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue),
+                        PaymentStatus = initialPayment >= _finalTotal ? PaymentStatus.Completed : PaymentStatus.Partial,
+                        CreatedLog = DateTime.Now.ToString(),
+                        UpdatedLog = DateTime.Now.ToString(),
+                        DeletedLog = "",
+                        isDeleted = false
+                    };
+
+                    _context.payments.Add(paymentRecord);
+                    await _context.SaveChangesAsync();
+                }
+                
+                // Note: We don't update InvoiceHeader.Payment or InvoiceHeader.Reminder
+                // Payment history is maintained in Payment records
+
+                XtraMessageBox.Show("Invoice saved successfully!");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Error saving invoice: {ex.Message}", "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 

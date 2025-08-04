@@ -13,13 +13,11 @@ namespace ServiveceSystem.PresentationLayer.Clinic
 {
     public partial class AllClinics : DevExpress.XtraEditors.XtraForm
     {
-        private readonly ClinicService _clinicService;
         private List<ServiceSystem.Models.Clinic> _clinics;
 
         public AllClinics()
         {
             InitializeComponent();
-            _clinicService = new ClinicService(new AppDBContext());
             gridView1.RowCellClick += gridView1_RowCellClick;
             LoadClinics();
         }
@@ -28,7 +26,8 @@ namespace ServiveceSystem.PresentationLayer.Clinic
         {
             try
             {
-                _clinics = await _clinicService.GetAll();
+                var clinicService = new ClinicService(new AppDBContext());
+                _clinics = await clinicService.GetAll();
                 BindGrid(_clinics);
             }
             catch (Exception ex)
@@ -113,7 +112,8 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             var clinic = _clinics.FirstOrDefault(c => c.ClinicId == clinicId);
             if (clinic != null && MessageBox.Show($"Delete clinic '{clinic.ClinicName}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                await _clinicService.DeleteAsync(clinicId);
+                var clinicService = new ClinicService(new AppDBContext());
+                await clinicService.DeleteAsync(clinicId);
                 await LoadClinicsAsync();
             }
         }
@@ -138,7 +138,8 @@ namespace ServiveceSystem.PresentationLayer.Clinic
         {
             try
             {
-                _clinics = await _clinicService.GetAll();
+                var clinicService = new ClinicService(new AppDBContext());
+                _clinics = await clinicService.GetAll();
                 BindGrid(_clinics);
             }
             catch (Exception ex)

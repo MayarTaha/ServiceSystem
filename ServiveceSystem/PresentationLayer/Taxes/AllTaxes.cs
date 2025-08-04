@@ -15,7 +15,6 @@ namespace ServiveceSystem.PresentationLayer.Taxes
 {
     public partial class AllTaxes : DevExpress.XtraEditors.XtraForm
     {
-        private readonly TaxesService _taxesService;
         private List<ServiceSystem.Models.Taxes> _taxes;
         private RepositoryItemButtonEdit editButton;
         private RepositoryItemButtonEdit deleteButton;
@@ -23,7 +22,6 @@ namespace ServiveceSystem.PresentationLayer.Taxes
         public AllTaxes()
         {
             InitializeComponent();
-            _taxesService = new TaxesService(new AppDBContext());
             gridView1.RowCellClick += gridView1_RowCellClick;
             LoadTaxes();
         }
@@ -32,7 +30,8 @@ namespace ServiveceSystem.PresentationLayer.Taxes
         {
             try
             {
-                _taxes = await _taxesService.GetAll();
+                var taxesService = new TaxesService(new AppDBContext());
+                _taxes = await taxesService.GetAll();
                 BindGrid(_taxes);
             }
             catch (Exception ex)
@@ -113,11 +112,12 @@ namespace ServiveceSystem.PresentationLayer.Taxes
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
             int taxesId = (int)gridView1.GetRowCellValue(rowHandle, "TaxesID");
-            var taxes = _taxes.FirstOrDefault(t => t.TaxesID == taxesId);
-            if (taxes != null && MessageBox.Show($"Delete tax '{taxes.Name}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            var tax = _taxes.FirstOrDefault(t => t.TaxesID == taxesId);
+            if (tax != null && MessageBox.Show($"Delete tax '{tax.Name}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                await _taxesService.DeleteAsync(taxesId);
-                LoadTaxes();
+                var taxesService = new TaxesService(new AppDBContext());
+                await taxesService.DeleteAsync(taxesId);
+                await LoadTaxesAsync();
             }
         }
 
@@ -141,7 +141,8 @@ namespace ServiveceSystem.PresentationLayer.Taxes
         {
             try
             {
-                _taxes = await _taxesService.GetAll();
+                var taxesService = new TaxesService(new AppDBContext());
+                _taxes = await taxesService.GetAll();
                 BindGrid(_taxes);
             }
             catch (Exception ex)

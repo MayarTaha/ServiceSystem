@@ -18,7 +18,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
     public partial class AllInvoices : DevExpress.XtraEditors.XtraForm
     {
         private readonly InvoiceHeaderService _invoiceHeaderService;
-        private List<ServiceSystem.Models.InvoiceHeader> _invoices;
+        private List<ServiceSystem.Models.InvoiceHeader> _invoices = new List<ServiceSystem.Models.InvoiceHeader>();
         public AllInvoices()
         {
             InitializeComponent();
@@ -33,6 +33,11 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             {
                 _invoices = await _invoiceHeaderService.GetAllAsync();
                 BindGrid(_invoices);
+
+                //var filteredInvoices = _invoices
+                //    .Where(i => decimal.TryParse(i.Reminder, out var rem) && rem > 0)
+                //    .ToList();
+                //BindGrid(filteredInvoices);
             }
             catch (Exception ex)
             {
@@ -63,37 +68,59 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         private void BindGrid(List<ServiceSystem.Models.InvoiceHeader> invoices)
         {
-            var displayList = invoices.Select(i => new
+            using (var context = new AppDBContext())
             {
-                i.InvoiceHeaderId,
-                Name = i.QuotationHeader != null ? i.QuotationHeader.Note : "", // Show Quotation Note as "Name"
-                i.InvoiceDate,
-                PaymentMethod = i.PaymentMethod != null ? i.PaymentMethod.PaymentType : "", // Show Payment Method Type
-                i.Reminder,
-                ContactName = i.Contact != null ? i.Contact.ContactName : "", // Show Contact Name
-                i.CreatedLog,
-                i.UpdatedLog,
-                i.DeletedLog
-            }).ToList();
+                var displayList = invoices.Select(i =>
+                {
+                    // Calculate current remainder from payment history
+                    var latestPayment = context.payments
+                        .Where(p => p.InvoiceId == i.InvoiceHeaderId && !p.isDeleted)
+                        .OrderByDescending(p => p.PaymentDate)
+                        .FirstOrDefault();
 
-            gridControl1.DataSource = displayList;
-            gridControl1.ForceInitialize();
+                    decimal currentRemainder;
+                    if (latestPayment != null)
+                    {
+                        currentRemainder = latestPayment.RemainingAmount;
+                    }
+                    else
+                    {
+                        currentRemainder = i.TotalPrice; // No payments made yet
+                    }
 
-            // Hide unwanted columns
-            string[] hiddenColumns = { "InvoiceHeaderId", "CreatedLog", "UpdatedLog", "DeletedLog" };
-            foreach (var colName in hiddenColumns)
-            {
-                var col = gridView1.Columns[colName];
-                if (col != null)
-                    col.Visible = false;
+                    return new
+                    {
+                        i.InvoiceHeaderId,
+                        Name = i.QuotationHeader != null ? i.QuotationHeader.Note : "", // Show Quotation Note as "Name"
+                        i.InvoiceDate,
+                        PaymentMethod = i.PaymentMethod != null ? i.PaymentMethod.PaymentType : "", // Show Payment Method Type
+                        CurrentRemainder = currentRemainder.ToString("F2"), // Show calculated current remainder
+                        ContactName = i.Contact != null ? i.Contact.ContactName : "", // Show Contact Name
+                        i.CreatedLog,
+                        i.UpdatedLog,
+                        i.DeletedLog
+                    };
+                }).ToList();
+
+                gridControl1.DataSource = displayList;
+                gridControl1.ForceInitialize();
+
+                // Hide unwanted columns
+                string[] hiddenColumns = { "InvoiceHeaderId", "CreatedLog", "UpdatedLog", "DeletedLog" };
+                foreach (var colName in hiddenColumns)
+                {
+                    var col = gridView1.Columns[colName];
+                    if (col != null)
+                        col.Visible = false;
+                }
+
+                // Set the "Name" column caption
+                var nameCol = gridView1.Columns["Name"];
+                if (nameCol != null)
+                    nameCol.Caption = "Name";
+
+                InitGridButtons();
             }
-
-            // Set the "Name" column caption
-            var nameCol = gridView1.Columns["Name"];
-            if (nameCol != null)
-                nameCol.Caption = "Name";
-
-            InitGridButtons();
         }
         private void InitGridButtons()
         {

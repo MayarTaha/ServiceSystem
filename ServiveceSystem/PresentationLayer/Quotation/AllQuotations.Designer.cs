@@ -46,22 +46,18 @@
             // gridControl1
             // 
             gridControl1.Dock = DockStyle.Fill;
-            gridControl1.EmbeddedNavigator.Margin = new Padding(4, 5, 4, 5);
-            gridControl1.Location = new Point(0, 63);
+            gridControl1.Location = new Point(0, 39);
             gridControl1.MainView = gridView1;
-            gridControl1.Margin = new Padding(4, 5, 4, 5);
             gridControl1.Name = "gridControl1";
-            gridControl1.Size = new Size(1131, 588);
+            gridControl1.Size = new Size(754, 364);
             gridControl1.TabIndex = 6;
             gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
             // gridView1
             // 
-            gridView1.DetailHeight = 565;
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
             gridView1.OptionsBehavior.Editable = false;
-            gridView1.OptionsEditForm.PopupEditFormWidth = 1200;
             gridView1.OptionsView.ShowGroupPanel = false;
             // 
             // topPanel
@@ -73,9 +69,8 @@
             topPanel.Controls.Add(btnAddClinic);
             topPanel.Dock = DockStyle.Top;
             topPanel.Location = new Point(0, 0);
-            topPanel.Margin = new Padding(4, 5, 4, 5);
             topPanel.Name = "topPanel";
-            topPanel.Size = new Size(1131, 63);
+            topPanel.Size = new Size(754, 39);
             topPanel.TabIndex = 7;
             // 
             // btnAddQuotation
@@ -83,10 +78,9 @@
             btnAddQuotation.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAddQuotation.Appearance.Font = new Font("Segoe UI Semilight", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAddQuotation.Appearance.Options.UseFont = true;
-            btnAddQuotation.Location = new Point(969, 16);
-            btnAddQuotation.Margin = new Padding(4, 5, 4, 5);
+            btnAddQuotation.Location = new Point(646, 10);
             btnAddQuotation.Name = "btnAddQuotation";
-            btnAddQuotation.Size = new Size(155, 36);
+            btnAddQuotation.Size = new Size(103, 22);
             btnAddQuotation.TabIndex = 7;
             btnAddQuotation.Text = "Add Quotaion";
             btnAddQuotation.Click += btnAddQuotation_Click;
@@ -96,19 +90,17 @@
             btnAddInvoice.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAddInvoice.Appearance.Font = new Font("Segoe UI Semilight", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAddInvoice.Appearance.Options.UseFont = true;
-            btnAddInvoice.Location = new Point(2059, 16);
-            btnAddInvoice.Margin = new Padding(4, 5, 4, 5);
+            btnAddInvoice.Location = new Point(1373, 10);
             btnAddInvoice.Name = "btnAddInvoice";
-            btnAddInvoice.Size = new Size(108, 36);
+            btnAddInvoice.Size = new Size(72, 22);
             btnAddInvoice.TabIndex = 6;
             btnAddInvoice.Text = "Add Invoice";
             // 
             // lblFilter
             // 
-            lblFilter.Location = new Point(8, 24);
-            lblFilter.Margin = new Padding(4, 5, 4, 5);
+            lblFilter.Location = new Point(5, 15);
             lblFilter.Name = "lblFilter";
-            lblFilter.Size = new Size(38, 21);
+            lblFilter.Size = new Size(29, 13);
             lblFilter.TabIndex = 5;
             lblFilter.Text = "Filter:";
             // 
@@ -116,11 +108,10 @@
             // 
             txtFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtFilter.EditValue = "Filter by Name...";
-            txtFilter.Location = new Point(65, 18);
-            txtFilter.Margin = new Padding(4, 5, 4, 5);
+            txtFilter.Location = new Point(43, 11);
             txtFilter.Name = "txtFilter";
             txtFilter.Properties.NullValuePrompt = "Filter by name...";
-            txtFilter.Size = new Size(878, 34);
+            txtFilter.Size = new Size(585, 22);
             txtFilter.TabIndex = 0;
             // 
             // btnAddClinic
@@ -128,20 +119,21 @@
             btnAddClinic.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAddClinic.Appearance.Font = new Font("Segoe UI Semilight", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAddClinic.Appearance.Options.UseFont = true;
-            btnAddClinic.Location = new Point(3042, 19);
-            btnAddClinic.Margin = new Padding(4, 5, 4, 5);
+            btnAddClinic.Location = new Point(2028, 12);
             btnAddClinic.Name = "btnAddClinic";
-            btnAddClinic.Size = new Size(108, 36);
+            btnAddClinic.Size = new Size(72, 22);
             btnAddClinic.TabIndex = 1;
             btnAddClinic.Text = "Add Clinic";
             // 
             // AllQuotations
             // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1131, 651);
+            ClientSize = new Size(754, 403);
             Controls.Add(gridControl1);
             Controls.Add(topPanel);
+            IconOptions.Image = Properties.Resources.icons8_offer_40;
+            Margin = new Padding(2, 2, 2, 2);
             Name = "AllQuotations";
             Text = "AllQuotations";
             ((System.ComponentModel.ISupportInitialize)gridControl1).EndInit();

@@ -13,6 +13,8 @@ namespace ServiveceSystem.PresentationLayer
         private DevExpress.XtraBars.Navigation.AccordionControlElement paymentsElement;
         private DevExpress.XtraBars.Navigation.AccordionControlElement taxesElement;
         private DevExpress.XtraBars.Navigation.AccordionControlElement paymentMethodsElement;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement reportsElement;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement clientReportElement;
         private DevExpress.XtraEditors.PanelControl topPanel;
         private DevExpress.XtraEditors.SimpleButton btnMinimize;
         private DevExpress.XtraEditors.SimpleButton btnClose;
@@ -33,6 +35,8 @@ namespace ServiveceSystem.PresentationLayer
             paymentsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             paymentMethodsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             taxesElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            reportsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            clientReportElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             topPanel = new DevExpress.XtraEditors.PanelControl();
             btnMinimize = new DevExpress.XtraEditors.SimpleButton();
             btnMaximize = new DevExpress.XtraEditors.SimpleButton();
@@ -48,7 +52,7 @@ namespace ServiveceSystem.PresentationLayer
             // accordionControl
             // 
             accordionControl.Dock = DockStyle.Left;
-            accordionControl.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { servicesElement, clinicsElement, contactsElement, quotationsElement, invoicesElement, configurationElement });
+            accordionControl.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { servicesElement, clinicsElement, contactsElement, quotationsElement, invoicesElement, configurationElement, reportsElement });
             accordionControl.ItemHeight = 60;
             accordionControl.Location = new Point(0, 0);
             accordionControl.Name = "accordionControl";
@@ -146,6 +150,24 @@ namespace ServiveceSystem.PresentationLayer
             taxesElement.ImageOptions.ImageLayoutMode = DevExpress.XtraBars.Navigation.ImageLayoutMode.Squeeze;
             taxesElement.Name = "taxesElement";
             taxesElement.Text = "Taxes";
+            // 
+            // reportsElement
+            // 
+            reportsElement.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { clientReportElement });
+            reportsElement.Expanded = true;
+            reportsElement.Height = 50;
+            reportsElement.ImageOptions.Image = ServiceSystem.Properties.Resources.icons8_invoice_64;
+            reportsElement.ImageOptions.ImageLayoutMode = DevExpress.XtraBars.Navigation.ImageLayoutMode.Squeeze;
+            reportsElement.Name = "reportsElement";
+            reportsElement.Text = "Reports";
+            // 
+            // clientReportElement
+            // 
+            clientReportElement.Height = 40;
+            clientReportElement.ImageOptions.Image = ServiceSystem.Properties.Resources.icons8_clinic_100;
+            clientReportElement.ImageOptions.ImageLayoutMode = DevExpress.XtraBars.Navigation.ImageLayoutMode.Squeeze;
+            clientReportElement.Name = "clientReportElement";
+            clientReportElement.Text = "Client Report";
             // 
             // topPanel
             // 

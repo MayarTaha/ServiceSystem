@@ -1,3 +1,6 @@
+using ServiceSystem.Models;
+using ServiveceSystem.BusinessLayer;
+using ServiveceSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,22 +16,21 @@ namespace ServiveceSystem.PresentationLayer.Payment
     public partial class PayInvoiceRemainderForm : DevExpress.XtraEditors.XtraForm
     {
         private readonly InvoiceHeaderService _invoiceHeaderService;
-        private readonly PaymentHistoryService _paymentHistoryService;
         private List<InvoiceHeader> _invoicesWithRemainder = new List<InvoiceHeader>();
 
         public PayInvoiceRemainderForm()
         {
             InitializeComponent();
-            var context = new AppDBContext();
-            _invoiceHeaderService = new InvoiceHeaderService(context);
-            _paymentHistoryService = new PaymentHistoryService(context);
+            _invoiceHeaderService = new InvoiceHeaderService(new AppDBContext());
             LoadInvoicesWithRemainder();
         }
 
-        private void LoadInvoicesWithRemainder()
+        private async void LoadInvoicesWithRemainder()
         {
-            // Use the PaymentHistoryService to get invoices with remainder
-            _invoicesWithRemainder = _paymentHistoryService.GetInvoicesWithRemainder();
+            var allInvoices = await _invoiceHeaderService.GetAllAsync();
+            _invoicesWithRemainder = allInvoices.Where(i =>
+                decimal.TryParse(i.Reminder, out var rem) && rem > 0
+            ).ToList();
             BindGrid(_invoicesWithRemainder);
         }
 
@@ -55,7 +57,7 @@ namespace ServiveceSystem.PresentationLayer.Payment
             {
                 var payNowButton = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
                 payNowButton.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
-                payNowButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph; 
+                payNowButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
                 payNowButton.Buttons[0].Caption = "Pay Now";
                 payNowButton.ButtonClick += PayNowButton_ButtonClick;
                 gridControl1.RepositoryItems.Add(payNowButton);
@@ -83,20 +85,29 @@ namespace ServiveceSystem.PresentationLayer.Payment
 
         private void PayNowForm_PaymentCompleted(object sender, PaymentCompletedEventArgs e)
         {
+            // Update invoice in database
+            using (var context = new AppDBContext())
+            {
+                var dbInvoice = context.invoiceHeaders.FirstOrDefault(i => i.InvoiceHeaderId == e.InvoiceId);
+                if (dbInvoice != null)
+                {
+                    dbInvoice.Reminder = e.NewRemainder.ToString();
+                    context.SaveChanges();
+                }
+            }
             // Update or remove invoice from grid based on new remainder
             var invoice = _invoicesWithRemainder.FirstOrDefault(i => i.InvoiceHeaderId == e.InvoiceId);
             if (invoice != null)
             {
+
                 invoice.Reminder = e.NewRemainder.ToString();
                 if (e.NewRemainder == 0)
                 {
                     _invoicesWithRemainder.Remove(invoice);
+
                 }
                 BindGrid(_invoicesWithRemainder);
             }
-            
-            // Refresh the data
-            LoadInvoicesWithRemainder();
         }
     }
-} 
+}

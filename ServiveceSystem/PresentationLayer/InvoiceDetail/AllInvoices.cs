@@ -271,6 +271,7 @@ using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
 using ServiveceSystem.PresentationLayer.InvoiceDetail;
 using ServiveceSystem.PresentationLayer.PaymentMethod;
+using ServiveceSystem.PresentationLayer.Payment;
 
 namespace ServiceSystem.PresentationLayer.InvoiceDetail
 {
@@ -330,8 +331,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 i.DeletedLog
             }).ToList();
 
-                gridControl1.DataSource = displayList;
-                gridControl1.ForceInitialize();
+            gridControl1.DataSource = displayList;
+            gridControl1.ForceInitialize();
 
             // Hide unwanted columns
             string[] hiddenColumns = { "InvoiceHeaderId", "CreatedLog", "UpdatedLog", "DeletedLog", "ShowPaymentButton" };
@@ -342,10 +343,10 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                     col.Visible = false;
             }
 
-                // Set the "Name" column caption
-                var nameCol = gridView1.Columns["Name"];
-                if (nameCol != null)
-                    nameCol.Caption = "Name";
+            // Set the "Name" column caption
+            var nameCol = gridView1.Columns["Name"];
+            if (nameCol != null)
+                nameCol.Caption = "Name";
 
             InitGridButtons();
             gridView1.RefreshData();
@@ -477,7 +478,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             if (invoice != null)
             {
                 // Navigate to AddPaymentForm instead of InvoicePayment
-                var paymentForm = new AddPaymentForm();
+                var paymentForm = new PayNowForm(invoiceHeaderId, decimal.Parse(invoice.Reminder));
                 if (paymentForm.ShowDialog() == DialogResult.OK)
                 {
                     await LoadInvoicesAsync();
@@ -487,6 +488,60 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         // Enhanced txtFilter_TextChanged method with filter state tracking
         private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private async Task LoadInvoicesAsync()
+        {
+            try
+            {
+                _invoices = await _invoiceHeaderService.GetAllAsync();
+
+                // Apply current filter if any
+                if (txtFilter != null && !string.IsNullOrEmpty(txtFilter.Text))
+                {
+                    txtFilter_TextChanged(txtFilter, EventArgs.Empty);
+                }
+                else
+                {
+                    // Reset filter state when reloading without filter
+                    _isReminderFilterActive = false;
+                    BindGrid(_invoices);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading invoices: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void gridView1_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+            if (e.Column.FieldName == "Edit")
+            {
+                EditButton_Click(sender, EventArgs.Empty);
+            }
+            else if (e.Column.FieldName == "Delete")
+            {
+                DeleteButton_Click(sender, EventArgs.Empty);
+            }
+            else if (e.Column.FieldName == "Payment")
+            {
+                PaymentButton_Click(sender, EventArgs.Empty);
+            }
+        }
+
+        private void btnAddInvoice_Click(object sender, EventArgs e)
+        {
+            var addForm = new AddInvoiceForm();
+            if (addForm.ShowDialog() == DialogResult.OK)
+            {
+                LoadInvoicesAsync();
+            }
+        }
+
+        private void txtFilter_EditValueChanged(object sender, EventArgs e)
         {
             // Get the sender as TextEdit to ensure we have the right control
             if (!(sender is TextEdit textEdit))
@@ -549,55 +604,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             }
 
             BindGrid(filtered);
-        }
 
-        private async Task LoadInvoicesAsync()
-        {
-            try
-            {
-                _invoices = await _invoiceHeaderService.GetAllAsync();
-
-                // Apply current filter if any
-                if (txtFilter != null && !string.IsNullOrEmpty(txtFilter.Text))
-                {
-                    txtFilter_TextChanged(txtFilter, EventArgs.Empty);
-                }
-                else
-                {
-                    // Reset filter state when reloading without filter
-                    _isReminderFilterActive = false;
-                    BindGrid(_invoices);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading invoices: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void gridView1_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
-        {
-            if (e.Column.FieldName == "Edit")
-            {
-                EditButton_Click(sender, EventArgs.Empty);
-            }
-            else if (e.Column.FieldName == "Delete")
-            {
-                DeleteButton_Click(sender, EventArgs.Empty);
-            }
-            else if (e.Column.FieldName == "Payment")
-            {
-                PaymentButton_Click(sender, EventArgs.Empty);
-            }
-        }
-
-        private void btnAddInvoice_Click(object sender, EventArgs e)
-        {
-            var addForm = new AddInvoiceForm();
-            if (addForm.ShowDialog() == DialogResult.OK)
-            {
-                LoadInvoicesAsync();
-            }
         }
     }
 }

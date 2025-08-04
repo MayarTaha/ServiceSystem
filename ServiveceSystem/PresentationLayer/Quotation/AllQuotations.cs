@@ -12,6 +12,7 @@ using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
 using ServiveceSystem.PresentationLayer.QuotationHeader;
 using DevExpress.XtraEditors.Repository;
+using ServiceSystem.PresentationLayer.Quotation;
 
 namespace ServiceSystem.PresentationLayer.QuotationHeader
 {
@@ -39,33 +40,14 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             }
         }
 
-        //private void BindGrid(List<ServiceSystem.Models.QuotationHeader> quotations)
-        //{
-        //    var displayList = quotations.Select(q => new
-        //    {
-        //        q.QuotationId,
-        //        q.Note,
-        //        q.InitialDate,
-        //        q.ExpireDate,
-        //        q.ClinicId,
-        //        q.ContactId,
-        //        q.CreatedLog,
-        //        q.UpdatedLog
-        //    }).ToList();
-        //    gridControl1.DataSource = displayList;
-        //    gridControl1.ForceInitialize();
-        //    var col = gridView1.Columns["QuotationId"];
-        //    if (col != null)
-        //        col.Visible = false;
-        //    InitGridButtons();
-        //}
+       
 
         private void BindGrid(List<ServiceSystem.Models.QuotationHeader> quotations)
         {
             var displayList = quotations.Select(q => new
             {
                 q.QuotationId,
-                Name = q.Note, // Show as "Name"
+                Name = q.QuotationNaMe, 
                 q.InitialDate,
                 q.ExpireDate,
                 ClinicName = q.Clinic != null ? q.Clinic.ClinicName : "",
@@ -130,6 +112,23 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
                 deleteCol.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
                 deleteCol.VisibleIndex = 1;
             }
+
+            if (gridView1.Columns["TransferToInvoice"] == null)
+            {
+                var transferButton = new RepositoryItemButtonEdit();
+                transferButton.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+                transferButton.Buttons[0].Caption = "Transfer";
+                transferButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
+                transferButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Green;
+                gridControl1.RepositoryItems.Add(transferButton);
+
+                var transferCol = gridView1.Columns.AddField("TransferToInvoice");
+                transferCol.Visible = true;
+                transferCol.UnboundType = DevExpress.Data.UnboundColumnType.Object;
+                transferCol.ColumnEdit = transferButton;
+                transferCol.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+                transferCol.VisibleIndex = 2;
+            }
         }
 
         private async void EditButton_Click(object sender, EventArgs e)
@@ -137,12 +136,11 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
             int quotationId = (int)gridView1.GetRowCellValue(rowHandle, "QuotationId");
-            // TODO: Implement EditQuotationForm and show it here
-            // var editForm = new EditQuotationForm(quotationId);
-            // if (editForm.ShowDialog() == DialogResult.OK)
-            // {
-            //     await LoadQuotationsAsync();
-            // }
+            var editForm = new EditQuotationForm(quotationId);
+            if (editForm.ShowDialog() == DialogResult.OK)
+            {
+                await LoadQuotationsAsync();
+            }
         }
 
         private async void DeleteButton_Click(object sender, EventArgs e)
@@ -151,7 +149,7 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             if (rowHandle < 0) return;
             int quotationId = (int)gridView1.GetRowCellValue(rowHandle, "QuotationId");
             var quotation = _quotations.FirstOrDefault(q => q.QuotationId == quotationId);
-            if (quotation != null && MessageBox.Show($"Delete quotation '{quotation.QuotationId}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (quotation != null && MessageBox.Show($"Delete quotation '{quotation.QuotationNaMe}'?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 await _quotationHeaderService.Delete(quotationId);
                 await LoadQuotationsAsync();
@@ -188,14 +186,41 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             {
                 DeleteButton_Click(sender, EventArgs.Empty);
             }
+            else if (e.Column.FieldName == "TransferToInvoice")
+            {
+                TransferToInvoiceButton_Click(sender, EventArgs.Empty);
+            }
         }
 
-        private void btnAddQuotation_Click(object sender, EventArgs e)
+        private async void TransferToInvoiceButton_Click(object sender, EventArgs e)
+        {
+            var rowHandle = gridView1.FocusedRowHandle;
+            if (rowHandle < 0) return;
+            int quotationId = (int)gridView1.GetRowCellValue(rowHandle, "QuotationId");
+            var quotation = _quotations.FirstOrDefault(q => q.QuotationId == quotationId);
+            if (quotation == null) return;
+            int clinicId = quotation.ClinicId;
+            int contactId = quotation.ContactId;
+
+            // Fetch QuotationDetails
+            var context = new AppDBContext();
+            var details = context.QuotationDetails.Where(qd => qd.QuotationId == quotationId && !qd.isDeleted).ToList();
+            // Load Service navigation property for each detail
+            foreach (var d in details)
+            {
+                d.Service = context.Services.FirstOrDefault(s => s.ServiceId == d.ServiceId);
+            }
+
+            var transferForm = new ServiceSystem.PresentationLayer.InvoiceDetail.TransferToInvoice(quotationId, clinicId, contactId, details, quotation.QuotationNaMe);
+            transferForm.ShowDialog();
+        }
+
+        private  void btnAddQuotation_Click(object sender, EventArgs e)
         {
             var addForm = new AddQuotationForm();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                 LoadQuotations();
+                 LoadQuotationsAsync();
             }
         }
 

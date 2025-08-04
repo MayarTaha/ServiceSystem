@@ -133,12 +133,14 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         //// THIS IS THE MISSING FUNCTION
-        //public async Task<List<InvoiceDetail>> GetDetailsByInvoiceHeaderIdAsync(int invoiceHeaderId)
-        //{
-        //    return await _context.InvoiceDetails
-        //                         .Where(d => d.InvoiceHeaderId == invoiceHeaderId && !d.isDeleted)
-        //                         .ToListAsync();
-        //}
+        public async Task<List<InvoiceDetail>> GetDetailsByInvoiceHeaderIdAsync(int invoiceHeaderId)
+        {
+            return await _context.InvoiceDetails
+                                 .Where(d => d.InvoiceHeaderId == invoiceHeaderId && !d.isDeleted)
+                                 .Include(d => d.Service)
+                                 .Include(d => d.QuotationHeader)
+                                 .ToListAsync();
+        }
 
 
         private decimal CalculateTotalService(InvoiceDetail detail)

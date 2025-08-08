@@ -110,9 +110,27 @@ namespace ServiveceSystem.PresentationLayer.Reports
                 gridView1.Columns["TotalPaid"].Width = 120;
                 gridView1.Columns["OutstandingBalance"].Width = 140;
 
-                // Set outstanding balance column color
+                // Set outstanding balance column color and make it clickable
                 gridView1.Columns["OutstandingBalance"].AppearanceCell.BackColor = Color.LightCoral;
                 gridView1.Columns["OutstandingBalance"].AppearanceCell.ForeColor = Color.DarkRed;
+                gridView1.Columns["OutstandingBalance"].AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+                
+                // Add click event for outstanding balance column
+                gridView1.Columns["OutstandingBalance"].AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+                gridView1.Columns["OutstandingBalance"].AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+                gridView1.Columns["OutstandingBalance"].AppearanceCell.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+                
+                // Make outstanding balance column look clickable
+                gridView1.Columns["OutstandingBalance"].AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+                gridView1.Columns["OutstandingBalance"].AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+                gridView1.Columns["OutstandingBalance"].AppearanceCell.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+                gridView1.Columns["OutstandingBalance"].AppearanceCell.TextOptions.Trimming = DevExpress.Utils.Trimming.EllipsisCharacter;
+                
+                // Add click event handler
+                gridView1.RowCellClick += GridView1_RowCellClick;
+                
+                // Set tooltip for outstanding balance column
+                gridView1.Columns["OutstandingBalance"].ToolTip = "Click to view invoices with outstanding balance";
 
                 lblTotalOutstanding.Text = $"Total Outstanding: {clinicBalances.Sum(cb => cb.OutstandingBalance):C2}";
                 lblTotalClients.Text = $"Total Clients with Outstanding Balance: {clinicBalances.Count}";
@@ -127,6 +145,33 @@ namespace ServiveceSystem.PresentationLayer.Reports
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             LoadClientReport();
+        }
+
+        private void btnViewInvoices_Click(object sender, EventArgs e)
+        {
+            var rowHandle = gridView1.FocusedRowHandle;
+            if (rowHandle < 0)
+            {
+                XtraMessageBox.Show("Please select a clinic first.", "Information", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            int clinicId = (int)gridView1.GetRowCellValue(rowHandle, "ClinicId");
+            string clinicName = gridView1.GetRowCellValue(rowHandle, "ClinicName").ToString();
+            decimal outstandingBalance = (decimal)gridView1.GetRowCellValue(rowHandle, "OutstandingBalance");
+
+            // Only open invoices report if there's an outstanding balance
+            if (outstandingBalance > 0)
+            {
+                var invoicesReportForm = new InvoicesReportForm(clinicId, clinicName);
+                invoicesReportForm.ShowDialog();
+            }
+            else
+            {
+                XtraMessageBox.Show($"No outstanding balance for {clinicName}.", "Information", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -165,6 +210,32 @@ namespace ServiveceSystem.PresentationLayer.Reports
             }
         }
 
+        private void GridView1_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+            // Check if clicked on Outstanding Balance column
+            if (e.Column.FieldName == "OutstandingBalance")
+            {
+                var rowHandle = e.RowHandle;
+                if (rowHandle >= 0)
+                {
+                    int clinicId = (int)gridView1.GetRowCellValue(rowHandle, "ClinicId");
+                    string clinicName = gridView1.GetRowCellValue(rowHandle, "ClinicName").ToString();
+                    decimal outstandingBalance = (decimal)gridView1.GetRowCellValue(rowHandle, "OutstandingBalance");
+
+                    // Only open invoices report if there's an outstanding balance
+                    if (outstandingBalance > 0)
+                    {
+                        var invoicesReportForm = new InvoicesReportForm(clinicId, clinicName);
+                        invoicesReportForm.ShowDialog();
+                    }
+                    else
+                    {
+                        XtraMessageBox.Show($"No outstanding balance for {clinicName}.", "Information", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
 
     }
 } 

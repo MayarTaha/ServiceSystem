@@ -42,6 +42,7 @@ namespace ServiveceSystem.PresentationLayer.Reports
             this.btnPrint = new DevExpress.XtraEditors.SimpleButton();
             this.btnExport = new DevExpress.XtraEditors.SimpleButton();
             this.btnRefresh = new DevExpress.XtraEditors.SimpleButton();
+            this.btnViewInvoices = new DevExpress.XtraEditors.SimpleButton();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -74,6 +75,7 @@ namespace ServiveceSystem.PresentationLayer.Reports
             this.panelControl1.Controls.Add(this.btnPrint);
             this.panelControl1.Controls.Add(this.btnExport);
             this.panelControl1.Controls.Add(this.btnRefresh);
+            this.panelControl1.Controls.Add(this.btnViewInvoices);
             this.panelControl1.Controls.Add(this.labelControl1);
             this.panelControl1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelControl1.Location = new System.Drawing.Point(0, 600);
@@ -137,6 +139,18 @@ namespace ServiveceSystem.PresentationLayer.Reports
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
+            // btnViewInvoices
+            // 
+            this.btnViewInvoices.Appearance.Font = new System.Drawing.Font("Tahoma", 9F);
+            this.btnViewInvoices.Appearance.Options.UseFont = true;
+            this.btnViewInvoices.ImageOptions.Image = global::ServiceSystem.Properties.Resources.icons8_invoice_64;
+            this.btnViewInvoices.Location = new System.Drawing.Point(800, 15);
+            this.btnViewInvoices.Name = "btnViewInvoices";
+            this.btnViewInvoices.Size = new System.Drawing.Size(80, 40);
+            this.btnViewInvoices.TabIndex = 4;
+            this.btnViewInvoices.Text = "View Invoices";
+            this.btnViewInvoices.Click += new System.EventHandler(this.btnViewInvoices_Click);
+            // 
             // labelControl1
             // 
             this.labelControl1.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
@@ -175,6 +189,7 @@ namespace ServiveceSystem.PresentationLayer.Reports
         private DevExpress.XtraEditors.SimpleButton btnRefresh;
         private DevExpress.XtraEditors.SimpleButton btnExport;
         private DevExpress.XtraEditors.SimpleButton btnPrint;
+        private DevExpress.XtraEditors.SimpleButton btnViewInvoices;
         private DevExpress.XtraEditors.LabelControl lblTotalOutstanding;
         private DevExpress.XtraEditors.LabelControl lblTotalClients;
     }

@@ -7,9 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using ServiceSystem.Models;
-using ServiveceSystem.BusinessLayer;
-using ServiveceSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServiveceSystem.PresentationLayer.Payment
 {
@@ -17,7 +15,12 @@ namespace ServiveceSystem.PresentationLayer.Payment
     {
         private readonly InvoiceHeaderService _invoiceHeaderService;
         private List<InvoiceHeader> _invoicesWithRemainder = new List<InvoiceHeader>();
+        //private readonly AppDBContext _context;
 
+        //public PayInvoiceRemainderForm(AppDBContext context)
+        //{
+        //    context = _context;
+        //}
         public PayInvoiceRemainderForm()
         {
             InitializeComponent();
@@ -27,11 +30,11 @@ namespace ServiveceSystem.PresentationLayer.Payment
 
         private async void LoadInvoicesWithRemainder()
         {
-            var allInvoices = await _invoiceHeaderService.GetAllAsync();
-            _invoicesWithRemainder = allInvoices.Where(i =>
-                decimal.TryParse(i.Reminder, out var rem) && rem > 0
-            ).ToList();
-            BindGrid(_invoicesWithRemainder);
+            //var allInvoices = await _invoiceHeaderService.GetAllAsync();
+            //_invoicesWithRemainder = allInvoices.Where(i =>
+            //    decimal.TryParse(i.Reminder, out var rem) && rem > 0
+            //).ToList();
+            BindGrid(GetInvoicesWithRemainder());
         }
 
         private void BindGrid(List<InvoiceHeader> invoices)
@@ -39,7 +42,8 @@ namespace ServiveceSystem.PresentationLayer.Payment
             var displayList = invoices.Select(i => new
             {
                 i.InvoiceHeaderId,
-                Name = i.QuotationHeader != null ? i.QuotationHeader.Note : "",
+                //Name = i.QuotationHeader != null ? i.QuotationHeader.QuotationNaMe : "",
+                Name=i.Note,
                 i.InvoiceDate,
                 PaymentMethod = i.PaymentMethod != null ? i.PaymentMethod.PaymentType : "",
                 Remainder = i.Reminder,
@@ -85,32 +89,44 @@ namespace ServiveceSystem.PresentationLayer.Payment
 
         private void PayNowForm_PaymentCompleted(object sender, PaymentCompletedEventArgs e)
         {
-            // Update invoice in database
+            BindGrid(GetInvoicesWithRemainder());
+        }
+
+        public List<InvoiceHeader> GetInvoicesWithRemainder()
+        {
             using (var context = new AppDBContext())
             {
-                var dbInvoice = context.invoiceHeaders.FirstOrDefault(i => i.InvoiceHeaderId == e.InvoiceId);
-                if (dbInvoice != null)
-                {
-                    dbInvoice.Reminder = e.NewRemainder.ToString();
-                    context.SaveChanges();
-                }
-            }
-            // Update or remove invoice from grid based on new remainder
-            var invoice = _invoicesWithRemainder.FirstOrDefault(i => i.InvoiceHeaderId == e.InvoiceId);
-            if (invoice != null)
-            {
+                // Load invoices 
+                var invoices = context.invoiceHeaders
+                    .Where(i => !i.isDeleted)
+                    .Include(i => i.PaymentMethod)
+                    .Include(i => i.Contact)
+                    .Include(i => i.QuotationHeader)
+                    .ToList();
 
-                invoice.Reminder = e.NewRemainder.ToString();
-                if (e.NewRemainder == 0)
-                {
-                    _invoicesWithRemainder.Remove(invoice);
+                // Group payments by invoice
+                var paymentsByInvoice = context.payments
+                    .Where(p => !p.isDeleted)
+                    .GroupBy(p => p.InvoiceId)
+                    .Select(g => new { InvoiceId = g.Key, TotalPaid = g.Sum(x => x.AmountPaid) })
+                    .ToDictionary(x => x.InvoiceId, x => x.TotalPaid);
 
+                var withRemainder = new List<InvoiceHeader>();
+                foreach (var inv in invoices)
+                {
+                    decimal paidFromPayments = paymentsByInvoice.TryGetValue(inv.InvoiceHeaderId, out var sum) ? sum : 0m;
+                    decimal totalPaid = inv.Payment + paidFromPayments; // include header.Payment as initial payment if any
+                    decimal remainder = inv.TotalPrice - totalPaid;
+                    if (remainder > 0)
+                    {
+                        inv.Reminder = remainder.ToString(); 
+                        withRemainder.Add(inv);
+                    }
                 }
-                BindGrid(_invoicesWithRemainder);
+
+                return withRemainder;
             }
         }
-    
-    
     }
 
 }

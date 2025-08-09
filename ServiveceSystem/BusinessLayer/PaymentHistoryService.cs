@@ -89,48 +89,38 @@ namespace ServiveceSystem.BusinessLayer
         //}
         public List<InvoiceHeader> GetInvoicesWithRemainder()
         {
-            // Step 1: bring all needed data into memory
-            var invoicePayments = (from inv in _context.invoiceHeaders
-                                   join pay in _context.payments on inv.InvoiceHeaderId equals pay.InvoiceId
-                                   where !inv.isDeleted
-                                   select new
-                                   {
-                                       InvoiceId = inv.InvoiceHeaderId,
-                                       inv.TotalPrice,
-                                       inv.Payment,
-                                       inv.Reminder,
-                                       PaymentAmount = pay.AmountPaid
-                                   }).ToList(); // force EF to execute here
-
-            // Step 2: group & filter in-memory
-            var grouped = invoicePayments
-                .GroupBy(x => new { x.InvoiceId, x.TotalPrice, x.Payment, x.Reminder })
-                .Where(g => g.Sum(x => x.PaymentAmount) + g.Key.Payment < g.Key.TotalPrice)
-                .Select(g => new
-                {
-                    g.Key.InvoiceId,
-                    g.Key.TotalPrice,
-                    g.Key.Payment,
-                    TotalPaid = g.Sum(x => x.PaymentAmount),
-                    Reminder = g.Key.TotalPrice - (g.Sum(x => x.PaymentAmount) + g.Key.Payment)
-                }).ToList();
-
-            // Step 3: load the InvoiceHeader objects
-            var invoices = _context.invoiceHeaders
-                .Where(i => grouped.Select(g => g.InvoiceId).Contains(i.InvoiceHeaderId))
+            // Get all non-deleted invoices
+            var allInvoices = _context.invoiceHeaders
+                .Where(i => !i.isDeleted)
                 .ToList();
 
-            // Step 4: attach updated reminder
-            foreach (var invoice in invoices)
+            // Pre-aggregate payments per invoice (only non-deleted payments)
+            var paymentsByInvoice = _context.payments
+                .Where(p => !p.isDeleted)
+                .GroupBy(p => p.InvoiceId)
+                .Select(g => new { InvoiceId = g.Key, TotalPaid = g.Sum(x => x.AmountPaid) })
+                .ToDictionary(x => x.InvoiceId, x => x.TotalPaid);
+
+            var result = new List<InvoiceHeader>();
+
+            foreach (var invoice in allInvoices)
             {
-                var match = grouped.FirstOrDefault(g => g.InvoiceId == invoice.InvoiceHeaderId);
-                if (match != null)
+                // Prefer payment history; if none exists (legacy invoices), fall back to header.Payment
+                decimal totalPaidFromPayments = paymentsByInvoice.TryGetValue(invoice.InvoiceHeaderId, out var paid)
+                    ? paid
+                    : 0m;
+                decimal totalPaid = totalPaidFromPayments > 0 ? totalPaidFromPayments : invoice.Payment;
+
+                decimal currentRemainder = invoice.TotalPrice - totalPaid;
+                if (currentRemainder > 0)
                 {
-                    invoice.Reminder = match.Reminder.ToString();
+                    // Populate Reminder for display only
+                    invoice.Reminder = currentRemainder.ToString();
+                    result.Add(invoice);
                 }
             }
 
-            return invoices;
+            return result;
         }
 
 

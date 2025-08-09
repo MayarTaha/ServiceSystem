@@ -31,6 +31,7 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
         {
             try
             {
+               var _quotationHeaderService = new QuotationHeaderService(new AppDBContext());
                 _quotations = await _quotationHeaderService.GetAll();
                 BindGrid(_quotations);
             }
@@ -131,7 +132,7 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             }
         }
 
-        private async void EditButton_Click(object sender, EventArgs e)
+        private  void EditButton_Click(object sender, EventArgs e)
         {
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
@@ -139,7 +140,7 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             var editForm = new EditQuotationForm(quotationId);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                await LoadQuotationsAsync();
+                 LoadQuotations();
             }
         }
 

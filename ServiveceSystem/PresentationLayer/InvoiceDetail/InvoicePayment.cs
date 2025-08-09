@@ -23,6 +23,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         private decimal _finalTotal;
         private InvoiceHeaderService _invoiceHeaderService;
         private InvoiceDetailService _invoiceDetailService;
+        private  PaymentService _paymentService;
+
 
         public InvoicePayment(List<ServiceSystem.Models.InvoiceDetail> invoiceDetails, decimal total)
         {
@@ -37,11 +39,15 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             _finalTotal = _total;
             _invoiceHeaderService = new InvoiceHeaderService(_context);
             _invoiceDetailService = new InvoiceDetailService(_context);
+            _paymentService = new PaymentService(_context);
             LoadLookUps();
             TotalPricetextEdit.Text = _total.ToString("0.##");
                         checkedListBoxControltax.ItemCheck += (s, e) => CalculateTotalWithDiscount();
             PaymenttextEdit.EditValueChanged += PaymenttextEdit_EditValueChanged;
-            
+            //taxes
+            checkedListBoxControltax.ItemCheck += (s, e) => CalculateTotalWithDiscount();
+
+
             // Wire up the payment discount type change event
             comboBoxPaymentDiscountType.SelectedIndexChanged += comboBoxPaymentDiscountType_SelectedIndexChanged;
             
@@ -53,14 +59,12 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             Discounttextedit.Enabled = false;
             
             CalculateTotalWithDiscount();
+
         }
 
         private void LoadLookUps()
         {
-            //paymentmethodlookupedit.Properties.DataSource = _context.PaymentMethods.ToList();
-            //paymentmethodlookupedit.Properties.DisplayMember = "PaymentType";
-            //paymentmethodlookupedit.Properties.ValueMember = "PaymentMethodId";
-            // ... تحميل بيانات أخرى ...
+            
 
             clinicLookUpEdit.Properties.DataSource = _context.Clinics.Where(c => !c.isDeleted).ToList();
             clinicLookUpEdit.Properties.DisplayMember = "ClinicName";
@@ -94,9 +98,15 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             comboBoxPaymentDiscountType.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
             comboBoxPaymentDiscountType.EditValue = Discount.NotSelected;
 
-            checkedListBoxControltax.DataSource = _context.Taxeses.Where(t => !t.isDeleted).ToList();
-            checkedListBoxControltax.DisplayMember = "Name";
-            checkedListBoxControltax.ValueMember = "TaxesID";
+            
+
+            //taxes
+            checkedListBoxControltax.Items.Clear();
+            var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+            foreach (var tax in taxes)
+            {
+                checkedListBoxControltax.Items.Add($"{tax.Name} ({tax.TaxRate}%)");
+            }
         }
 
         private void Payment_Enter(object sender, EventArgs e)
@@ -148,21 +158,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         private void comboBoxDiscountType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (comboBoxPaymentDiscountType.EditValue == null)
-            //    return;
-
-            //var selected = (Discount)comboBoxPaymentDiscountType.EditValue;
-            //if (selected == Discount.NotSelected)
-            //{
-            //    Discounttextedit.Text = "0";
-            //    Discounttextedit.Enabled = false;
-            //}
-            //else
-            //{
-            //    Discounttextedit.Text = ""; // Clear the text so user can write
-            //    Discounttextedit.Enabled = true;
-            //}
-            //CalculateTotalWithDiscount();
+            
         }
         private void comboBoxPaymentDiscountType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -229,6 +225,51 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         private async void savebutton_Click(object sender, EventArgs e)
         {
+            //// Get values from form fields
+            //decimal totalPrice = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
+            //decimal payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
+            //decimal discount = decimal.TryParse(Discounttextedit.Text, out var d) ? d : 0;
+
+            //var newHeader = new InvoiceHeader
+            //{
+            //    QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue),
+            //    InvoiceDate = invoiceDateEdit.DateTime.ToString("yyyy-MM-dd"),
+            //    PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue),
+            //    Reminder = reminderTextEdit.Text,
+            //    Note = noterichTextBox.Text,
+            //    ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
+            //    Status = (InvoiceStatus)comboBoxStatus.EditValue,
+            //    DiscountType = (Discount)comboBoxPaymentDiscountType.EditValue,
+            //    Discount = discount,
+            //    TotalPrice = totalPrice,
+            //    Payment = payment,
+            //    CreatedLog = DateTime.Now.ToString(),
+            //    UpdatedLog = DateTime.Now.ToString(),
+            //    DeletedLog = "",
+            //    isDeleted = false
+            //};
+            //var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(newHeader);
+            //if (!headerAdded)
+            //{
+            //    XtraMessageBox.Show("Failed to add invoice header.");
+            //    return;
+            //}
+
+            //// Add InvoiceDetails
+            //foreach (var detail in _invoiceDetails)
+            //{
+            //    detail.InvoiceHeaderId = newHeader.InvoiceHeaderId;
+            //    detail.QuotationId = newHeader.QuotationId;
+            //    detail.CreatedLog = DateTime.Now.ToString();
+            //    detail.UpdatedLog = DateTime.Now.ToString();
+            //    detail.DeletedLog = "";
+            //    detail.isDeleted = false;
+            //    await _invoiceDetailService.AddInvoiceDetail(detail);
+            //}
+
+            //XtraMessageBox.Show("Invoice saved successfully!");
+            //this.DialogResult = DialogResult.OK;
+            //this.Close();
             // Get values from form fields
             decimal totalPrice = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
             decimal payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
@@ -252,6 +293,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 DeletedLog = "",
                 isDeleted = false
             };
+
             var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(newHeader);
             if (!headerAdded)
             {
@@ -270,6 +312,24 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 detail.isDeleted = false;
                 await _invoiceDetailService.AddInvoiceDetail(detail);
             }
+
+            // ✅ Add Payment
+            var newPayment = new Payment
+            {
+                InvoiceId = newHeader.InvoiceHeaderId,
+                AmountPaid = payment, // from PaymenttextEdit
+                RemainingAmount = decimal.TryParse(reminderTextEdit.Text, out var rem) ? rem : 0, // from reminder
+                PaymentDate = invoiceDateEdit.DateTime, // start date = invoice date
+                PaymentMethodId = newHeader.PaymentMethodId,
+                PaymentStatus = PaymentStatus.Pending, // using invoice status enum
+                CreatedLog = DateTime.Now.ToString(),
+                UpdatedLog = DateTime.Now.ToString(),
+                DeletedLog = "",
+                isDeleted = false
+            };
+
+            await _paymentService.AddPayment(newPayment);
+           
 
             XtraMessageBox.Show("Invoice saved successfully!");
             this.DialogResult = DialogResult.OK;

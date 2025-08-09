@@ -64,33 +64,16 @@ namespace ServiveceSystem.BusinessLayer
         }
 
 
-        //public async Task<bool> AddQuotationDetails(QuotationDetail qout, string? username = "null")
-        //{
-        //    username ??= CurrentUser.Username ?? "system";
-        //    var quotationExists = await _context.QuotationHeaders
-        //        .AnyAsync(q => q.QuotationId == qout.QuotationId && !q.isDeleted);
-
-        //    if (!quotationExists)
-        //        return false;
-
-        //    // حساب TotalService
-        //    qout.TotalService = (qout.ServicePrice * qout.Quantity) - qout.Discount;
-        //    qout.CreatedLog = $"{username} - {DateTime.Now}";
-        //    qout.isDeleted = false;
-
-        //    _context.QuotationDetails.Add(qout);
-        //    await _context.SaveChangesAsync();
-        //    return true;
-        //}
 
         // Update 
-        public void Update(InvoiceDetail detail)
+        public async Task<bool> Update(InvoiceDetail detail)
         {
-            var existingDetail = _context.InvoiceDetails.Find(detail.InvoiceDetailId);
+            var existingDetail = await _context.InvoiceDetails.FindAsync(detail.InvoiceDetailId);
             if (existingDetail != null)
-            {
-               
-                existingDetail.ServiceId = detail.ServiceId;
+                return false;
+
+
+            existingDetail.ServiceId = detail.ServiceId;
                 existingDetail.QuotationId = detail.QuotationId;
                 existingDetail.Quantity = detail.Quantity;
                 existingDetail.Discount = detail.Discount;
@@ -102,23 +85,12 @@ namespace ServiveceSystem.BusinessLayer
                 //existingDetail.TotalDuo = detail.TotalDuo;
                 existingDetail.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
-                _context.SaveChanges();
-            }
+                await _context.SaveChangesAsync();
+                return true;
+            
             
         }
-
-        // Delete
-        //public void Delete(int id)
-        //{
-        //    var detail = _context.InvoiceDetails.Find(id);
-        //    if (detail != null)
-        //    {
-        //        _context.InvoiceDetails.Remove(detail);
-        //        _context.SaveChanges();
-        //    }
-        //}
-
-        // Example: Soft Delete InvoiceDetail (you might have this already)
+     
         public async Task<bool> Delete(int id)
         {
             var detail = await _context.InvoiceDetails.FindAsync(id);

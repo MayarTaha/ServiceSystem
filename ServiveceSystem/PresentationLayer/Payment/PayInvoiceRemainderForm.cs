@@ -27,7 +27,7 @@ namespace ServiveceSystem.PresentationLayer.Payment
 
         private async void LoadInvoicesWithRemainder()
         {
-            var allInvoices = await _invoiceHeaderService.GetAllAsync();
+            var allInvoices = await _invoiceHeaderService.GetAll();
             _invoicesWithRemainder = allInvoices.Where(i =>
                 decimal.TryParse(i.Reminder, out var rem) && rem > 0
             ).ToList();

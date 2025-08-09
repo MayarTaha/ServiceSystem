@@ -15,8 +15,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ServiceSystem.PresentationLayer.InvoiceDetail
 {
-	public partial class EditInvoiceForm: DevExpress.XtraEditors.XtraForm
-	{
+    public partial class EditInvoiceForm : DevExpress.XtraEditors.XtraForm
+    {
         private readonly AppDBContext _context;
         private readonly InvoiceHeaderService _invoiceHeaderService;
         private readonly InvoiceDetailService _invoiceDetailService;
@@ -25,7 +25,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         private ServiceSystem.Models.InvoiceDetail _editingDetail = null;
 
         public EditInvoiceForm(int invoiceHeaderId)
-		{
+        {
             InitializeComponent();
             _context = new AppDBContext();
             _invoiceHeaderService = new InvoiceHeaderService(_context);
@@ -38,7 +38,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             LoadInvoiceData();
             SetupGrid();
             SetupEvents();
-		}
+        }
 
         private void LoadLookUps()
         {
@@ -119,12 +119,12 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 TotalPricetextEdit.Text = header.TotalPrice.ToString("0.##");
                 PaymenttextEdit.Text = header.Payment.ToString("0.##");
                 reminderTextEdit.Text = header.Reminder ?? ""; // Load existing reminder value
-                
+
                 // Set clinic and contact based on quotation
                 if (header.QuotationHeader != null)
                 {
                     clinicLookUpEdit.EditValue = header.QuotationHeader.ClinicId;
-                    
+
                     // Load clinic data
                     if (header.QuotationHeader.ClinicId > 0)
                     {
@@ -135,13 +135,13 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                             emailTextEdit.Text = clinic.Email;
                             phoneTextEdit.Text = clinic.Phone;
                         }
-                        
+
                         // Set contact data source based on selected clinic
                         var contacts = _context.ContactPersons.Where(cp => cp.ClinicId == header.QuotationHeader.ClinicId && !cp.isDeleted).ToList();
                         contactLookUpEdit.Properties.DataSource = contacts;
                     }
                 }
-                
+
                 contactLookUpEdit.EditValue = header.ContactId;
 
                 // Load selected taxes - direct relationship
@@ -166,10 +166,10 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
             invoiceDetailsList = new BindingList<ServiceSystem.Models.InvoiceDetail>(details);
             gridcontrolDetails.DataSource = invoiceDetailsList;
-            
+
             // Set TotaltextEdit to match TotalPricetextEdit (both show the same total)
             TotaltextEdit.Text = TotalPricetextEdit.Text;
-            
+
             // Calculate payment balance based on loaded values
             CalculatePaymentBalance();
         }
@@ -178,7 +178,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         {
             gridViewdet.OptionsBehavior.Editable = false;
             gridViewdet.Columns.Clear();
-            
+
             // Service column with lookup to show service name
             var serviceColumn = gridViewdet.Columns.AddVisible("ServiceId", "Service");
             var serviceLookUp = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
@@ -186,7 +186,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             serviceLookUp.DisplayMember = "Name";
             serviceLookUp.ValueMember = "ServiceId";
             serviceColumn.ColumnEdit = serviceLookUp;
-            
+
             gridViewdet.Columns.AddVisible("Quantity", "Quantity");
             gridViewdet.Columns.AddVisible("ServicePrice", "Service Price");
             gridViewdet.Columns.AddVisible("DiscountType", "Discount Type");
@@ -199,8 +199,6 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             gridViewdet.CellValueChanged += (s, e) => UpdateGrandTotal();
             gridViewdet.RowCountChanged += (s, e) => UpdateGrandTotal();
             gridViewdet.RowClick += gridViewdet_RowClick;
-            savebutton.Click += CompleteprocessButton_Click;
-            btnSubmit.Click += btnSubmit_Click;
             SetupGroupBoxEvents();
             SetupHeaderEvents();
         }
@@ -213,7 +211,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 if (clinicLookUpEdit.EditValue != null)
                 {
                     int clinicId = Convert.ToInt32(clinicLookUpEdit.EditValue);
-                    
+
                     // Get clinic data
                     var clinic = _context.Clinics.FirstOrDefault(c => c.ClinicId == clinicId);
                     if (clinic != null)
@@ -222,11 +220,11 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                         emailTextEdit.Text = clinic.Email;
                         phoneTextEdit.Text = clinic.Phone;
                     }
-                    
+
                     // Filter contacts for this clinic
                     var contacts = _context.ContactPersons.Where(cp => cp.ClinicId == clinicId && !cp.isDeleted).ToList();
                     contactLookUpEdit.Properties.DataSource = contacts;
-                    
+
                     // Auto-select first contact if available
                     if (contacts.Count > 0)
                     {
@@ -282,7 +280,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             quantityTextEdit.EditValueChanged += (s, e) => CalculateTotalService();
             textEditDiscountDetail.EditValueChanged += (s, e) => CalculateTotalService();
             textEditServicePrice.EditValueChanged += (s, e) => CalculateTotalService();
-            
+
             // Service detail discount type change
             comboBoxDiscountTypeDetail.SelectedIndexChanged += (s, e) =>
             {
@@ -302,7 +300,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 }
                 CalculateTotalService();
             };
-            
+
             serviceLookUpEdit.EditValueChanged += (s, e) =>
             {
                 if (serviceLookUpEdit.EditValue != null)
@@ -367,7 +365,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             decimal total = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
             decimal payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
             decimal balance = total - payment;
-            
+
             // Always update reminder when payment changes
             reminderTextEdit.Text = balance.ToString("0.##");
         }
@@ -404,50 +402,11 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             }
         }
 
-        private void btnSubmit_Click(object sender, EventArgs e)
+
+
+        private async void savebutton_Click(object sender, EventArgs e)
         {
-            if (_editingDetail != null)
-            {
-                // Update existing detail
-                _editingDetail.ServiceId = Convert.ToInt32(serviceLookUpEdit.EditValue);
-                _editingDetail.Quantity = int.TryParse(quantityTextEdit.Text, out var q) ? q : 0;
-                _editingDetail.ServicePrice = decimal.TryParse(textEditServicePrice.Text, out var p) ? p : 0;
-                _editingDetail.DiscountType = (Discount)comboBoxDiscountTypeDetail.EditValue;
-                _editingDetail.Discount = decimal.TryParse(textEditDiscountDetail.Text, out var d) ? d : 0;
-                _editingDetail.TotalService = decimal.TryParse(totalServiceTextEdit.Text, out var t) ? t : 0;
-                
-                _editingDetail = null;
-                btnSubmit.Text = "Add";
-            }
-            else
-            {
-                // Add new detail
-                var detail = new ServiceSystem.Models.InvoiceDetail
-                {
-                    ServiceId = Convert.ToInt32(serviceLookUpEdit.EditValue),
-                    Quantity = int.TryParse(quantityTextEdit.Text, out var q) ? q : 0,
-                    ServicePrice = decimal.TryParse(textEditServicePrice.Text, out var p) ? p : 0,
-                    DiscountType = (Discount)comboBoxDiscountTypeDetail.EditValue,
-                    Discount = decimal.TryParse(textEditDiscountDetail.Text, out var d) ? d : 0,
-                    TotalService = decimal.TryParse(totalServiceTextEdit.Text, out var t) ? t : 0,
-                };
-                invoiceDetailsList.Add(detail);
-            }
-
-            gridcontrolDetails.RefreshDataSource();
-            UpdateGrandTotal();
-
-            // Clear group box fields after add/update
-            serviceLookUpEdit.EditValue = null;
-            quantityTextEdit.Text = string.Empty;
-            textEditServicePrice.Text = string.Empty;
-            comboBoxDiscountTypeDetail.EditValue = Discount.NotSelected;
-            textEditDiscountDetail.Text = "0";
-            totalServiceTextEdit.Text = string.Empty;
-        }
-
-        private async void CompleteprocessButton_Click(object sender, EventArgs e)
-        {
+            try { 
             if (invoiceDetailsList.Count == 0)
             {
                 XtraMessageBox.Show("Please add at least one service before continuing.");
@@ -494,10 +453,15 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             }
 
             await _context.SaveChangesAsync();
-            
-            XtraMessageBox.Show("Invoice updated successfully!");
+
+            XtraMessageBox.Show("Invoice updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-	}
+             catch (Exception ex)
+    {
+                XtraMessageBox.Show($"Error updating invoice: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
 }

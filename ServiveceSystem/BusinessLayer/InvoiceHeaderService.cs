@@ -27,7 +27,7 @@ namespace ServiveceSystem.BusinessLayer
         //    return _context.invoiceHeaders.ToList();
         //}
 
-        public async Task<List<InvoiceHeader>> GetAllAsync()
+        public async Task<List<InvoiceHeader>> GetAll()
         {
             return await _context.invoiceHeaders.Include(i => i.QuotationHeader)
         .Include(i => i.PaymentMethod)
@@ -71,24 +71,26 @@ namespace ServiveceSystem.BusinessLayer
         }
 
         // Update 
-        public void Update(InvoiceHeader invoice)
+        public async Task<bool> Update(InvoiceHeader invoice)
         {
-            var existingInvoice = _context.invoiceHeaders.Find(invoice.InvoiceHeaderId);
+            var existingInvoice = await _context.invoiceHeaders.FindAsync(invoice.InvoiceHeaderId);
             if (existingInvoice != null)
-            {
+                return false;
 
                 bool quotationExists = _context.QuotationHeaders.Any(q => q.QuotationId == invoice.QuotationId);
                 bool paymentMethodExists = _context.PaymentMethods.Any(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
 
 
                 if (!quotationExists)
-                    throw new Exception("Quotation not found");
+                return false;
+            //throw new Exception("Quotation not found");
 
-                if (!paymentMethodExists)
-                    throw new Exception("Payment method not found");
+            if (!paymentMethodExists)
+                // throw new Exception("Payment method not found");
+                return false;
 
 
-                existingInvoice.QuotationId = invoice.QuotationId;
+            existingInvoice.QuotationId = invoice.QuotationId;
                 existingInvoice.InvoiceDate = invoice.InvoiceDate;
                 existingInvoice.TotalPrice = invoice.TotalPrice;
                 existingInvoice.Payment = invoice.Payment;
@@ -100,11 +102,50 @@ namespace ServiveceSystem.BusinessLayer
 
                 existingInvoice.UpdatedLog = DateTime.Now.ToString();
 
-                _context.SaveChanges();
-            }
+            await _context.SaveChangesAsync();
+            return true;
+
 
         }
 
+
+        //public async Task<bool> UpdateQuotationHeader(QuotationHeader qout, string? username = "null")
+        //{
+        //    username ??= CurrentUser.Username ?? "system";
+
+        //    var contactExists = await _context.ContactPersons.AnyAsync(cp => cp.ContactId == qout.ContactId);
+        //    if (!contactExists)
+        //        return false;
+        //    var exists = await _context.QuotationHeaders
+        //        .AnyAsync(q => q.QuotationId != qout.QuotationId &&
+        //                       q.ClinicId == qout.ClinicId &&
+        //                       q.InitialDate == qout.InitialDate &&
+        //        !q.isDeleted);
+        //    if (exists)
+        //        return false;
+
+        //    var tracked = await _context.QuotationHeaders.FirstOrDefaultAsync(q => q.QuotationId == qout.QuotationId);
+        //    if (tracked == null)
+        //        return false;
+
+        //    // Update properties
+        //    tracked.ClinicId = qout.ClinicId;
+        //    tracked.InitialDate = qout.InitialDate;
+        //    tracked.ExpireDate = qout.ExpireDate;
+        //    tracked.Note = qout.Note;
+        //    tracked.QuotationNaMe = qout.QuotationNaMe;
+        //    tracked.Status = qout.Status;
+        //    tracked.priority = qout.priority;
+        //    tracked.DiscountType = qout.DiscountType;
+        //    tracked.Discount = qout.Discount;
+        //    tracked.TotalDuo = qout.TotalDuo;
+        //    tracked.ContactId = qout.ContactId;
+        //    tracked.UpdatedLog = $"{username} - {DateTime.Now}";
+        //    // ... any other fields
+
+        //    await _context.SaveChangesAsync();
+        //    return true;
+        //}
         // Delete 
         public async Task<bool> Delete(int id)
         {

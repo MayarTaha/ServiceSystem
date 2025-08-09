@@ -242,6 +242,7 @@
             savebutton.Size = new Size(476, 49);
             savebutton.TabIndex = 41;
             savebutton.Text = "Save";
+            savebutton.Click += savebutton_Click;
             // 
             // Invoice
             // 

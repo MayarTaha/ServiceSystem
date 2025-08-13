@@ -72,6 +72,12 @@ namespace ServiceSystem.PresentationLayer.Quotation
             clinicLookUpEdit.Properties.ValueMember = "ClinicId";
             clinicLookUpEdit.Properties.Columns.Clear();
             clinicLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ClinicName", "Clinic Name"));
+            //salesman
+            SalesManlookUpEdit.Properties.DataSource = _context.SalesMen.Where(c => !c.isDeleted).ToList();
+            SalesManlookUpEdit.Properties.DisplayMember = "SalesManName";
+            SalesManlookUpEdit.Properties.ValueMember = "SalesManId";
+            SalesManlookUpEdit.Properties.Columns.Clear();
+            SalesManlookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("SalesManName", "SalesMan Name"));
 
             // Contact Persons - will be filtered based on selected clinic
             contactLookUpEdit.Properties.DisplayMember = "ContactName";
@@ -108,6 +114,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 initialDateEdit.DateTime = header.InitialDate;
                 expireDateEdit.DateTime = header.ExpireDate;
                 noteRichTextBox.Text = header.Note;
+                SalesManlookUpEdit.EditValue = header.SalesManId;
                 quotationNameTextEdit.Text = header.QuotationNaMe;
                 comboBoxStatus.EditValue = header.Status;
                 prioritycomboBoxEdit.EditValue = header.priority;

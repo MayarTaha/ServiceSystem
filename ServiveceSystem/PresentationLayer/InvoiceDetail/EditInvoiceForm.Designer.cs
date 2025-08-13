@@ -86,6 +86,8 @@
             textEditDiscountDetail = new DevExpress.XtraEditors.TextEdit();
             TotaltextEdit = new DevExpress.XtraEditors.TextEdit();
             labelControl26 = new DevExpress.XtraEditors.LabelControl();
+            salesmanlookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
+            labelControl27 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)gridViewdet).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emailTextEdit.Properties).BeginInit();
@@ -116,6 +118,7 @@
             ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)textEditDiscountDetail.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)salesmanlookUpEdit.Properties).BeginInit();
             SuspendLayout();
             // 
             // gridViewdet
@@ -131,7 +134,7 @@
             // 
             // gridcontrolDetails
             // 
-            gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(6, 9, 6, 9);
+            gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(6, 8, 6, 8);
             gridcontrolDetails.Location = new Point(12, 839);
             gridcontrolDetails.MainView = gridViewdet;
             gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);
@@ -237,7 +240,7 @@
             // 
             savebutton.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             savebutton.Appearance.Options.UseFont = true;
-            savebutton.Location = new Point(9, 762);
+            savebutton.Location = new Point(12, 783);
             savebutton.Name = "savebutton";
             savebutton.Size = new Size(476, 49);
             savebutton.TabIndex = 41;
@@ -246,6 +249,8 @@
             // 
             // Invoice
             // 
+            Invoice.Controls.Add(salesmanlookUpEdit);
+            Invoice.Controls.Add(labelControl27);
             Invoice.Controls.Add(labelControl19);
             Invoice.Controls.Add(comboBoxStatus);
             Invoice.Controls.Add(labelControl11);
@@ -257,7 +262,7 @@
             Invoice.Controls.Add(quotationLookUpEdit);
             Invoice.Location = new Point(12, 385);
             Invoice.Name = "Invoice";
-            Invoice.Size = new Size(476, 357);
+            Invoice.Size = new Size(476, 392);
             Invoice.TabIndex = 40;
             Invoice.TabStop = false;
             Invoice.Text = "Invoice";
@@ -297,7 +302,7 @@
             // noterichTextBox
             // 
             noterichTextBox.Font = new Font("Microsoft Sans Serif", 12F);
-            noterichTextBox.Location = new Point(209, 235);
+            noterichTextBox.Location = new Point(209, 271);
             noterichTextBox.Name = "noterichTextBox";
             noterichTextBox.Size = new Size(250, 103);
             noterichTextBox.TabIndex = 28;
@@ -307,7 +312,7 @@
             // 
             labelControl2.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             labelControl2.Appearance.Options.UseFont = true;
-            labelControl2.Location = new Point(10, 252);
+            labelControl2.Location = new Point(10, 279);
             labelControl2.Name = "labelControl2";
             labelControl2.Size = new Size(64, 29);
             labelControl2.TabIndex = 27;
@@ -641,7 +646,7 @@
             // 
             labelControl22.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             labelControl22.Appearance.Options.UseFont = true;
-            labelControl22.Location = new Point(22, 152);
+            labelControl22.Location = new Point(22, 153);
             labelControl22.Margin = new Padding(3, 4, 3, 4);
             labelControl22.Name = "labelControl22";
             labelControl22.Size = new Size(144, 29);
@@ -751,8 +756,32 @@
             labelControl26.TabIndex = 45;
             labelControl26.Text = "Total  :";
             // 
+            // salesmanlookUpEdit
+            // 
+            salesmanlookUpEdit.Location = new Point(209, 215);
+            salesmanlookUpEdit.Name = "salesmanlookUpEdit";
+            salesmanlookUpEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            salesmanlookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
+            salesmanlookUpEdit.Properties.Appearance.Options.UseFont = true;
+            salesmanlookUpEdit.Properties.Appearance.Options.UseForeColor = true;
+            salesmanlookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            salesmanlookUpEdit.Properties.NullText = "Select Sales Man";
+            salesmanlookUpEdit.Size = new Size(250, 42);
+            salesmanlookUpEdit.TabIndex = 41;
+            // 
+            // labelControl27
+            // 
+            labelControl27.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            labelControl27.Appearance.Options.UseFont = true;
+            labelControl27.Location = new Point(10, 221);
+            labelControl27.Name = "labelControl27";
+            labelControl27.Size = new Size(131, 29);
+            labelControl27.TabIndex = 40;
+            labelControl27.Text = "Sales Man : ";
+            // 
             // EditInvoiceForm
             // 
+            Appearance.Options.UseFont = true;
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1186, 1062);
@@ -764,10 +793,14 @@
             Controls.Add(Invoice);
             Controls.Add(groupBox1);
             Controls.Add(Payment);
-            FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            Font = new Font("Segoe UI", 8F);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            IconOptions.Image = Properties.Resources.icons8_invoice_64;
+            MaximizeBox = false;
             Name = "EditInvoiceForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Edit Invoice";
+            Load += EditInvoiceForm_Load;
             ((System.ComponentModel.ISupportInitialize)gridViewdet).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).EndInit();
             ((System.ComponentModel.ISupportInitialize)emailTextEdit.Properties).EndInit();
@@ -802,6 +835,7 @@
             ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)textEditDiscountDetail.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)salesmanlookUpEdit.Properties).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -866,5 +900,7 @@
         private DevExpress.XtraEditors.SimpleButton btnSubmit;
         private DevExpress.XtraEditors.TextEdit TotaltextEdit;
         private DevExpress.XtraEditors.LabelControl labelControl26;
+        private DevExpress.XtraEditors.LookUpEdit salesmanlookUpEdit;
+        private DevExpress.XtraEditors.LabelControl labelControl27;
     }
 }

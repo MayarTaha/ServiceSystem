@@ -25,7 +25,7 @@ namespace ServiceSystem.Models
         public virtual Service Service { get; set; }
 
         [ForeignKey("QuotationHeader")]
-        public int QuotationId { get; set; } // FK
+        public int? QuotationId { get; set; } // FK
         public virtual QuotationHeader QuotationHeader { get; set; } // 
 
         public int Quantity { get; set; }

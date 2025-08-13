@@ -38,6 +38,9 @@ namespace ServiceSystem.Models
         [ForeignKey("Clinic")]
         public int ClinicId { get; set; } ///fk
         public virtual Clinic Clinic { get; set; }
+
+        public int? SalesManId { get; set; } // FK
+        public SalesMan? SalesMan { get; set; }
         public DateTime InitialDate { get; set; }
         public DateTime ExpireDate { get; set; }
         public string Note { get; set; }

@@ -11,6 +11,7 @@ using DevExpress.XtraEditors;
 using ServiveceSystem.Models;
 using ServiceSystem.Models;
 using ServiveceSystem.BusinessLayer;
+using System.Reflection.PortableExecutable;
 
 namespace ServiceSystem.PresentationLayer.InvoiceDetail
 {
@@ -44,7 +45,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             contactLookUpEdit.Properties.ValueMember = "ContactId";
             contactLookUpEdit.Properties.Columns.Clear();
             contactLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ContactName", "Contact Name"));
-            contactLookUpEdit.EditValue = contactId;
+            //salesman
+
             // Quotation lookup
             quotationLookUpEdit.EditValue = quotationId;
             if (quotationLookUpEdit.Properties.DataSource == null)
@@ -105,6 +107,14 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             paymentmethodlookupedit.Properties.ValueMember = "PaymentMethodId";
             paymentmethodlookupedit.Properties.Columns.Clear();
             paymentmethodlookupedit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentType", "Payment Method"));
+            //salesman
+            salesmanlookUpEdit.Properties.DataSource = context.SalesMen.Where(c => !c.isDeleted).ToList();
+            salesmanlookUpEdit.Properties.DisplayMember = "SalesManName";
+            salesmanlookUpEdit.Properties.ValueMember = "SalesManId";
+            salesmanlookUpEdit.Properties.Columns.Clear();
+            salesmanlookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("SalesManName", "SalesMan Name"));
+
+
             // Discount Type
             comboBoxDiscountType.Properties.Items.Clear();
             comboBoxDiscountType.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
@@ -164,6 +174,10 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             var context = new AppDBContext();
             var invoiceHeaderService = new InvoiceHeaderService(context);
             var invoiceDetailService = new InvoiceDetailService(context);
+            var _paymentService = new PaymentService(context);
+            decimal totalPrice = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
+            decimal payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
+            decimal discount = decimal.TryParse(Discounttextedit.Text, out var d) ? d : 0;
             var header = new InvoiceHeader
             {
                 QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue),
@@ -173,6 +187,11 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 Note = noterichTextBox.Text,
                 ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
                 Status = (InvoiceStatus)comboBoxStatus.EditValue,
+                DiscountType = (Discount)comboBoxDiscountType.EditValue,
+                SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue),
+                Discount = discount,
+                TotalPrice = totalPrice,
+                Payment = payment,
                 CreatedLog = DateTime.Now.ToString(),
                 UpdatedLog = DateTime.Now.ToString(),
                 DeletedLog = "",
@@ -204,6 +223,22 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 };
                 await invoiceDetailService.AddInvoiceDetail(invoiceDetail);
             }
+            // ✅ Add Payment
+            var newPayment = new Payment
+            {
+                InvoiceId = header.InvoiceHeaderId,
+                AmountPaid = payment, // from PaymenttextEdit
+                RemainingAmount = decimal.TryParse(reminderTextEdit.Text, out var rem) ? rem : 0, // from reminder
+                PaymentDate = invoiceDateEdit.DateTime, // start date = invoice date
+                PaymentMethodId = header.PaymentMethodId,
+                PaymentStatus = PaymentStatus.Pending, // using invoice status enum
+                CreatedLog = DateTime.Now.ToString(),
+                UpdatedLog = DateTime.Now.ToString(),
+                DeletedLog = "",
+                isDeleted = false
+            };
+
+            await _paymentService.AddPayment(newPayment);
             XtraMessageBox.Show("Invoice saved successfully!");
             this.DialogResult = DialogResult.OK;
             this.Close();

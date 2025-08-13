@@ -87,6 +87,12 @@ namespace ServiceSystem.PresentationLayer.Quotation
             contactLookUpEdit.Properties.Columns.Clear();
             contactLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ContactName", "Contact Name"));
 
+            //salesman
+            salesmanlookUpEdit.Properties.DataSource = _context.SalesMen.Where(c => !c.isDeleted).ToList();
+            salesmanlookUpEdit.Properties.DisplayMember = "SalesManName";
+            salesmanlookUpEdit.Properties.ValueMember = "SalesManId";
+            salesmanlookUpEdit.Properties.Columns.Clear();
+            salesmanlookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("SalesManName", "SalesMan Name"));
 
             // 5. نوع الخصم
             comboBoxDiscountType.Properties.Items.Clear();
@@ -196,6 +202,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
                     QuotationNaMe = quotationNameTextEdit.Text,
                     Status = (QuotationStatus)comboBoxStatus.EditValue,
                     priority = (priorityStatus)prioritycomboBoxEdit.EditValue,
+                    SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue),
                     DiscountType = (Discount)comboBoxDiscountType.EditValue,
                     Discount = decimal.TryParse(textEditDiscountHeader.Text, out var d) ? d : 0,
                     TotalDuo = decimal.TryParse(totaltextEdit.Text, out var t) ? t : 0,

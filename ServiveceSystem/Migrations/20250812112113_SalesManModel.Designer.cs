@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiveceSystem.Models;
 
@@ -11,9 +12,11 @@ using ServiveceSystem.Models;
 namespace ServiceSystem.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250812112113_SalesManModel")]
+    partial class SalesManModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,7 +221,7 @@ namespace ServiceSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SalesManId")
+                    b.Property<int>("SalesManId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -392,7 +395,7 @@ namespace ServiceSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SalesManId")
+                    b.Property<int>("SalesManId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -424,34 +427,19 @@ namespace ServiceSystem.Migrations
 
             modelBuilder.Entity("ServiceSystem.Models.SalesMan", b =>
                 {
-                    b.Property<int?>("SalesManId")
+                    b.Property<int>("SalesManId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("SalesManId"));
-
-                    b.Property<string>("CreatedLog")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedLog")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalesManId"));
 
                     b.Property<string>("SalesManName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedLog")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("SalesManId");
 
-                    b.ToTable("SalesMen");
+                    b.ToTable("SalesMan");
                 });
 
             modelBuilder.Entity("ServiceSystem.Models.Service", b =>
@@ -658,7 +646,8 @@ namespace ServiceSystem.Migrations
                     b.HasOne("ServiceSystem.Models.SalesMan", "SalesMan")
                         .WithMany("InvoiceHeaders")
                         .HasForeignKey("SalesManId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Contact");
 
@@ -724,7 +713,8 @@ namespace ServiceSystem.Migrations
                     b.HasOne("ServiceSystem.Models.SalesMan", "SalesMan")
                         .WithMany("QuotationHeaders")
                         .HasForeignKey("SalesManId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Clinic");
 

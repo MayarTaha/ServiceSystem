@@ -72,6 +72,16 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             clinicLookUpEdit.Properties.Columns.Clear();
             clinicLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ClinicName", "Clinic Name"));
 
+
+
+
+            lookUpEditSalesMan.Properties.DataSource = _context.SalesMen.Where(c => !c.isDeleted).ToList();
+            lookUpEditSalesMan.Properties.DisplayMember = "SalesManName";
+            lookUpEditSalesMan.Properties.ValueMember = "SalesManId";
+            lookUpEditSalesMan.Properties.Columns.Clear();
+            lookUpEditSalesMan.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("SalesManName", "SalesMan Name"));
+
+
             contactLookUpEdit.Properties.DataSource = _context.ContactPersons.Where(cp => !cp.isDeleted).ToList();
             contactLookUpEdit.Properties.DisplayMember = "ContactName";
             contactLookUpEdit.Properties.ValueMember = "ContactId";
@@ -225,51 +235,6 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         private async void savebutton_Click(object sender, EventArgs e)
         {
-            //// Get values from form fields
-            //decimal totalPrice = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
-            //decimal payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
-            //decimal discount = decimal.TryParse(Discounttextedit.Text, out var d) ? d : 0;
-
-            //var newHeader = new InvoiceHeader
-            //{
-            //    QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue),
-            //    InvoiceDate = invoiceDateEdit.DateTime.ToString("yyyy-MM-dd"),
-            //    PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue),
-            //    Reminder = reminderTextEdit.Text,
-            //    Note = noterichTextBox.Text,
-            //    ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
-            //    Status = (InvoiceStatus)comboBoxStatus.EditValue,
-            //    DiscountType = (Discount)comboBoxPaymentDiscountType.EditValue,
-            //    Discount = discount,
-            //    TotalPrice = totalPrice,
-            //    Payment = payment,
-            //    CreatedLog = DateTime.Now.ToString(),
-            //    UpdatedLog = DateTime.Now.ToString(),
-            //    DeletedLog = "",
-            //    isDeleted = false
-            //};
-            //var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(newHeader);
-            //if (!headerAdded)
-            //{
-            //    XtraMessageBox.Show("Failed to add invoice header.");
-            //    return;
-            //}
-
-            //// Add InvoiceDetails
-            //foreach (var detail in _invoiceDetails)
-            //{
-            //    detail.InvoiceHeaderId = newHeader.InvoiceHeaderId;
-            //    detail.QuotationId = newHeader.QuotationId;
-            //    detail.CreatedLog = DateTime.Now.ToString();
-            //    detail.UpdatedLog = DateTime.Now.ToString();
-            //    detail.DeletedLog = "";
-            //    detail.isDeleted = false;
-            //    await _invoiceDetailService.AddInvoiceDetail(detail);
-            //}
-
-            //XtraMessageBox.Show("Invoice saved successfully!");
-            //this.DialogResult = DialogResult.OK;
-            //this.Close();
             // Get values from form fields
             decimal totalPrice = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
             decimal payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
@@ -277,12 +242,16 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
             var newHeader = new InvoiceHeader
             {
-                QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue),
+                // QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue),
+                QuotationId = quotationLookUpEdit.EditValue == null
+    ? (int?)null
+    : Convert.ToInt32(quotationLookUpEdit.EditValue),
                 InvoiceDate = invoiceDateEdit.DateTime.ToString("yyyy-MM-dd"),
                 PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue),
                 Reminder = reminderTextEdit.Text,
                 Note = noterichTextBox.Text,
                 ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
+                SalesManId = Convert.ToInt32(lookUpEditSalesMan.EditValue),
                 Status = (InvoiceStatus)comboBoxStatus.EditValue,
                 DiscountType = (Discount)comboBoxPaymentDiscountType.EditValue,
                 Discount = discount,
@@ -294,18 +263,35 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 isDeleted = false
             };
 
-            var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(newHeader);
-            if (!headerAdded)
+            //var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(newHeader);
+            //if (!headerAdded)
+            //{
+            //    XtraMessageBox.Show("Failed to add invoice header.");
+            //    return;
+            //}
+            try
             {
-                XtraMessageBox.Show("Failed to add invoice header.");
+                var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(newHeader);
+                //if (!headerAdded)
+                //{
+                //    XtraMessageBox.Show("Failed to add invoice header.");
+                //    return;
+                //}
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Failed to add invoice header: {ex.Message}");
                 return;
             }
+
 
             // Add InvoiceDetails
             foreach (var detail in _invoiceDetails)
             {
                 detail.InvoiceHeaderId = newHeader.InvoiceHeaderId;
-                detail.QuotationId = newHeader.QuotationId;
+                //  detail.QuotationId = newHeader.QuotationId;
+                if(newHeader.QuotationId != null)
+        detail.QuotationId = newHeader.QuotationId;
                 detail.CreatedLog = DateTime.Now.ToString();
                 detail.UpdatedLog = DateTime.Now.ToString();
                 detail.DeletedLog = "";
@@ -314,24 +300,24 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             }
 
             // ✅ Add Payment
-            var newPayment = new Payment
-            {
-                InvoiceId = newHeader.InvoiceHeaderId,
-                AmountPaid = payment, // from PaymenttextEdit
-                RemainingAmount = decimal.TryParse(reminderTextEdit.Text, out var rem) ? rem : 0, // from reminder
-                PaymentDate = invoiceDateEdit.DateTime, // start date = invoice date
-                PaymentMethodId = newHeader.PaymentMethodId,
-                PaymentStatus = PaymentStatus.Pending, // using invoice status enum
-                CreatedLog = DateTime.Now.ToString(),
-                UpdatedLog = DateTime.Now.ToString(),
-                DeletedLog = "",
-                isDeleted = false
-            };
+            //var newPayment = new Payment
+            //{
+            //    InvoiceId = newHeader.InvoiceHeaderId,
+            //    AmountPaid = payment, // from PaymenttextEdit
+            //    RemainingAmount = decimal.TryParse(reminderTextEdit.Text, out var rem) ? rem : 0, // from reminder
+            //    PaymentDate = invoiceDateEdit.DateTime, // start date = invoice date
+            //    PaymentMethodId = newHeader.PaymentMethodId,
+            //    PaymentStatus = PaymentStatus.Pending, // using invoice status enum
+            //    CreatedLog = DateTime.Now.ToString(),
+            //    UpdatedLog = DateTime.Now.ToString(),
+            //    DeletedLog = "",
+            //    isDeleted = false
+            //};
 
-            await _paymentService.AddPayment(newPayment);
+            //await _paymentService.AddPayment(newPayment);
            
 
-            XtraMessageBox.Show("Invoice saved successfully!");
+           // XtraMessageBox.Show("Invoice saved successfully!");
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

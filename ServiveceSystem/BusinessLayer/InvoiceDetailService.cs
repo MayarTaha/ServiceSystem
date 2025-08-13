@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DevExpress.XtraEditors;
+using Microsoft.EntityFrameworkCore;
 using ServiceSystem.Models;
 using ServiveceSystem.Models;
 using System;
@@ -47,19 +48,34 @@ namespace ServiveceSystem.BusinessLayer
         // Add new InvoiceDetail
         public async Task<bool> AddInvoiceDetail(InvoiceDetail detail)
         {
-            var quotationExists = await _context.QuotationHeaders
-              .AnyAsync(q => q.QuotationId == detail.QuotationId && !q.isDeleted);
+            //var quotationExists = await _context.QuotationHeaders
+            //  .AnyAsync(q => q.QuotationId == detail.QuotationId && !q.isDeleted);
 
-            if (!quotationExists)
-                  return false;
-              
+            //if (!quotationExists)
+            //      return false;
+            bool quotationExists = true;
 
-            detail.TotalService = CalculateTotalService(detail);
+            // Only check quotation if provided
+            if (detail.QuotationId.HasValue)
+            {
+                quotationExists = await _context.QuotationHeaders
+                    .AnyAsync(q => q.QuotationId == detail.QuotationId && !q.isDeleted);
+
+                if (!quotationExists)
+                {
+                    XtraMessageBox.Show("The selected quotation does not exist.");
+                    return false;
+                }
+            }
+
+
+                detail.TotalService = CalculateTotalService(detail);
             detail.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
             detail.UpdatedLog = DateTime.Now.ToString();
             detail.isDeleted = false;
             _context.InvoiceDetails.Add(detail);
             await _context.SaveChangesAsync();
+            XtraMessageBox.Show("Invoice saved successfully!");
             return true;
         }
 

@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using DevExpress.XtraGrid.Columns;
 using ServiceSystem.PresentationLayer.InvoiceDetail;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
+
 
 namespace ServiveceSystem.PresentationLayer.InvoiceDetail
 {
@@ -30,7 +32,7 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
         public AddInvoiceForm()
         {
             InitializeComponent();
-            //this.Size = new Size(900, 400);
+
             gridViewdet.GroupPanelText = " ";
             _context = new AppDBContext();
             _invoiceHeaderService = new InvoiceHeaderService(_context);
@@ -38,14 +40,22 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
 
             // Set the GridControl's DataSource initially
             gridcontrolDetails.DataSource = invoiceDetailsList;
+            RepositoryItemLookUpEdit serviceLookup = new RepositoryItemLookUpEdit();
+            serviceLookup.DataSource = _context.Services.ToList();
+            serviceLookup.DisplayMember = "Name";   // what you want to show
+            serviceLookup.ValueMember = "ServiceId"; // actual FK in your table
+            serviceLookup.NullText = "";
+
+            gridViewdet.Columns["ServiceId"].ColumnEdit = serviceLookup;
+
 
             LoadLookUps();
-            SetupGrid(); 
+            SetupGrid();
 
             // Event handlers for gridViewdet (the GridView)
             gridViewdet.CellValueChanged += (s, e) => UpdateGrandTotal();
             gridViewdet.RowCountChanged += (s, e) => UpdateGrandTotal();
-           
+
         }
 
         private void LoadLookUps()
@@ -62,49 +72,49 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
         }
         private void SetupGrid()
         {
-            
-            gridViewdet.Columns.Add(new GridColumn() { FieldName = "ServiceId", Caption = "Service" });
+
+            gridViewdet.Columns.Add(new GridColumn() { FieldName = "Name", Caption = "Service" });
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "Quantity", Caption = "Quantity" });
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "ServicePrice", Caption = "Unit Price" });
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "Discount", Caption = "Discount" });
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "DiscountType", Caption = "Discount Type" });
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "TotalService", Caption = "Total" });
 
-            // Set up Service column as LookUpEdit
-            var serviceCol = gridViewdet.Columns["ServiceId"];
-            if (serviceCol != null)
-            {
-                var repoService = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-                repoService.DataSource = _context.Services.ToList();
-                repoService.DisplayMember = "Name";
-                repoService.ValueMember = "ServiceId";
-                serviceCol.ColumnEdit = repoService;
-            }
+            //// Set up Service column as LookUpEdit
+            //var serviceCol = gridViewdet.Columns["ServiceId"];
+            //if (serviceCol != null)
+            //{
+            //    var repoService = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            //    repoService.DataSource = _context.Services.ToList();
+            //    repoService.DisplayMember = "Name";
+            //    repoService.ValueMember = "ServiceId";
+            //    serviceCol.ColumnEdit = repoService;
+            //}
 
-            // Set up DiscountType column as ComboBox
-            var discountTypeCol = gridViewdet.Columns["DiscountType"];
-            if (discountTypeCol != null)
-            {
-                var repoDiscountType = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-                repoDiscountType.Items.AddRange(Enum.GetValues(typeof(Discount)));
-                discountTypeCol.ColumnEdit = repoDiscountType;
-            }
+            //// Set up DiscountType column as ComboBox
+            //var discountTypeCol = gridViewdet.Columns["DiscountType"];
+            //if (discountTypeCol != null)
+            //{
+            //    var repoDiscountType = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            //    repoDiscountType.Items.AddRange(Enum.GetValues(typeof(Discount)));
+            //    discountTypeCol.ColumnEdit = repoDiscountType;
+            //}
 
         }
         private void gridcontrolDetails_Click(object sender, EventArgs e)
         {
         }
-   
+
         private void UpdateGrandTotal()
         {
-           
+
 
             decimal sum = 0;
             foreach (var item in invoiceDetailsList)
             {
                 sum += item.TotalService;
             }
-            TotaltextEdit.Text = sum.ToString("0.##"); 
+            TotaltextEdit.Text = sum.ToString("0.##");
         }
         private void CompleteprocessButton_Click(object sender, EventArgs e)
         {
@@ -207,6 +217,17 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
             comboBoxDiscountType.EditValue = Discount.NotSelected;
             discountValueTextEdit.Text = "0";
             totalServiceTextEdit.Text = "";
+        }
+
+        private void AddInvoiceForm_Load(object sender, EventArgs e)
+        {
+            // Center all row text
+            gridViewdet.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
+            // Center header text
+            gridViewdet.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
+
         }
     }
 }

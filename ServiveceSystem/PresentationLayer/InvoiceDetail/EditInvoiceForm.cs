@@ -27,6 +27,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         public EditInvoiceForm(int invoiceHeaderId)
         {
             InitializeComponent();
+            this.Size = new Size(800, 600);
             _context = new AppDBContext();
             _invoiceHeaderService = new InvoiceHeaderService(_context);
             _invoiceDetailService = new InvoiceDetailService(_context);
@@ -55,6 +56,12 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             // Invoice Status
             comboBoxStatus.Properties.Items.Clear();
             comboBoxStatus.Properties.Items.AddRange(Enum.GetValues(typeof(InvoiceStatus)));
+            //salesman
+            salesmanlookUpEdit.Properties.DataSource = _context.SalesMen.Where(c => !c.isDeleted).ToList();
+            salesmanlookUpEdit.Properties.DisplayMember = "SalesManName";
+            salesmanlookUpEdit.Properties.ValueMember = "SalesManId";
+            salesmanlookUpEdit.Properties.Columns.Clear();
+            salesmanlookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("SalesManName", "SalesMan Name"));
 
             // Services
             serviceLookUpEdit.Properties.DataSource = _context.Services.Where(s => !s.isDeleted).ToList();
@@ -406,62 +413,74 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         private async void savebutton_Click(object sender, EventArgs e)
         {
-            try { 
-            if (invoiceDetailsList.Count == 0)
+            try
             {
-                XtraMessageBox.Show("Please add at least one service before continuing.");
-                return;
-            }
-
-            // Update header
-            var header = _context.Set<InvoiceHeader>().FirstOrDefault(i => i.InvoiceHeaderId == _invoiceHeaderId);
-            if (header != null)
-            {
-                header.QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue);
-                header.InvoiceDate = invoiceDateEdit.DateTime.ToString("yyyy-MM-dd");
-                header.PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue);
-                header.Reminder = reminderTextEdit.Text; // Save the edited reminder value
-                header.Note = noterichTextBox.Text;
-                header.Status = (InvoiceStatus)comboBoxStatus.EditValue;
-                header.DiscountType = (Discount)comboBoxDiscountType.EditValue;
-                header.Discount = decimal.TryParse(Discounttextedit.Text, out var d) ? d : 0;
-                header.TotalPrice = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
-                header.Payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
-                header.ContactId = Convert.ToInt32(contactLookUpEdit.EditValue);
-                header.UpdatedLog = DateTime.Now.ToString();
-
-                _invoiceHeaderService.Update(header);
-            }
-
-            // Update details
-            foreach (var detail in invoiceDetailsList)
-            {
-                if (detail.InvoiceDetailId == 0) // New detail
+                if (invoiceDetailsList.Count == 0)
                 {
-                    detail.InvoiceHeaderId = _invoiceHeaderId;
-                    detail.CreatedLog = DateTime.Now.ToString();
-                    detail.UpdatedLog = DateTime.Now.ToString();
-                    detail.DeletedLog = "";
-                    detail.isDeleted = false;
-                    await _invoiceDetailService.AddInvoiceDetail(detail);
+                    XtraMessageBox.Show("Please add at least one service before continuing.");
+                    return;
                 }
-                else
+
+                // Update header
+                var header = _context.Set<InvoiceHeader>().FirstOrDefault(i => i.InvoiceHeaderId == _invoiceHeaderId);
+                if (header != null)
                 {
-                    // Update existing detail
-                    _invoiceDetailService.Update(detail);
+                    header.QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue);
+                    header.InvoiceDate = invoiceDateEdit.DateTime.ToString("yyyy-MM-dd");
+                    header.PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue);
+                    header.Reminder = reminderTextEdit.Text; // Save the edited reminder value
+                    header.Note = noterichTextBox.Text;
+                    header.SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue);
+                    header.Status = (InvoiceStatus)comboBoxStatus.EditValue;
+                    header.DiscountType = (Discount)comboBoxDiscountType.EditValue;
+                    header.Discount = decimal.TryParse(Discounttextedit.Text, out var d) ? d : 0;
+                    header.TotalPrice = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
+                    header.Payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
+                    header.ContactId = Convert.ToInt32(contactLookUpEdit.EditValue);
+                    header.UpdatedLog = DateTime.Now.ToString();
+
+                    _invoiceHeaderService.Update(header);
                 }
+
+                // Update details
+                foreach (var detail in invoiceDetailsList)
+                {
+                    if (detail.InvoiceDetailId == 0) // New detail
+                    {
+                        detail.InvoiceHeaderId = _invoiceHeaderId;
+                        detail.CreatedLog = DateTime.Now.ToString();
+                        detail.UpdatedLog = DateTime.Now.ToString();
+                        detail.DeletedLog = "";
+                        detail.isDeleted = false;
+                        await _invoiceDetailService.AddInvoiceDetail(detail);
+                    }
+                    else
+                    {
+                        // Update existing detail
+                        _invoiceDetailService.Update(detail);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+
+                XtraMessageBox.Show("Invoice updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-
-            await _context.SaveChangesAsync();
-
-            XtraMessageBox.Show("Invoice updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-             catch (Exception ex)
-    {
+            catch (Exception ex)
+            {
                 XtraMessageBox.Show($"Error updating invoice: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void EditInvoiceForm_Load(object sender, EventArgs e)
+        {
+
+            // Center all row text
+            gridViewdet.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
+            // Center header text
+            gridViewdet.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
         }
     }
 }

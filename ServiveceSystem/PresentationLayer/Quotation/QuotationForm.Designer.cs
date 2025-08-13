@@ -52,6 +52,8 @@
             labelControl2 = new DevExpress.XtraEditors.LabelControl();
             labelControl4 = new DevExpress.XtraEditors.LabelControl();
             groupBox1 = new GroupBox();
+            salesmanlookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
+            labelControl20 = new DevExpress.XtraEditors.LabelControl();
             contactLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             labelControl13 = new DevExpress.XtraEditors.LabelControl();
             emailTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -75,6 +77,7 @@
             ((System.ComponentModel.ISupportInitialize)expireDateEdit.Properties.CalendarTimeProperties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)comboBoxStatus.Properties).BeginInit();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)salesmanlookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)contactLookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emailTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)locationTextEdit.Properties).BeginInit();
@@ -139,7 +142,7 @@
             // 
             // checkedListBoxControltax
             // 
-            checkedListBoxControltax.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkedListBoxControltax.Appearance.Font = new Font("Tahoma", 14F);
             checkedListBoxControltax.Appearance.Options.UseFont = true;
             checkedListBoxControltax.Location = new Point(121, 246);
             checkedListBoxControltax.Name = "checkedListBoxControltax";
@@ -154,7 +157,7 @@
             prioritycomboBoxEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             prioritycomboBoxEdit.Properties.Appearance.Options.UseFont = true;
             prioritycomboBoxEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            prioritycomboBoxEdit.Size = new Size(221, 40);
+            prioritycomboBoxEdit.Size = new Size(221, 46);
             prioritycomboBoxEdit.TabIndex = 45;
             // 
             // totaltextEdit
@@ -166,7 +169,7 @@
             totaltextEdit.Properties.Appearance.Options.UseFont = true;
             totaltextEdit.Properties.Appearance.Options.UseTextOptions = true;
             totaltextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            totaltextEdit.Size = new Size(225, 62);
+            totaltextEdit.Size = new Size(225, 68);
             totaltextEdit.TabIndex = 44;
             // 
             // labelControl10
@@ -209,7 +212,7 @@
             quotationNameTextEdit.Properties.Appearance.Options.UseFont = true;
             quotationNameTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             quotationNameTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            quotationNameTextEdit.Size = new Size(225, 40);
+            quotationNameTextEdit.Size = new Size(225, 46);
             quotationNameTextEdit.TabIndex = 40;
             // 
             // labelControl12
@@ -243,7 +246,7 @@
             textEditDiscountHeader.Properties.Appearance.Options.UseFont = true;
             textEditDiscountHeader.Properties.Appearance.Options.UseTextOptions = true;
             textEditDiscountHeader.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            textEditDiscountHeader.Size = new Size(160, 40);
+            textEditDiscountHeader.Size = new Size(160, 46);
             textEditDiscountHeader.TabIndex = 37;
             textEditDiscountHeader.EditValueChanged += textEditDiscountHeader_EditValueChanged;
             // 
@@ -255,7 +258,7 @@
             comboBoxDiscountType.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             comboBoxDiscountType.Properties.Appearance.Options.UseFont = true;
             comboBoxDiscountType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            comboBoxDiscountType.Size = new Size(194, 40);
+            comboBoxDiscountType.Size = new Size(194, 46);
             comboBoxDiscountType.TabIndex = 36;
             comboBoxDiscountType.SelectedIndexChanged += comboBoxDiscountType_SelectedIndexChanged;
             // 
@@ -291,7 +294,7 @@
             initialDateEdit.Properties.Appearance.Options.UseFont = true;
             initialDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             initialDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            initialDateEdit.Size = new Size(221, 40);
+            initialDateEdit.Size = new Size(221, 46);
             initialDateEdit.TabIndex = 32;
             // 
             // expireDateEdit
@@ -304,7 +307,7 @@
             expireDateEdit.Properties.Appearance.Options.UseFont = true;
             expireDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             expireDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            expireDateEdit.Size = new Size(221, 40);
+            expireDateEdit.Size = new Size(221, 46);
             expireDateEdit.TabIndex = 33;
             // 
             // labelControl3
@@ -326,7 +329,7 @@
             comboBoxStatus.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             comboBoxStatus.Properties.Appearance.Options.UseFont = true;
             comboBoxStatus.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            comboBoxStatus.Size = new Size(225, 40);
+            comboBoxStatus.Size = new Size(225, 46);
             comboBoxStatus.TabIndex = 30;
             // 
             // labelControl11
@@ -355,11 +358,13 @@
             // 
             labelControl4.Location = new Point(0, 0);
             labelControl4.Name = "labelControl4";
-            labelControl4.Size = new Size(0, 19);
+            labelControl4.Size = new Size(0, 21);
             labelControl4.TabIndex = 26;
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(salesmanlookUpEdit);
+            groupBox1.Controls.Add(labelControl20);
             groupBox1.Controls.Add(contactLookUpEdit);
             groupBox1.Controls.Add(labelControl13);
             groupBox1.Controls.Add(emailTextEdit);
@@ -374,10 +379,34 @@
             groupBox1.ForeColor = Color.White;
             groupBox1.Location = new Point(5, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(465, 330);
+            groupBox1.Size = new Size(465, 411);
             groupBox1.TabIndex = 36;
             groupBox1.TabStop = false;
             groupBox1.Text = "Client";
+            // 
+            // salesmanlookUpEdit
+            // 
+            salesmanlookUpEdit.Location = new Point(198, 323);
+            salesmanlookUpEdit.Margin = new Padding(3, 4, 3, 4);
+            salesmanlookUpEdit.Name = "salesmanlookUpEdit";
+            salesmanlookUpEdit.Properties.Appearance.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            salesmanlookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
+            salesmanlookUpEdit.Properties.Appearance.Options.UseFont = true;
+            salesmanlookUpEdit.Properties.Appearance.Options.UseForeColor = true;
+            salesmanlookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            salesmanlookUpEdit.Properties.NullText = "Select Sales Man";
+            salesmanlookUpEdit.Size = new Size(250, 50);
+            salesmanlookUpEdit.TabIndex = 39;
+            // 
+            // labelControl20
+            // 
+            labelControl20.Appearance.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelControl20.Appearance.Options.UseFont = true;
+            labelControl20.Location = new Point(15, 335);
+            labelControl20.Name = "labelControl20";
+            labelControl20.Size = new Size(156, 32);
+            labelControl20.TabIndex = 38;
+            labelControl20.Text = "Sales Man : ";
             // 
             // contactLookUpEdit
             // 
@@ -390,7 +419,7 @@
             contactLookUpEdit.Properties.Appearance.Options.UseForeColor = true;
             contactLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             contactLookUpEdit.Properties.NullText = "Select Contact";
-            contactLookUpEdit.Size = new Size(250, 46);
+            contactLookUpEdit.Size = new Size(250, 52);
             contactLookUpEdit.TabIndex = 30;
             // 
             // labelControl13
@@ -411,7 +440,7 @@
             emailTextEdit.Name = "emailTextEdit";
             emailTextEdit.Properties.Appearance.Font = new Font("Segoe UI", 14.25F);
             emailTextEdit.Properties.Appearance.Options.UseFont = true;
-            emailTextEdit.Size = new Size(250, 46);
+            emailTextEdit.Size = new Size(250, 52);
             emailTextEdit.TabIndex = 28;
             // 
             // locationTextEdit
@@ -421,7 +450,7 @@
             locationTextEdit.Name = "locationTextEdit";
             locationTextEdit.Properties.Appearance.Font = new Font("Segoe UI", 14.25F);
             locationTextEdit.Properties.Appearance.Options.UseFont = true;
-            locationTextEdit.Size = new Size(250, 46);
+            locationTextEdit.Size = new Size(250, 52);
             locationTextEdit.TabIndex = 27;
             // 
             // phoneTextEdit
@@ -431,7 +460,7 @@
             phoneTextEdit.Name = "phoneTextEdit";
             phoneTextEdit.Properties.Appearance.Font = new Font("Segoe UI", 14.25F);
             phoneTextEdit.Properties.Appearance.Options.UseFont = true;
-            phoneTextEdit.Size = new Size(250, 46);
+            phoneTextEdit.Size = new Size(250, 52);
             phoneTextEdit.TabIndex = 26;
             // 
             // labelControl15
@@ -489,7 +518,7 @@
             clinicLookUpEdit.Properties.Appearance.Options.UseForeColor = true;
             clinicLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             clinicLookUpEdit.Properties.NullText = "Select Clinic";
-            clinicLookUpEdit.Size = new Size(250, 46);
+            clinicLookUpEdit.Size = new Size(250, 52);
             clinicLookUpEdit.TabIndex = 1;
             clinicLookUpEdit.EditValueChanged += clinicLookUpEdit_EditValueChanged;
             // 
@@ -502,7 +531,7 @@
             Controls.Add(savebutton);
             Controls.Add(Invoice);
             Controls.Add(groupBox1);
-            Font = new Font("Segoe UI", 8F);
+            IconOptions.Image = Properties.Resources.icons8_offer_40;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "QuotationForm";
@@ -523,6 +552,7 @@
             ((System.ComponentModel.ISupportInitialize)comboBoxStatus.Properties).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)salesmanlookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)contactLookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)emailTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)locationTextEdit.Properties).EndInit();
@@ -568,5 +598,7 @@
         private DevExpress.XtraEditors.ComboBoxEdit prioritycomboBoxEdit;
         private DevExpress.XtraEditors.CheckedListBoxControl checkedListBoxControltax;
         private DevExpress.XtraEditors.LabelControl labelControl16;
+        private DevExpress.XtraEditors.LabelControl labelControl20;
+        private DevExpress.XtraEditors.LookUpEdit salesmanlookUpEdit;
     }
 }

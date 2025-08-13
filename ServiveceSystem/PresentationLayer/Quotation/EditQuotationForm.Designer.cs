@@ -68,6 +68,7 @@
             labelControl2 = new DevExpress.XtraEditors.LabelControl();
             labelControl4 = new DevExpress.XtraEditors.LabelControl();
             groupBox1 = new GroupBox();
+            labelControl10 = new DevExpress.XtraEditors.LabelControl();
             contactLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             labelControl13 = new DevExpress.XtraEditors.LabelControl();
             emailTextEdit = new DevExpress.XtraEditors.TextEdit();
@@ -78,6 +79,7 @@
             labelControl9 = new DevExpress.XtraEditors.LabelControl();
             labelControl1 = new DevExpress.XtraEditors.LabelControl();
             clinicLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
+            SalesManlookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).BeginInit();
             Quotaion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)comboBoxDiscountTypeDetail.Properties).BeginInit();
@@ -105,6 +107,7 @@
             ((System.ComponentModel.ISupportInitialize)locationTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)phoneTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)clinicLookUpEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SalesManlookUpEdit.Properties).BeginInit();
             SuspendLayout();
             // 
             // TotaltextEdit
@@ -331,7 +334,7 @@
             // 
             savebutton.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             savebutton.Appearance.Options.UseFont = true;
-            savebutton.Location = new Point(12, 573);
+            savebutton.Location = new Point(12, 586);
             savebutton.Name = "savebutton";
             savebutton.Size = new Size(462, 49);
             savebutton.TabIndex = 49;
@@ -577,6 +580,8 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(SalesManlookUpEdit);
+            groupBox1.Controls.Add(labelControl10);
             groupBox1.Controls.Add(contactLookUpEdit);
             groupBox1.Controls.Add(labelControl13);
             groupBox1.Controls.Add(emailTextEdit);
@@ -591,10 +596,20 @@
             groupBox1.ForeColor = Color.White;
             groupBox1.Location = new Point(9, 211);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(465, 330);
+            groupBox1.Size = new Size(465, 369);
             groupBox1.TabIndex = 55;
             groupBox1.TabStop = false;
             groupBox1.Text = "Client";
+            // 
+            // labelControl10
+            // 
+            labelControl10.Appearance.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelControl10.Appearance.Options.UseFont = true;
+            labelControl10.Location = new Point(15, 323);
+            labelControl10.Name = "labelControl10";
+            labelControl10.Size = new Size(156, 32);
+            labelControl10.TabIndex = 38;
+            labelControl10.Text = "Sales Man : ";
             // 
             // contactLookUpEdit
             // 
@@ -709,6 +724,20 @@
             clinicLookUpEdit.Size = new Size(250, 52);
             clinicLookUpEdit.TabIndex = 1;
             // 
+            // SalesManlookUpEdit
+            // 
+            SalesManlookUpEdit.Location = new Point(198, 315);
+            SalesManlookUpEdit.Margin = new Padding(3, 4, 3, 4);
+            SalesManlookUpEdit.Name = "SalesManlookUpEdit";
+            SalesManlookUpEdit.Properties.Appearance.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SalesManlookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
+            SalesManlookUpEdit.Properties.Appearance.Options.UseFont = true;
+            SalesManlookUpEdit.Properties.Appearance.Options.UseForeColor = true;
+            SalesManlookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            SalesManlookUpEdit.Properties.NullText = "Select Sales Man";
+            SalesManlookUpEdit.Size = new Size(250, 50);
+            SalesManlookUpEdit.TabIndex = 39;
+            // 
             // EditQuotationForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -755,6 +784,7 @@
             ((System.ComponentModel.ISupportInitialize)locationTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)phoneTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)clinicLookUpEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SalesManlookUpEdit.Properties).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -810,5 +840,7 @@
         private DevExpress.XtraEditors.LabelControl labelControl9;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.LookUpEdit clinicLookUpEdit;
+        private DevExpress.XtraEditors.LabelControl labelControl10;
+        private DevExpress.XtraEditors.LookUpEdit SalesManlookUpEdit;
     }
 }

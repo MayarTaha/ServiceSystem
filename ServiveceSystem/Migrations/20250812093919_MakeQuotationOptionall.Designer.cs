@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiveceSystem.Models;
 
@@ -11,9 +12,11 @@ using ServiveceSystem.Models;
 namespace ServiceSystem.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250812093919_MakeQuotationOptionall")]
+    partial class MakeQuotationOptionall
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,9 +221,6 @@ namespace ServiceSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SalesManId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -241,8 +241,6 @@ namespace ServiceSystem.Migrations
                     b.HasIndex("PaymentMethodId");
 
                     b.HasIndex("QuotationId");
-
-                    b.HasIndex("SalesManId");
 
                     b.ToTable("invoiceHeaders");
                 });
@@ -392,9 +390,6 @@ namespace ServiceSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SalesManId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -417,41 +412,7 @@ namespace ServiceSystem.Migrations
 
                     b.HasIndex("ContactId");
 
-                    b.HasIndex("SalesManId");
-
                     b.ToTable("QuotationHeaders");
-                });
-
-            modelBuilder.Entity("ServiceSystem.Models.SalesMan", b =>
-                {
-                    b.Property<int?>("SalesManId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("SalesManId"));
-
-                    b.Property<string>("CreatedLog")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedLog")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SalesManName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedLog")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("SalesManId");
-
-                    b.ToTable("SalesMen");
                 });
 
             modelBuilder.Entity("ServiceSystem.Models.Service", b =>
@@ -655,18 +616,11 @@ namespace ServiceSystem.Migrations
                         .HasForeignKey("QuotationId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("ServiceSystem.Models.SalesMan", "SalesMan")
-                        .WithMany("InvoiceHeaders")
-                        .HasForeignKey("SalesManId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("Contact");
 
                     b.Navigation("PaymentMethod");
 
                     b.Navigation("QuotationHeader");
-
-                    b.Navigation("SalesMan");
                 });
 
             modelBuilder.Entity("ServiceSystem.Models.Payment", b =>
@@ -721,16 +675,9 @@ namespace ServiceSystem.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ServiceSystem.Models.SalesMan", "SalesMan")
-                        .WithMany("QuotationHeaders")
-                        .HasForeignKey("SalesManId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("Clinic");
 
                     b.Navigation("Contact");
-
-                    b.Navigation("SalesMan");
                 });
 
             modelBuilder.Entity("ServiceSystem.Models.Taxes", b =>
@@ -761,13 +708,6 @@ namespace ServiceSystem.Migrations
                     b.Navigation("QuotationDetails");
 
                     b.Navigation("Taxes");
-                });
-
-            modelBuilder.Entity("ServiceSystem.Models.SalesMan", b =>
-                {
-                    b.Navigation("InvoiceHeaders");
-
-                    b.Navigation("QuotationHeaders");
                 });
 #pragma warning restore 612, 618
         }

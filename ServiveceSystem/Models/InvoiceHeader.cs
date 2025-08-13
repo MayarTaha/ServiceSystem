@@ -20,8 +20,12 @@ namespace ServiceSystem.Models
         public int InvoiceHeaderId { get; set; }
 
         [ForeignKey("QuotationHeader")]
-        public int QuotationId { get; set; } // FK
+        public int? QuotationId { get; set; } // FK
         public virtual QuotationHeader? QuotationHeader { get; set; }
+        public int? SalesManId { get; set; } // FK
+        public  SalesMan? SalesMan { get; set; }
+
+
 
         public string InvoiceDate { get; set; }
         public decimal TotalPrice { get; set; }

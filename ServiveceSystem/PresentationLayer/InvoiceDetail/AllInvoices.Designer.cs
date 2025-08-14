@@ -91,11 +91,12 @@
             // txtFilter
             // 
             txtFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtFilter.EditValue = "Filter by Reminder...";
+            txtFilter.EditValue = "";
             txtFilter.Location = new Point(57, 21);
             txtFilter.Margin = new Padding(4);
             txtFilter.Name = "txtFilter";
             txtFilter.Properties.NullText = "Filter by clinic name...";
+            txtFilter.Properties.NullValuePrompt = "Filter by Reminder...";
             txtFilter.Size = new Size(972, 34);
             txtFilter.TabIndex = 7;
             txtFilter.EditValueChanged += txtFilter_EditValueChanged;

@@ -19,11 +19,7 @@ namespace ServiveceSystem.BusinessLayer
             _context = context;
         }
 
-        // Getall InvoiceDetails
-        //public List<InvoiceDetail> GetAll()
-        //{
-        //    return _context.InvoiceDetails.ToList();
-        //}
+       
 
 
         public async Task<List<InvoiceDetail>> GetAllAsync()
@@ -34,7 +30,7 @@ namespace ServiveceSystem.BusinessLayer
             .ThenInclude(q => q.Clinic).ToListAsync();
         }
 
-        //
+      
 
 
 
@@ -45,68 +41,82 @@ namespace ServiveceSystem.BusinessLayer
             return _context.InvoiceDetails.Find(id);
         }
 
-        // Add new InvoiceDetail
+        
+
         public async Task<bool> AddInvoiceDetail(InvoiceDetail detail)
         {
-            //var quotationExists = await _context.QuotationHeaders
-            //  .AnyAsync(q => q.QuotationId == detail.QuotationId && !q.isDeleted);
-
-            //if (!quotationExists)
-            //      return false;
-            bool quotationExists = true;
-
-            // Only check quotation if provided
-            if (detail.QuotationId.HasValue)
+            // Create a new DbContext instance for this operation
+            using (var context = new AppDBContext())
             {
-                quotationExists = await _context.QuotationHeaders
-                    .AnyAsync(q => q.QuotationId == detail.QuotationId && !q.isDeleted);
-
-                if (!quotationExists)
+                bool serviceExists = await context.Services
+                    .AnyAsync(s => s.ServiceId == detail.ServiceId && !s.isDeleted);
+                if (!serviceExists)
                 {
-                    XtraMessageBox.Show("The selected quotation does not exist.");
+                    
+                    XtraMessageBox.Show("The selected service does not exist.");
                     return false;
                 }
-            }
+                if (detail.QuotationId.HasValue)
+                {
+                    bool quotationExists = await context.QuotationHeaders
+                        .AnyAsync(q => q.QuotationId == detail.QuotationId && !q.isDeleted);
+                    if (!quotationExists)
+                    {
+                        // Same recommendation as above for UI interaction.
+                        XtraMessageBox.Show("The selected quotation does not exist.");
+                        return false;
+                    }
+                }
 
-
+                // Assuming CalculateTotalService is a pure function or part of the domain model
                 detail.TotalService = CalculateTotalService(detail);
-            detail.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
-            detail.UpdatedLog = DateTime.Now.ToString();
-            detail.isDeleted = false;
-            _context.InvoiceDetails.Add(detail);
-            await _context.SaveChangesAsync();
+
+                // Assuming CurrentUser is accessible globally or passed in
+                detail.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
+                detail.UpdatedLog = DateTime.Now.ToString(); // This seems inconsistent with CreatedLog format
+                detail.isDeleted = false;
+                context.InvoiceDetails.Add(detail);
+                await context.SaveChangesAsync();
+            }
+            // UI interaction should be handled by the calling layer.
             XtraMessageBox.Show("Invoice saved successfully!");
             return true;
         }
 
 
 
-        // Update 
+
+        
+
         public async Task<bool> Update(InvoiceDetail detail)
         {
-            var existingDetail = await _context.InvoiceDetails.FindAsync(detail.InvoiceDetailId);
-            if (existingDetail != null)
-                return false;
+            // Create a new DbContext instance for this operation
+            using (var context = new AppDBContext())
+            {
+                var existingDetail = await context.InvoiceDetails.FindAsync(detail.InvoiceDetailId);
+                if (existingDetail == null)
+                    return false;
 
-
-            existingDetail.ServiceId = detail.ServiceId;
+                existingDetail.ServiceId = detail.ServiceId;
                 existingDetail.QuotationId = detail.QuotationId;
                 existingDetail.Quantity = detail.Quantity;
                 existingDetail.Discount = detail.Discount;
                 existingDetail.DiscountType = detail.DiscountType;
                 existingDetail.ServicePrice = detail.ServicePrice;
 
-                
+                // Assuming CalculateTotalService is a pure function or part of the domain model
                 existingDetail.TotalService = CalculateTotalService(detail);
-                //existingDetail.TotalDuo = detail.TotalDuo;
+
+                //existingDetail.TotalDuo = detail.TotalDuo; // Commented out in original code
+
+                // Assuming CurrentUser is accessible globally or passed in
                 existingDetail.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
 
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return true;
-            
-            
+            }
         }
-     
+
         public async Task<bool> Delete(int id)
         {
             var detail = await _context.InvoiceDetails.FindAsync(id);

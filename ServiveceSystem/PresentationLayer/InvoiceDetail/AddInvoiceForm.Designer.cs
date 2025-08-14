@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             groupBox2 = new GroupBox();
             comboBoxDiscountType = new DevExpress.XtraEditors.ComboBoxEdit();
             labelControl8 = new DevExpress.XtraEditors.LabelControl();
@@ -91,7 +91,7 @@
             // 
             // comboBoxDiscountType
             // 
-            comboBoxDiscountType.Location = new Point(220, 90);
+            comboBoxDiscountType.Location = new Point(220, 92);
             comboBoxDiscountType.Name = "comboBoxDiscountType";
             comboBoxDiscountType.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             comboBoxDiscountType.Properties.Appearance.Options.UseFont = true;
@@ -103,7 +103,9 @@
             // labelControl8
             // 
             labelControl8.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
+            labelControl8.Appearance.ForeColor = Color.White;
             labelControl8.Appearance.Options.UseFont = true;
+            labelControl8.Appearance.Options.UseForeColor = true;
             labelControl8.Location = new Point(513, 37);
             labelControl8.Margin = new Padding(3, 4, 3, 4);
             labelControl8.Name = "labelControl8";
@@ -117,7 +119,9 @@
             textEditServicePrice.Margin = new Padding(3, 4, 3, 4);
             textEditServicePrice.Name = "textEditServicePrice";
             textEditServicePrice.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
+            textEditServicePrice.Properties.Appearance.ForeColor = Color.Transparent;
             textEditServicePrice.Properties.Appearance.Options.UseFont = true;
+            textEditServicePrice.Properties.Appearance.Options.UseForeColor = true;
             textEditServicePrice.Size = new Size(250, 40);
             textEditServicePrice.TabIndex = 6;
             textEditServicePrice.EditValueChanged += textEditServicePrice_EditValueChanged;
@@ -125,7 +129,9 @@
             // labelControl7
             // 
             labelControl7.Appearance.Font = new Font("Segoe UI", 14.25F);
+            labelControl7.Appearance.ForeColor = Color.White;
             labelControl7.Appearance.Options.UseFont = true;
+            labelControl7.Appearance.Options.UseForeColor = true;
             labelControl7.Location = new Point(16, 33);
             labelControl7.Margin = new Padding(3, 4, 3, 4);
             labelControl7.Name = "labelControl7";
@@ -148,8 +154,10 @@
             // labelControl6
             // 
             labelControl6.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
+            labelControl6.Appearance.ForeColor = Color.White;
             labelControl6.Appearance.Options.UseFont = true;
-            labelControl6.Location = new Point(513, 149);
+            labelControl6.Appearance.Options.UseForeColor = true;
+            labelControl6.Location = new Point(513, 163);
             labelControl6.Margin = new Padding(3, 4, 3, 4);
             labelControl6.Name = "labelControl6";
             labelControl6.Size = new Size(187, 33);
@@ -174,7 +182,9 @@
             // labelControl5
             // 
             labelControl5.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
+            labelControl5.Appearance.ForeColor = Color.White;
             labelControl5.Appearance.Options.UseFont = true;
+            labelControl5.Appearance.Options.UseForeColor = true;
             labelControl5.Location = new Point(513, 94);
             labelControl5.Margin = new Padding(3, 4, 3, 4);
             labelControl5.Name = "labelControl5";
@@ -185,7 +195,9 @@
             // labelControl3
             // 
             labelControl3.Appearance.Font = new Font("Segoe UI", 14.25F);
+            labelControl3.Appearance.ForeColor = Color.White;
             labelControl3.Appearance.Options.UseFont = true;
+            labelControl3.Appearance.Options.UseForeColor = true;
             labelControl3.Location = new Point(16, 156);
             labelControl3.Margin = new Padding(3, 4, 3, 4);
             labelControl3.Name = "labelControl3";
@@ -207,7 +219,9 @@
             // labelControl2
             // 
             labelControl2.Appearance.Font = new Font("Segoe UI", 14.25F);
+            labelControl2.Appearance.ForeColor = Color.White;
             labelControl2.Appearance.Options.UseFont = true;
+            labelControl2.Appearance.Options.UseForeColor = true;
             labelControl2.Location = new Point(16, 95);
             labelControl2.Margin = new Padding(3, 4, 3, 4);
             labelControl2.Name = "labelControl2";
@@ -251,7 +265,9 @@
             // labelControl1
             // 
             labelControl1.Appearance.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelControl1.Appearance.ForeColor = Color.White;
             labelControl1.Appearance.Options.UseFont = true;
+            labelControl1.Appearance.Options.UseForeColor = true;
             labelControl1.Location = new Point(1071, 24);
             labelControl1.Margin = new Padding(3, 4, 3, 4);
             labelControl1.Name = "labelControl1";
@@ -350,9 +366,9 @@
             // gridcontrolDetails
             // 
             gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(1, 2, 1, 2);
-            gridLevelNode1.RelationName = "Level1";
-            gridcontrolDetails.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode1 });
-            gridcontrolDetails.Location = new Point(7, 306);
+            gridLevelNode2.RelationName = "Level1";
+            gridcontrolDetails.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode2 });
+            gridcontrolDetails.Location = new Point(7, 288);
             gridcontrolDetails.MainView = gridViewdet;
             gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);
             gridcontrolDetails.Name = "gridcontrolDetails";
@@ -362,12 +378,15 @@
             // 
             // AddInvoiceForm
             // 
-            Appearance.BackColor = SystemColors.ControlText;
+            AccessibleRole = AccessibleRole.ButtonDropDownGrid;
+            Appearance.BackColor = Color.FromArgb(36, 36, 36);
+            Appearance.ForeColor = Color.FromArgb(36, 36, 36);
             Appearance.Options.UseBackColor = true;
             Appearance.Options.UseFont = true;
+            Appearance.Options.UseForeColor = true;
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1368, 647);
+            ClientSize = new Size(1368, 642);
             Controls.Add(TotaltextEdit);
             Controls.Add(labelControl1);
             Controls.Add(CompleteprocessButton);

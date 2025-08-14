@@ -15,19 +15,20 @@ using System.Reflection.PortableExecutable;
 
 namespace ServiceSystem.PresentationLayer.InvoiceDetail
 {
-	public partial class TransferToInvoice: DevExpress.XtraEditors.XtraForm
-	{
+    public partial class TransferToInvoice : DevExpress.XtraEditors.XtraForm
+    {
         private List<QuotationDetail> _details;
         public TransferToInvoice()
-		{
+        {
             InitializeComponent();
-		}
+        }
 
         public TransferToInvoice(int quotationId, int clinicId, int contactId, List<QuotationDetail> details, string quotationName)
         {
             InitializeComponent();
             _details = details;
             var context = new AppDBContext();
+            this.Size = new Size(710, 630);
             // Set invoice date to current
             invoiceDateEdit.DateTime = DateTime.Now;
             // Populate clinic lookup
@@ -58,7 +59,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             quotationLookUpEdit.Properties.Columns.Clear();
             quotationLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("QuotationNaMe", "Quotation Name"));
             // Fill grid with details
-            gridcontrolDetails.DataSource = _details.Select(d => new {
+            gridcontrolDetails.DataSource = _details.Select(d => new
+            {
                 d.ServiceId,
                 ServiceName = d.Service?.Name,
                 d.Quantity,
@@ -276,6 +278,15 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             _finalTotal = total + totalTax;
             TotalPricetextEdit.Text = _finalTotal.ToString("0.##");
             CalculateReminder();
+        }
+
+        private void TransferToInvoice_Load(object sender, EventArgs e)
+        {
+            // Center all row text
+            gridViewdet.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
+            // Center header text
+            gridViewdet.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
         }
     }
 }

@@ -40,6 +40,7 @@
             labelControl1 = new DevExpress.XtraEditors.LabelControl();
             clinicLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             Invoice = new GroupBox();
+            lookUpEditSalesMan = new DevExpress.XtraEditors.LookUpEdit();
             labelControl20 = new DevExpress.XtraEditors.LabelControl();
             labelControl19 = new DevExpress.XtraEditors.LabelControl();
             comboBoxStatus = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -69,7 +70,6 @@
             labelControl3 = new DevExpress.XtraEditors.LabelControl();
             labelControl5 = new DevExpress.XtraEditors.LabelControl();
             labelControl7 = new DevExpress.XtraEditors.LabelControl();
-            lookUpEditSalesMan = new DevExpress.XtraEditors.LookUpEdit();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)emailTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)locationTextEdit.Properties).BeginInit();
@@ -77,6 +77,7 @@
             ((System.ComponentModel.ISupportInitialize)contactLookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)clinicLookUpEdit.Properties).BeginInit();
             Invoice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)lookUpEditSalesMan.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)comboBoxStatus.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)invoiceDateEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)invoiceDateEdit.Properties.CalendarTimeProperties).BeginInit();
@@ -90,7 +91,6 @@
             ((System.ComponentModel.ISupportInitialize)discountValueTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)reminderTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)paymentmethodlookupedit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)lookUpEditSalesMan.Properties).BeginInit();
             SuspendLayout();
             // 
             // groupBox1
@@ -106,6 +106,7 @@
             groupBox1.Controls.Add(labelControl1);
             groupBox1.Controls.Add(clinicLookUpEdit);
             groupBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox1.ForeColor = Color.White;
             groupBox1.Location = new Point(12, 1);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(962, 185);
@@ -220,12 +221,26 @@
             Invoice.Controls.Add(labelControl10);
             Invoice.Controls.Add(labelControl4);
             Invoice.Controls.Add(quotationLookUpEdit);
+            Invoice.ForeColor = Color.White;
             Invoice.Location = new Point(12, 196);
             Invoice.Name = "Invoice";
             Invoice.Size = new Size(476, 447);
             Invoice.TabIndex = 30;
             Invoice.TabStop = false;
             Invoice.Text = "Invoice";
+            // 
+            // lookUpEditSalesMan
+            // 
+            lookUpEditSalesMan.Location = new Point(210, 222);
+            lookUpEditSalesMan.Name = "lookUpEditSalesMan";
+            lookUpEditSalesMan.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            lookUpEditSalesMan.Properties.Appearance.ForeColor = Color.Silver;
+            lookUpEditSalesMan.Properties.Appearance.Options.UseFont = true;
+            lookUpEditSalesMan.Properties.Appearance.Options.UseForeColor = true;
+            lookUpEditSalesMan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            lookUpEditSalesMan.Properties.NullText = "Select Sales Man";
+            lookUpEditSalesMan.Size = new Size(250, 42);
+            lookUpEditSalesMan.TabIndex = 37;
             // 
             // labelControl20
             // 
@@ -362,6 +377,7 @@
             Payment.Controls.Add(labelControl3);
             Payment.Controls.Add(labelControl5);
             Payment.Controls.Add(labelControl7);
+            Payment.ForeColor = Color.White;
             Payment.Location = new Point(494, 196);
             Payment.Name = "Payment";
             Payment.Size = new Size(480, 447);
@@ -522,19 +538,6 @@
             labelControl7.Size = new Size(0, 21);
             labelControl7.TabIndex = 26;
             // 
-            // lookUpEditSalesMan
-            // 
-            lookUpEditSalesMan.Location = new Point(210, 222);
-            lookUpEditSalesMan.Name = "lookUpEditSalesMan";
-            lookUpEditSalesMan.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
-            lookUpEditSalesMan.Properties.Appearance.ForeColor = Color.Silver;
-            lookUpEditSalesMan.Properties.Appearance.Options.UseFont = true;
-            lookUpEditSalesMan.Properties.Appearance.Options.UseForeColor = true;
-            lookUpEditSalesMan.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            lookUpEditSalesMan.Properties.NullText = "Select Sales Man";
-            lookUpEditSalesMan.Size = new Size(250, 42);
-            lookUpEditSalesMan.TabIndex = 37;
-            // 
             // InvoicePayment
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -545,6 +548,7 @@
             Controls.Add(Invoice);
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            IconOptions.Image = Properties.Resources.icons8_payment_100;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "InvoicePayment";
@@ -559,6 +563,7 @@
             ((System.ComponentModel.ISupportInitialize)clinicLookUpEdit.Properties).EndInit();
             Invoice.ResumeLayout(false);
             Invoice.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)lookUpEditSalesMan.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)comboBoxStatus.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)invoiceDateEdit.Properties.CalendarTimeProperties).EndInit();
             ((System.ComponentModel.ISupportInitialize)invoiceDateEdit.Properties).EndInit();
@@ -573,7 +578,6 @@
             ((System.ComponentModel.ISupportInitialize)discountValueTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)reminderTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)paymentmethodlookupedit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)lookUpEditSalesMan.Properties).EndInit();
             ResumeLayout(false);
         }
 

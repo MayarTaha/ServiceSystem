@@ -15,8 +15,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ServiceSystem.PresentationLayer.Quotation
 {
-	public partial class EditQuotationForm: DevExpress.XtraEditors.XtraForm
-	{
+    public partial class EditQuotationForm : DevExpress.XtraEditors.XtraForm
+    {
         private readonly AppDBContext _context;
         private readonly QuotationHeaderService _quotationHeaderService;
         private readonly QuotationDetailService _quotationDetailService;
@@ -25,8 +25,9 @@ namespace ServiceSystem.PresentationLayer.Quotation
         private ServiceSystem.Models.QuotationDetail _editingDetail = null;
 
         public EditQuotationForm(int quotationHeaderId)
-		{
+        {
             InitializeComponent();
+            this.Size = new Size(900, 600);
             _context = new AppDBContext();
             _quotationHeaderService = new QuotationHeaderService(_context);
             _quotationDetailService = new QuotationDetailService(_context);
@@ -37,7 +38,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
             LoadQuotationData();
             SetupGrid();
             SetupEvents();
-		}
+        }
 
         private void LoadLookUps()
         {
@@ -103,14 +104,14 @@ namespace ServiceSystem.PresentationLayer.Quotation
             {
                 // Populate header controls
                 clinicLookUpEdit.EditValue = header.ClinicId;
-                
+
                 // Set contact data source based on selected clinic
                 if (header.ClinicId > 0)
                 {
                     var contacts = _context.ContactPersons.Where(cp => cp.ClinicId == header.ClinicId && !cp.isDeleted).ToList();
                     contactLookUpEdit.Properties.DataSource = contacts;
                 }
-                
+
                 initialDateEdit.DateTime = header.InitialDate;
                 expireDateEdit.DateTime = header.ExpireDate;
                 noteRichTextBox.Text = header.Note;
@@ -155,7 +156,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
         {
             gridViewdet.OptionsBehavior.Editable = false;
             gridViewdet.Columns.Clear();
-            
+
             // Service column with lookup to show service name
             var serviceColumn = gridViewdet.Columns.AddVisible("ServiceId", "Service");
             var serviceLookUp = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
@@ -163,7 +164,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
             serviceLookUp.DisplayMember = "Name";
             serviceLookUp.ValueMember = "ServiceId";
             serviceColumn.ColumnEdit = serviceLookUp;
-            
+
             gridViewdet.Columns.AddVisible("Quantity", "Quantity");
             gridViewdet.Columns.AddVisible("ServicePrice", "Service Price");
             gridViewdet.Columns.AddVisible("DiscountType", "Discount Type");
@@ -190,7 +191,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 if (clinicLookUpEdit.EditValue != null)
                 {
                     int clinicId = Convert.ToInt32(clinicLookUpEdit.EditValue);
-                    
+
                     // Get clinic data
                     var clinic = _context.Clinics.FirstOrDefault(c => c.ClinicId == clinicId);
                     if (clinic != null)
@@ -199,11 +200,11 @@ namespace ServiceSystem.PresentationLayer.Quotation
                         emailTextEdit.Text = clinic.Email;
                         phoneTextEdit.Text = clinic.Phone;
                     }
-                    
+
                     // Filter contacts for this clinic
                     var contacts = _context.ContactPersons.Where(cp => cp.ClinicId == clinicId && !cp.isDeleted).ToList();
                     contactLookUpEdit.Properties.DataSource = contacts;
-                    
+
                     // Auto-select first contact if available
                     if (contacts.Count > 0)
                     {
@@ -280,7 +281,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
             quantityTextEdit.EditValueChanged += (s, e) => CalculateTotalService();
             textEditDiscountDetail.EditValueChanged += (s, e) => CalculateTotalService();
             textEditServicePrice.EditValueChanged += (s, e) => CalculateTotalService();
-            
+
             // Service detail discount type change
             comboBoxDiscountTypeDetail.SelectedIndexChanged += (s, e) =>
             {
@@ -300,7 +301,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 }
                 CalculateTotalService();
             };
-            
+
             serviceLookUpEdit.EditValueChanged += (s, e) =>
             {
                 if (serviceLookUpEdit.EditValue != null)
@@ -401,7 +402,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 _editingDetail.DiscountType = (Discount)comboBoxDiscountTypeDetail.EditValue;
                 _editingDetail.Discount = decimal.TryParse(textEditDiscountDetail.Text, out var d) ? d : 0;
                 _editingDetail.TotalService = decimal.TryParse(totalServiceTextEdit.Text, out var t) ? t : 0;
-                
+
                 _editingDetail = null;
                 btnSubmit.Text = "Add";
             }
@@ -448,6 +449,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 header.InitialDate = initialDateEdit.DateTime;
                 header.ExpireDate = expireDateEdit.DateTime;
                 header.Note = noteRichTextBox.Text;
+                header.SalesManId = Convert.ToInt32(SalesManlookUpEdit.EditValue);
                 header.QuotationNaMe = quotationNameTextEdit.Text;
                 header.Status = (QuotationStatus)comboBoxStatus.EditValue;
                 header.priority = (priorityStatus)prioritycomboBoxEdit.EditValue;
@@ -480,10 +482,19 @@ namespace ServiceSystem.PresentationLayer.Quotation
             }
 
             await _context.SaveChangesAsync();
-            
+
             XtraMessageBox.Show("Quotation updated successfully!");
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-	}
+
+        private void EditQuotationForm_Load(object sender, EventArgs e)
+        {
+            // Center all row text
+            gridViewdet.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
+            // Center header text
+            gridViewdet.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+        }
+    }
 }

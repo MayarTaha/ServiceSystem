@@ -46,7 +46,7 @@
             // gridControl1
             // 
             gridControl1.Dock = DockStyle.Fill;
-            gridControl1.EmbeddedNavigator.Margin = new Padding(4, 5, 4, 5);
+            gridControl1.EmbeddedNavigator.Margin = new Padding(2, 2, 2, 2);
             gridControl1.Location = new Point(0, 63);
             gridControl1.MainView = gridView1;
             gridControl1.Margin = new Padding(4, 6, 4, 6);
@@ -57,6 +57,9 @@
             // 
             // gridView1
             // 
+            gridView1.Appearance.Row.Options.UseTextOptions = true;
+            gridView1.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridView1.Appearance.Row.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridView1.DetailHeight = 565;
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
@@ -108,7 +111,7 @@
             lblFilter.Location = new Point(8, 24);
             lblFilter.Margin = new Padding(4, 6, 4, 6);
             lblFilter.Name = "lblFilter";
-            lblFilter.Size = new Size(38, 21);
+            lblFilter.Size = new Size(29, 13);
             lblFilter.TabIndex = 5;
             lblFilter.Text = "Filter:";
             // 
@@ -121,7 +124,7 @@
             txtFilter.Name = "txtFilter";
             txtFilter.Properties.NullText = "Filter by Quotation name...";
             txtFilter.Properties.NullValuePrompt = "Filter by Quotation name...";
-            txtFilter.Size = new Size(878, 34);
+            txtFilter.Size = new Size(878, 22);
             txtFilter.TabIndex = 0;
             txtFilter.EditValueChanged += txtFilter_EditValueChanged;
             // 
@@ -140,7 +143,7 @@
             // AllQuotations
             // 
             Appearance.Options.UseFont = true;
-            AutoScaleDimensions = new SizeF(9F, 21F);
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1131, 657);
             Controls.Add(gridControl1);

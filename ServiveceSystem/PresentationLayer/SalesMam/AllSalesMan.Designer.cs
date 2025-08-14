@@ -53,6 +53,9 @@
             // 
             // gridView1
             // 
+            gridView1.Appearance.Row.Options.UseTextOptions = true;
+            gridView1.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridView1.Appearance.Row.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
             gridView1.OptionsBehavior.Editable = false;
@@ -75,7 +78,6 @@
             txtFilter.Location = new Point(40, 12);
             txtFilter.Name = "txtFilter";
             txtFilter.Properties.NullValuePrompt = "Filter by Name...";
-            txtFilter.Properties.NullValuePromptShowForEmptyValue = true;
             txtFilter.Size = new Size(602, 22);
             txtFilter.TabIndex = 8;
             txtFilter.EditValueChanged += txtFilter_EditValueChanged;
@@ -107,7 +109,6 @@
             ClientSize = new Size(759, 344);
             Controls.Add(gridControl1);
             Controls.Add(topPanel);
-            Font = new Font("Segoe UI", 8.25F);
             Margin = new Padding(2);
             Name = "AllSalesMan";
             Text = "AllSalesMan";

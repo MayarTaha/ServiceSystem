@@ -115,8 +115,11 @@ namespace ServiveceSystem.PresentationLayer.Payment
                 foreach (var inv in invoices)
                 {
                     decimal paidFromPayments = paymentsByInvoice.TryGetValue(inv.InvoiceHeaderId, out var sum) ? sum : 0m;
-                    decimal totalPaid = inv.Payment + paidFromPayments; // include header.Payment as initial payment if any
-                    decimal remainder = inv.TotalPrice - totalPaid;
+                    //decimal totalPaid = inv.Payment ;
+                    decimal totalPaid =  paidFromPayments; // include header.Payment as initial payment if any
+                     decimal remainder = inv.TotalPrice - totalPaid;
+                    //decimal remainder = inv.TotalPrice;
+
                     if (remainder > 0)
                     {
                         inv.Reminder = remainder.ToString(); 

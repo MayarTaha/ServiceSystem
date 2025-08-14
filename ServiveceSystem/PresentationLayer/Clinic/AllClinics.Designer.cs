@@ -39,6 +39,9 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             // 
             // gridView1
             // 
+            gridView1.Appearance.Row.Options.UseTextOptions = true;
+            gridView1.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridView1.Appearance.Row.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
             gridView1.OptionsBehavior.Editable = false;
@@ -92,6 +95,7 @@ namespace ServiveceSystem.PresentationLayer.Clinic
             ClientSize = new Size(784, 461);
             Controls.Add(gridControl1);
             Controls.Add(topPanel);
+            Font = new Font("Segoe UI", 8.25F);
             FormBorderStyle = FormBorderStyle.None;
             MaximizeBox = false;
             MinimizeBox = false;

@@ -263,12 +263,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 isDeleted = false
             };
 
-            //var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(newHeader);
-            //if (!headerAdded)
-            //{
-            //    XtraMessageBox.Show("Failed to add invoice header.");
-            //    return;
-            //}
+            
             try
             {
                 var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(newHeader);
@@ -300,24 +295,24 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             }
 
             // ✅ Add Payment
-            //var newPayment = new Payment
-            //{
-            //    InvoiceId = newHeader.InvoiceHeaderId,
-            //    AmountPaid = payment, // from PaymenttextEdit
-            //    RemainingAmount = decimal.TryParse(reminderTextEdit.Text, out var rem) ? rem : 0, // from reminder
-            //    PaymentDate = invoiceDateEdit.DateTime, // start date = invoice date
-            //    PaymentMethodId = newHeader.PaymentMethodId,
-            //    PaymentStatus = PaymentStatus.Pending, // using invoice status enum
-            //    CreatedLog = DateTime.Now.ToString(),
-            //    UpdatedLog = DateTime.Now.ToString(),
-            //    DeletedLog = "",
-            //    isDeleted = false
-            //};
+            var newPayment = new Payment
+            {
+                InvoiceId = newHeader.InvoiceHeaderId,
+                AmountPaid = payment, // from PaymenttextEdit
+                RemainingAmount = decimal.TryParse(reminderTextEdit.Text, out var rem) ? rem : 0, // from reminder
+                PaymentDate = invoiceDateEdit.DateTime, // start date = invoice date
+                PaymentMethodId = newHeader.PaymentMethodId,
+                PaymentStatus = PaymentStatus.Pending, // using invoice status enum
+                CreatedLog = DateTime.Now.ToString(),
+                UpdatedLog = DateTime.Now.ToString(),
+                DeletedLog = "",
+                isDeleted = false
+            };
 
-            //await _paymentService.AddPayment(newPayment);
-           
+            await _paymentService.AddPayment(newPayment);
 
-           // XtraMessageBox.Show("Invoice saved successfully!");
+
+            // XtraMessageBox.Show("Invoice saved successfully!");
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

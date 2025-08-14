@@ -48,6 +48,7 @@
             labelControl7 = new DevExpress.XtraEditors.LabelControl();
             savebutton = new DevExpress.XtraEditors.SimpleButton();
             Invoice = new GroupBox();
+            salesmanlookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             labelControl20 = new DevExpress.XtraEditors.LabelControl();
             labelControl19 = new DevExpress.XtraEditors.LabelControl();
             comboBoxStatus = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -71,7 +72,6 @@
             clinicLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             gridcontrolDetails = new DevExpress.XtraGrid.GridControl();
             gridViewdet = new DevExpress.XtraGrid.Views.Grid.GridView();
-            salesmanlookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
             Payment.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PaymenttextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)checkedListBoxControltax).BeginInit();
@@ -82,6 +82,7 @@
             ((System.ComponentModel.ISupportInitialize)reminderTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)paymentmethodlookupedit.Properties).BeginInit();
             Invoice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)salesmanlookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)comboBoxStatus.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)invoiceDateEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)invoiceDateEdit.Properties.CalendarTimeProperties).BeginInit();
@@ -94,7 +95,6 @@
             ((System.ComponentModel.ISupportInitialize)clinicLookUpEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridViewdet).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)salesmanlookUpEdit.Properties).BeginInit();
             SuspendLayout();
             // 
             // Payment
@@ -116,6 +116,7 @@
             Payment.Controls.Add(labelControl3);
             Payment.Controls.Add(labelControl5);
             Payment.Controls.Add(labelControl7);
+            Payment.ForeColor = Color.White;
             Payment.Location = new Point(497, 204);
             Payment.Name = "Payment";
             Payment.Size = new Size(480, 447);
@@ -297,12 +298,26 @@
             Invoice.Controls.Add(labelControl10);
             Invoice.Controls.Add(labelControl4);
             Invoice.Controls.Add(quotationLookUpEdit);
+            Invoice.ForeColor = Color.White;
             Invoice.Location = new Point(15, 204);
             Invoice.Name = "Invoice";
             Invoice.Size = new Size(476, 392);
             Invoice.TabIndex = 34;
             Invoice.TabStop = false;
             Invoice.Text = "Invoice";
+            // 
+            // salesmanlookUpEdit
+            // 
+            salesmanlookUpEdit.Location = new Point(209, 223);
+            salesmanlookUpEdit.Name = "salesmanlookUpEdit";
+            salesmanlookUpEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            salesmanlookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
+            salesmanlookUpEdit.Properties.Appearance.Options.UseFont = true;
+            salesmanlookUpEdit.Properties.Appearance.Options.UseForeColor = true;
+            salesmanlookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            salesmanlookUpEdit.Properties.NullText = "Select Sales Man";
+            salesmanlookUpEdit.Size = new Size(250, 42);
+            salesmanlookUpEdit.TabIndex = 39;
             // 
             // labelControl20
             // 
@@ -421,6 +436,7 @@
             groupBox1.Controls.Add(labelControl1);
             groupBox1.Controls.Add(clinicLookUpEdit);
             groupBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            groupBox1.ForeColor = Color.White;
             groupBox1.Location = new Point(15, 12);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(962, 185);
@@ -543,19 +559,6 @@
             gridViewdet.OptionsBehavior.Editable = false;
             gridViewdet.OptionsView.ShowGroupPanel = false;
             // 
-            // salesmanlookUpEdit
-            // 
-            salesmanlookUpEdit.Location = new Point(209, 223);
-            salesmanlookUpEdit.Name = "salesmanlookUpEdit";
-            salesmanlookUpEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
-            salesmanlookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
-            salesmanlookUpEdit.Properties.Appearance.Options.UseFont = true;
-            salesmanlookUpEdit.Properties.Appearance.Options.UseForeColor = true;
-            salesmanlookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            salesmanlookUpEdit.Properties.NullText = "Select Sales Man";
-            salesmanlookUpEdit.Size = new Size(250, 42);
-            salesmanlookUpEdit.TabIndex = 39;
-            // 
             // TransferToInvoice
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -566,7 +569,6 @@
             Controls.Add(savebutton);
             Controls.Add(Invoice);
             Controls.Add(groupBox1);
-            Font = new Font("Segoe UI", 8F);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             IconOptions.ColorizeInactiveIcon = DevExpress.Utils.DefaultBoolean.True;
             IconOptions.Image = Properties.Resources.icons8_invoice_64;
@@ -574,6 +576,7 @@
             Name = "TransferToInvoice";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "TransferToInvoice";
+            Load += TransferToInvoice_Load;
             Payment.ResumeLayout(false);
             Payment.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PaymenttextEdit.Properties).EndInit();
@@ -586,6 +589,7 @@
             ((System.ComponentModel.ISupportInitialize)paymentmethodlookupedit.Properties).EndInit();
             Invoice.ResumeLayout(false);
             Invoice.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)salesmanlookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)comboBoxStatus.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)invoiceDateEdit.Properties.CalendarTimeProperties).EndInit();
             ((System.ComponentModel.ISupportInitialize)invoiceDateEdit.Properties).EndInit();
@@ -599,7 +603,6 @@
             ((System.ComponentModel.ISupportInitialize)clinicLookUpEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridViewdet).EndInit();
-            ((System.ComponentModel.ISupportInitialize)salesmanlookUpEdit.Properties).EndInit();
             ResumeLayout(false);
         }
 

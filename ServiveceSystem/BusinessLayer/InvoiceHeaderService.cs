@@ -22,11 +22,7 @@ namespace ServiveceSystem.BusinessLayer
             _context = context;
         }
 
-        // Get all InvoiceHeaders
-        //public List<InvoiceHeader> GetAll()
-        //{
-        //    return _context.invoiceHeaders.ToList();
-        //}
+       
 
         public async Task<List<InvoiceHeader>> GetAll()
         {
@@ -43,33 +39,7 @@ namespace ServiveceSystem.BusinessLayer
             return _context.invoiceHeaders.Find(id);
         }
 
-        // Add new InvoiceHeader
-        //public async Task<bool> AddInvoiceHeader(InvoiceHeader invoice)
-        //{
-        //    var quotationExists = await _context.QuotationHeaders.AnyAsync(q => q.QuotationId == invoice.QuotationId && !q.isDeleted);
-        //    var paymentMethodExists = await _context.PaymentMethods.AnyAsync(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
-        //    //
-        //    if (!quotationExists || !paymentMethodExists)
-        //        return false;
-        //    var exists = await _context.invoiceHeaders
-        //       .AnyAsync(q => q.QuotationId == invoice.QuotationId &&
-        //                      q.PaymentMethodId == invoice.PaymentMethodId &&
-        //                      q.ContactId == invoice.ContactId &&
-        //                      !q.isDeleted);
-        //    DevExpress.XtraEditors.XtraMessageBox.Show($"QuotationId Exists: {quotationExists}\nPayment Exists: {paymentMethodExists}\nAlready Exists: {exists}");
-
-        //    if (!quotationExists || !paymentMethodExists || exists)
-        //        return false;
-
-
-
-        //    invoice.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
-        //    invoice.UpdatedLog = DateTime.Now.ToString();
-
-        //    _context.invoiceHeaders.Add(invoice);
-        //    await _context.SaveChangesAsync();
-        //    return true;
-        //}
+        
         public async Task<bool> AddInvoiceHeader(InvoiceHeader invoice)
         {
             bool quotationExists = true;
@@ -108,34 +78,7 @@ namespace ServiveceSystem.BusinessLayer
             }
 
 
-            // Prevent duplicates only if quotation exists
-            //var exists = await _context.invoiceHeaders
-            //    .AnyAsync(q =>
-            //        q.QuotationId == invoice.QuotationId &&
-            //        q.PaymentMethodId == invoice.PaymentMethodId &&
-            //        q.ContactId == invoice.ContactId &&
-            //        !q.isDeleted);
-
-            //if (exists)
-            //{
-            //    XtraMessageBox.Show("An invoice with the same details already exists.");
-            //    return false;
-            //}
-
-
-
-
-            //Prevent duplicates only if quotation exists
-           //var exists = await _context.invoiceHeaders
-           //    .AnyAsync(q =>
-           //        q.Payment == invoice.Payment &&
-           //        !q.isDeleted);
-
-           // if (exists)
-           // {
-           //     XtraMessageBox.Show("must wirte payemnt .");
-           //     return false;
-           // }
+            
 
             // Set logs
             invoice.CreatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
@@ -147,28 +90,34 @@ namespace ServiveceSystem.BusinessLayer
             //XtraMessageBox.Show("Invoice saved successfully!");
             return true;
         }
-
-        // Update 
+        //new update
         public async Task<bool> Update(InvoiceHeader invoice)
         {
-            var existingInvoice = await _context.invoiceHeaders.FindAsync(invoice.InvoiceHeaderId);
-            if (existingInvoice != null)
-                return false;
+            // Create a new DbContext instance for this operation
+            using (var context = new AppDBContext())
+            {
+                var existingInvoice = await context.invoiceHeaders.FindAsync(invoice.InvoiceHeaderId);
+                if (existingInvoice == null)
+                    return false;
 
-                bool quotationExists = _context.QuotationHeaders.Any(q => q.QuotationId == invoice.QuotationId);
-                bool paymentMethodExists = _context.PaymentMethods.Any(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
+                // bool quotationExists = _context.QuotationHeaders.Any(q => q.QuotationId == invoice.QuotationId);
+                bool paymentMethodExists = context.PaymentMethods.Any(pm => pm.PaymentMethodId == invoice.PaymentMethodId);
+                //if (!quotationExists)
+                //return false;
+                //throw new Exception("Quotation not found");
 
-
-                if (!quotationExists)
-                return false;
-            //throw new Exception("Quotation not found");
-
-            if (!paymentMethodExists)
-                // throw new Exception("Payment method not found");
-                return false;
-
-
-            existingInvoice.QuotationId = invoice.QuotationId;
+                if (!paymentMethodExists)
+                    // throw new Exception("Payment method not found");
+                    return false;
+                //existingInvoice.QuotationId = invoice.QuotationId;
+                if (invoice.QuotationId.HasValue)
+                    existingInvoice.QuotationId = invoice.QuotationId;
+                else
+                    existingInvoice.QuotationId = null;
+                if (invoice.SalesManId.HasValue)
+                    existingInvoice.SalesManId = invoice.SalesManId;
+                else
+                    existingInvoice.SalesManId = null;
                 existingInvoice.InvoiceDate = invoice.InvoiceDate;
                 existingInvoice.TotalPrice = invoice.TotalPrice;
                 existingInvoice.Payment = invoice.Payment;
@@ -176,54 +125,13 @@ namespace ServiveceSystem.BusinessLayer
                 existingInvoice.Reminder = invoice.Reminder;
                 existingInvoice.ContactId = invoice.ContactId;
                 existingInvoice.UpdatedLog = $"{CurrentUser.Username} - {DateTime.Now}";
-
-
-                existingInvoice.UpdatedLog = DateTime.Now.ToString();
-
-            await _context.SaveChangesAsync();
-            return true;
-
-
+                // existingInvoice.UpdatedLog = DateTime.Now.ToString();
+                await context.SaveChangesAsync();
+                return true;
+            }
         }
-
-
-        //public async Task<bool> UpdateQuotationHeader(QuotationHeader qout, string? username = "null")
-        //{
-        //    username ??= CurrentUser.Username ?? "system";
-
-        //    var contactExists = await _context.ContactPersons.AnyAsync(cp => cp.ContactId == qout.ContactId);
-        //    if (!contactExists)
-        //        return false;
-        //    var exists = await _context.QuotationHeaders
-        //        .AnyAsync(q => q.QuotationId != qout.QuotationId &&
-        //                       q.ClinicId == qout.ClinicId &&
-        //                       q.InitialDate == qout.InitialDate &&
-        //        !q.isDeleted);
-        //    if (exists)
-        //        return false;
-
-        //    var tracked = await _context.QuotationHeaders.FirstOrDefaultAsync(q => q.QuotationId == qout.QuotationId);
-        //    if (tracked == null)
-        //        return false;
-
-        //    // Update properties
-        //    tracked.ClinicId = qout.ClinicId;
-        //    tracked.InitialDate = qout.InitialDate;
-        //    tracked.ExpireDate = qout.ExpireDate;
-        //    tracked.Note = qout.Note;
-        //    tracked.QuotationNaMe = qout.QuotationNaMe;
-        //    tracked.Status = qout.Status;
-        //    tracked.priority = qout.priority;
-        //    tracked.DiscountType = qout.DiscountType;
-        //    tracked.Discount = qout.Discount;
-        //    tracked.TotalDuo = qout.TotalDuo;
-        //    tracked.ContactId = qout.ContactId;
-        //    tracked.UpdatedLog = $"{username} - {DateTime.Now}";
-        //    // ... any other fields
-
-        //    await _context.SaveChangesAsync();
-        //    return true;
-        //}
+        
+       
         // Delete 
         public async Task<bool> Delete(int id)
         {

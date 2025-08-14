@@ -31,7 +31,7 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
         {
             try
             {
-               var _quotationHeaderService = new QuotationHeaderService(new AppDBContext());
+                var _quotationHeaderService = new QuotationHeaderService(new AppDBContext());
                 _quotations = await _quotationHeaderService.GetAll();
                 BindGrid(_quotations);
             }
@@ -41,14 +41,14 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             }
         }
 
-       
+
 
         private void BindGrid(List<ServiceSystem.Models.QuotationHeader> quotations)
         {
             var displayList = quotations.Select(q => new
             {
                 q.QuotationId,
-                Name = q.QuotationNaMe, 
+                Name = q.QuotationNaMe,
                 q.InitialDate,
                 q.ExpireDate,
                 ClinicName = q.Clinic != null ? q.Clinic.ClinicName : "",
@@ -132,7 +132,7 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             }
         }
 
-        private  void EditButton_Click(object sender, EventArgs e)
+        private void EditButton_Click(object sender, EventArgs e)
         {
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
@@ -140,7 +140,7 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             var editForm = new EditQuotationForm(quotationId);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                 LoadQuotations();
+                LoadQuotations();
             }
         }
 
@@ -216,16 +216,21 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             transferForm.ShowDialog();
         }
 
-        private  void btnAddQuotation_Click(object sender, EventArgs e)
+        private void btnAddQuotation_Click(object sender, EventArgs e)
         {
             var addForm = new AddQuotationForm();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                 LoadQuotationsAsync();
+                LoadQuotationsAsync();
             }
         }
 
-       
+        private void txtFilter_EditValueChanged(object sender, EventArgs e)
+        {
+            string filter = txtFilter.Text.Trim().ToLower();
+            var filtered = _quotations.Where(q => q.QuotationNaMe != null && q.QuotationNaMe.ToLower().Contains(filter)).ToList();
+            BindGrid(filtered);
+        }
     }
 }
 

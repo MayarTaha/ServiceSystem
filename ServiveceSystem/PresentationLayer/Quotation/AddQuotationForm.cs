@@ -30,7 +30,8 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
         public AddQuotationForm()
         {
             InitializeComponent();
-            this.Size = new Size(935, 500);
+            this.Size = new Size(880, 380);
+
             gridViewdet.GroupPanelText = " ";
             _context = new AppDBContext();
             _quotationHeaderService = new QuotationHeaderService(_context);
@@ -54,13 +55,7 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
             comboBoxDiscountTypeDetail.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
             comboBoxDiscountTypeDetail.EditValue = Discount.NotSelected;
 
-            // Discount Type header
-            //comboBoxDiscountTypeHeader.Properties.Items.Clear();
-            //comboBoxDiscountTypeHeader.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
-
-            //// Quotation Status
-            //comboBoxStatus.Properties.Items.Clear();
-            //comboBoxStatus.Properties.Items.AddRange(Enum.GetValues(typeof(QuotationStatus)));
+           
 
             // Service
             serviceLookUpEdit.Properties.DataSource = _context.Services.Where(s => !s.isDeleted).ToList();
@@ -74,32 +69,23 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
 
         private void SetupGrid()
         {
+            gridViewdet.OptionsBehavior.Editable = false;
+            gridViewdet.Columns.Clear();
 
-            // Add only the columns you want to display
-            gridViewdet.Columns.Add(new GridColumn() { FieldName = "ServiceId", Caption = "Service" });
-            gridViewdet.Columns.Add(new GridColumn() { FieldName = "Quantity", Caption = "Quantity" });
-            gridViewdet.Columns.Add(new GridColumn() { FieldName = "ServicePrice", Caption = "ServicePrice" });
-            gridViewdet.Columns.Add(new GridColumn() { FieldName = "DiscountType", Caption = "Discount Type" });
-            gridViewdet.Columns.Add(new GridColumn() { FieldName = "Discount", Caption = "Discount" });
-            gridViewdet.Columns.Add(new GridColumn() { FieldName = "TotalService", Caption = "Total" });
+            // Service column with lookup to show service name
+            var serviceColumn = gridViewdet.Columns.AddVisible("ServiceId", "Service");
+            var serviceLookUp = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            serviceLookUp.DataSource = _context.Services.Where(s => !s.isDeleted).ToList();
+            serviceLookUp.DisplayMember = "Name";
+            serviceLookUp.ValueMember = "ServiceId";
+            serviceColumn.ColumnEdit = serviceLookUp;
+            gridViewdet.Columns.AddVisible("Quantity", "Quantity");
+            gridViewdet.Columns.AddVisible("ServicePrice", "Service Price");
+            gridViewdet.Columns.AddVisible("DiscountType", "Discount Type");
+            gridViewdet.Columns.AddVisible("Discount", "Discount");
+            gridViewdet.Columns.AddVisible("TotalService", "Total");
 
-            var serviceCol = gridViewdet.Columns["ServiceId"];
-            if (serviceCol != null)
-            {
-                var repoService = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-                repoService.DataSource = _context.Services.ToList();
-                repoService.DisplayMember = "Name";
-                repoService.ValueMember = "ServiceId";
-                serviceCol.ColumnEdit = repoService;
-            }
-            // Set up DiscountType column as ComboBox
-            var discountTypeCol = gridViewdet.Columns["DiscountType"];
-            if (discountTypeCol != null)
-            {
-                var repoDiscountType = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-                repoDiscountType.Items.AddRange(Enum.GetValues(typeof(Discount)));
-                discountTypeCol.ColumnEdit = repoDiscountType;
-            }
+           
         }
 
         private void gridcontrolDetails_Click(object sender, EventArgs e)
@@ -250,21 +236,20 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
 
         private void AddQuotationForm_Load(object sender, EventArgs e)
         {
-            gridViewdet.Columns["ServiceId"].Visible = false;
-            gridViewdet.Columns["QuotationDetailId"].Visible = false;
+          
 
             var column = gridViewdet.Columns["Quotation Header"];
             if (column != null)
             {
                 column.Visible = false;
             }
+            // Center all row text
+            gridViewdet.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
+            // Center header text
+            gridViewdet.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
             
-           
-            gridViewdet.Columns["QuotationId"].Visible = false;
-            gridViewdet.Columns["CreatedLog"].Visible = false;
-            gridViewdet.Columns["UpdatedLog"].Visible = false;
-            gridViewdet.Columns["DeletedLog"].Visible = false;
-            gridViewdet.Columns["isDeleted"].Visible = false;
         }
     }
 }

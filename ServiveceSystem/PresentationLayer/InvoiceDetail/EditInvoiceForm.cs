@@ -27,7 +27,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         public EditInvoiceForm(int invoiceHeaderId)
         {
             InitializeComponent();
-            this.Size = new Size(800, 600);
+            this.Size = new Size(850, 700);
             _context = new AppDBContext();
             _invoiceHeaderService = new InvoiceHeaderService(_context);
             _invoiceDetailService = new InvoiceDetailService(_context);
@@ -208,7 +208,10 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             gridViewdet.RowClick += gridViewdet_RowClick;
             SetupGroupBoxEvents();
             SetupHeaderEvents();
+            btnSubmit.Click += btnSubmit_Click;
+
         }
+
 
         private void SetupHeaderEvents()
         {
@@ -413,24 +416,28 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         private async void savebutton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (invoiceDetailsList.Count == 0)
+              if (invoiceDetailsList.Count == 0)
                 {
                     XtraMessageBox.Show("Please add at least one service before continuing.");
                     return;
                 }
 
                 // Update header
-                var header = _context.Set<InvoiceHeader>().FirstOrDefault(i => i.InvoiceHeaderId == _invoiceHeaderId);
+                var header = _context.invoiceHeaders.FirstOrDefault(i => i.InvoiceHeaderId == _invoiceHeaderId);
                 if (header != null)
                 {
-                    header.QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue);
+                    // header.QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue);
+                    header.QuotationId = quotationLookUpEdit.EditValue == null
+    ? (int?)null
+    : Convert.ToInt32(quotationLookUpEdit.EditValue);
                     header.InvoiceDate = invoiceDateEdit.DateTime.ToString("yyyy-MM-dd");
                     header.PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue);
                     header.Reminder = reminderTextEdit.Text; // Save the edited reminder value
                     header.Note = noterichTextBox.Text;
-                    header.SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue);
+                header.SalesManId = salesmanlookUpEdit.EditValue == null
+   ? (int?)null
+   : Convert.ToInt32(salesmanlookUpEdit.EditValue);
+                //header.SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue);
                     header.Status = (InvoiceStatus)comboBoxStatus.EditValue;
                     header.DiscountType = (Discount)comboBoxDiscountType.EditValue;
                     header.Discount = decimal.TryParse(Discounttextedit.Text, out var d) ? d : 0;
@@ -463,15 +470,10 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
                 await _context.SaveChangesAsync();
 
-                XtraMessageBox.Show("Invoice updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Quotation updated successfully!");
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
-            catch (Exception ex)
-            {
-                XtraMessageBox.Show($"Error updating invoice: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         private void EditInvoiceForm_Load(object sender, EventArgs e)
         {
@@ -482,5 +484,84 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             // Center header text
             gridViewdet.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
         }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+     
+            if (serviceLookUpEdit.EditValue == null ||
+    !int.TryParse(serviceLookUpEdit.EditValue.ToString(), out int serviceId) ||
+    serviceId <= 0)
+            {
+               // XtraMessageBox.Show("Please select a valid service.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // 2. Parse Input Values Safely
+           // int serviceId = Convert.ToInt32(serviceLookUpEdit.EditValue);
+            int quantity = int.TryParse(quantityTextEdit.Text, out var q) ? q : 0;
+            decimal servicePrice = decimal.TryParse(textEditServicePrice.Text, out var sp) ? sp : 0;
+            Discount discountType = comboBoxDiscountTypeDetail.EditValue != null ? (Discount)comboBoxDiscountTypeDetail.EditValue : Discount.NotSelected;
+            decimal discount = decimal.TryParse(textEditDiscountDetail.Text, out var d) ? d : 0;
+            decimal totalService = decimal.TryParse(totalServiceTextEdit.Text, out var ts) ? ts : 0;
+
+           // 3.Add New or Update Existing Detail
+            if (_editingDetail == null) // Add new detail
+            {
+                var newDetail = new ServiceSystem.Models.InvoiceDetail
+                {
+                    InvoiceHeaderId = _invoiceHeaderId, // Assign header ID for new details
+                    ServiceId = serviceId,
+                    Quantity = quantity,
+                    ServicePrice = servicePrice,
+                    DiscountType = discountType,
+                    Discount = discount,
+                    TotalService = totalService,
+                    CreatedLog = DateTime.Now.ToString(),
+                    UpdatedLog = DateTime.Now.ToString(),
+                    isDeleted = false
+                };
+                invoiceDetailsList.Add(newDetail);
+            }
+            else // Update existing detail
+            {
+                _editingDetail.ServiceId = serviceId;
+                _editingDetail.Quantity = quantity;
+                _editingDetail.ServicePrice = servicePrice;
+                _editingDetail.DiscountType = discountType;
+                _editingDetail.Discount = discount;
+                _editingDetail.TotalService = totalService;
+                _editingDetail.UpdatedLog = DateTime.Now.ToString();
+
+
+
+            // Important: Notify BindingList of change for existing item
+
+            //  This is crucial for the grid to reflect changes and for save to work correctly
+
+            var index = invoiceDetailsList.IndexOf(_editingDetail);
+                if (index != -1)
+                            {
+                                invoiceDetailsList[index] = _editingDetail; // Reassign to trigger BindingList update
+                            }
+            }
+
+            // 4. Refresh Grid and Recalculate Totals
+            gridcontrolDetails.RefreshDataSource(); // Ensure grid reflects changes
+            UpdateGrandTotal(); // Recalculate header total after detail changes
+
+            // 5. Clear Input Fields and Reset State
+            ClearGroupBoxFields();
+            btnSubmit.Text = "Add"; // Reset button text
+            _editingDetail = null; // Reset editing detail
+        }
+        private void ClearGroupBoxFields()
+        {
+            serviceLookUpEdit.EditValue = null;
+            quantityTextEdit.Text = "0";
+            textEditServicePrice.Text = "0";
+            comboBoxDiscountTypeDetail.EditValue = Discount.NotSelected;
+            textEditDiscountDetail.Text = "0";
+            totalServiceTextEdit.Text = "0";
+        }
+
     }
 }

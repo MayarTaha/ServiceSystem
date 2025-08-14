@@ -470,7 +470,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
                 await _context.SaveChangesAsync();
 
-                XtraMessageBox.Show("Quotation updated successfully!");
+                XtraMessageBox.Show("Invoice updated successfully!");
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

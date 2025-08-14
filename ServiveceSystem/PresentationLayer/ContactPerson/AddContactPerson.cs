@@ -97,8 +97,8 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             }
             else
             {
-                // UAE mobile number regex: starts with 05 and 8 digits after
-                var phoneRegex = new System.Text.RegularExpressions.Regex(@"^05[0-9]{8}$");
+                // UAE mobile number regex: starts with +971
+                var phoneRegex = new System.Text.RegularExpressions.Regex(@"^\+971\s[0-9]{2}\s[0-9]{3}\s[0-9]{4}$");
 
                 if (!phoneRegex.IsMatch(PhonetextEdit.Text))
                 {

@@ -6,6 +6,7 @@ namespace ServiveceSystem.PresentationLayer
         private DevExpress.XtraBars.Navigation.AccordionControlElement servicesElement;
         private DevExpress.XtraBars.Navigation.AccordionControlElement clinicsElement;
         private DevExpress.XtraBars.Navigation.AccordionControlElement contactsElement;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement salesmenElement;
         private DevExpress.XtraBars.Navigation.AccordionControlElement quotationsElement;
         private DevExpress.XtraBars.Navigation.AccordionControlElement invoicesElement;
         private DevExpress.XtraBars.Navigation.AccordionControlElement configurationElement;
@@ -28,6 +29,7 @@ namespace ServiveceSystem.PresentationLayer
             servicesElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             clinicsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             contactsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            salesmenElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             quotationsElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             invoicesElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             configurationElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -52,7 +54,7 @@ namespace ServiveceSystem.PresentationLayer
             // accordionControl
             // 
             accordionControl.Dock = DockStyle.Left;
-            accordionControl.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { servicesElement, clinicsElement, contactsElement, quotationsElement, invoicesElement, configurationElement, reportsElement });
+            accordionControl.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] { servicesElement, clinicsElement, contactsElement, salesmenElement, quotationsElement, invoicesElement, configurationElement, reportsElement });
             accordionControl.ItemHeight = 60;
             accordionControl.Location = new Point(0, 0);
             accordionControl.Name = "accordionControl";
@@ -90,6 +92,15 @@ namespace ServiveceSystem.PresentationLayer
             contactsElement.Name = "contactsElement";
             contactsElement.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             contactsElement.Text = "Contact Persons";
+            // 
+            // salesmenElement
+            // 
+            salesmenElement.Height = 50;
+            salesmenElement.ImageOptions.Image = ServiceSystem.Properties.Resources.icons8_contacts_80;
+            salesmenElement.ImageOptions.ImageLayoutMode = DevExpress.XtraBars.Navigation.ImageLayoutMode.Squeeze;
+            salesmenElement.Name = "salesmenElement";
+            salesmenElement.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            salesmenElement.Text = "Salesmen";
             // 
             // quotationsElement
             // 

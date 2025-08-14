@@ -111,7 +111,7 @@ namespace ServiveceSystem.PresentationLayer.ContactPerson
             }
             else
             {
-                var phoneRegex = new System.Text.RegularExpressions.Regex(@"^05[0-9]{8}$");
+                var phoneRegex = new System.Text.RegularExpressions.Regex(@"^\+971\s[0-9]{2}\s[0-9]{3}\s[0-9]{4}$");
                 if (!phoneRegex.IsMatch(txtContactNumber.Text))
                 {
                     labelPhoneError.Visible = true;

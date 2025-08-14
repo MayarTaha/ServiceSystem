@@ -35,15 +35,17 @@ namespace ServiveceSystem.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<SalesMan>()
-            .HasMany(s => s.InvoiceHeaders)
-            .WithOne(i => i.SalesMan)
-            .HasForeignKey(i => i.SalesManId)
-            .OnDelete(DeleteBehavior.NoAction);
+                .HasMany(s => s.InvoiceHeaders)
+                .WithOne(i => i.SalesMan)
+                .HasForeignKey(i => i.SalesManId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<SalesMan>()
                 .HasMany(s => s.QuotationHeaders)
                 .WithOne(q => q.SalesMan)
                 .HasForeignKey(q => q.SalesManId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.NoAction);
 
 

@@ -30,15 +30,18 @@ namespace ServiveceSystem.PresentationLayer.PaymentMethod
             // gridControl1
             // 
             gridControl1.Dock = DockStyle.Fill;
-            gridControl1.Location = new System.Drawing.Point(0, 39);
+            gridControl1.Location = new Point(0, 39);
             gridControl1.MainView = gridView1;
             gridControl1.Name = "gridControl1";
-            gridControl1.Size = new System.Drawing.Size(784, 422);
+            gridControl1.Size = new Size(784, 422);
             gridControl1.TabIndex = 2;
             gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
             // 
             // gridView1
             // 
+            gridView1.Appearance.Row.Options.UseTextOptions = true;
+            gridView1.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridView1.Appearance.Row.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             gridView1.GridControl = gridControl1;
             gridView1.Name = "gridView1";
             gridView1.OptionsBehavior.Editable = false;
@@ -47,21 +50,21 @@ namespace ServiveceSystem.PresentationLayer.PaymentMethod
             // txtFilter
             // 
             txtFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtFilter.Location = new System.Drawing.Point(46, 11);
+            txtFilter.Location = new Point(46, 11);
             txtFilter.Name = "txtFilter";
             txtFilter.Properties.NullText = "Filter by payment type...";
-            txtFilter.Size = new System.Drawing.Size(648, 22);
+            txtFilter.Size = new Size(648, 22);
             txtFilter.TabIndex = 0;
             txtFilter.TextChanged += txtFilter_TextChanged;
             // 
             // btnAdd
             // 
             btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAdd.Appearance.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F);
+            btnAdd.Appearance.Font = new Font("Segoe UI Semilight", 9.75F);
             btnAdd.Appearance.Options.UseFont = true;
-            btnAdd.Location = new System.Drawing.Point(700, 12);
+            btnAdd.Location = new Point(700, 12);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new System.Drawing.Size(72, 22);
+            btnAdd.Size = new Size(72, 22);
             btnAdd.TabIndex = 1;
             btnAdd.Text = "Add";
             btnAdd.Click += btnAdd_Click;
@@ -72,27 +75,27 @@ namespace ServiveceSystem.PresentationLayer.PaymentMethod
             topPanel.Controls.Add(txtFilter);
             topPanel.Controls.Add(btnAdd);
             topPanel.Dock = DockStyle.Top;
-            topPanel.Location = new System.Drawing.Point(0, 0);
+            topPanel.Location = new Point(0, 0);
             topPanel.Name = "topPanel";
-            topPanel.Size = new System.Drawing.Size(784, 39);
+            topPanel.Size = new Size(784, 39);
             topPanel.TabIndex = 3;
             // 
             // lblFilter
             // 
-            lblFilter.Location = new System.Drawing.Point(5, 15);
+            lblFilter.Location = new Point(5, 15);
             lblFilter.Name = "lblFilter";
-            lblFilter.Size = new System.Drawing.Size(29, 13);
+            lblFilter.Size = new Size(29, 13);
             lblFilter.TabIndex = 5;
             lblFilter.Text = "Filter:";
             // 
             // AllPaymentMethods
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(784, 461);
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(784, 461);
             Controls.Add(gridControl1);
             Controls.Add(topPanel);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "AllPaymentMethods";

@@ -8,7 +8,7 @@ namespace ServiceSystem.Models
 {
    public class SalesMan
     {
-        public int? SalesManId { get; set; }
+        public int SalesManId { get; set; }
         public string SalesManName { get; set; }
         public string CreatedLog { get; set; }
         public string UpdatedLog { get; set; }

@@ -2,6 +2,7 @@ using System;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraBars.Navigation;
+using ServiceSystem.PresentationLayer.SalesMam;
 
 namespace ServiveceSystem.PresentationLayer
 {
@@ -34,6 +35,9 @@ namespace ServiveceSystem.PresentationLayer
                     break;
                 case "contactsElement":
                     ShowFormInPanel(new ContactPerson.AllContactPersons());
+                    break;
+                case "salesmenElement":
+                    ShowFormInPanel(new ServiceSystem.PresentationLayer.SalesMam.AllSalesMan());
                     break;
                 case "quotationsElement":
                     ShowFormInPanel(new ServiceSystem.PresentationLayer.QuotationHeader.AllQuotations());

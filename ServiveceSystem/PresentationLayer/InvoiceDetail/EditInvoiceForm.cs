@@ -12,6 +12,7 @@ using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
 using ServiceSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using DevExpress.XtraEditors.Controls;
 
 namespace ServiceSystem.PresentationLayer.InvoiceDetail
 {
@@ -97,10 +98,25 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             quotationLookUpEdit.Properties.Columns.Clear();
             quotationLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("QuotationNaMe", "Quotation Name"));
 
+            //// Taxes
+            //checkedListBoxControltax.DataSource = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+            //checkedListBoxControltax.DisplayMember = "Name";
+            //checkedListBoxControltax.ValueMember = "TaxesID";
             // Taxes
-            checkedListBoxControltax.DataSource = _context.Taxeses.Where(t => !t.isDeleted).ToList();
-            checkedListBoxControltax.DisplayMember = "Name";
-            checkedListBoxControltax.ValueMember = "TaxesID";
+            checkedListBoxControltax.Items.Clear();
+            var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+
+            foreach (var tax in taxes)
+            {
+
+                checkedListBoxControltax.Items.Add(
+                    new DevExpress.XtraEditors.Controls.CheckedListBoxItem(
+                        value: tax.TaxesID,
+                        description: $"{tax.Name} ({tax.TaxRate}%)",
+                         false
+                    )
+                );
+            }
         }
 
         private void LoadInvoiceData()
@@ -121,6 +137,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 paymentmethodlookupedit.EditValue = header.PaymentMethodId;
                 noterichTextBox.Text = header.Note;
                 comboBoxStatus.EditValue = header.Status;
+                salesmanlookUpEdit.EditValue = header.SalesManId;
                 comboBoxDiscountType.EditValue = header.DiscountType;
                 Discounttextedit.Text = header.Discount.ToString("0.##");
                 TotalPricetextEdit.Text = header.TotalPrice.ToString("0.##");
@@ -150,16 +167,19 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 }
 
                 contactLookUpEdit.EditValue = header.ContactId;
-
-                // Load selected taxes - direct relationship
+                //taxes
                 if (header.Taxes != null)
                 {
-                    for (int i = 0; i < checkedListBoxControltax.ItemCount; i++)
+                    foreach (var qTax in header.Taxes)
                     {
-                        var tax = checkedListBoxControltax.GetItem(i) as Taxes;
-                        if (tax != null && header.Taxes.Any(t => t.TaxesID == tax.TaxesID))
+                        for (int i = 0; i < checkedListBoxControltax.Items.Count; i++)
                         {
-                            checkedListBoxControltax.SetItemChecked(i, true);
+                            if (checkedListBoxControltax.Items[i] is CheckedListBoxItem item &&
+                                (int)item.Value == qTax.TaxesID)
+                            {
+                                checkedListBoxControltax.SetItemChecked(i, true);
+                                break;
+                            }
                         }
                     }
                 }
@@ -434,9 +454,10 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                     header.PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue);
                     header.Reminder = reminderTextEdit.Text; // Save the edited reminder value
                     header.Note = noterichTextBox.Text;
-                header.SalesManId = salesmanlookUpEdit.EditValue == null
-   ? (int?)null
-   : Convert.ToInt32(salesmanlookUpEdit.EditValue);
+                header.SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue);
+   //             header.SalesManId = salesmanlookUpEdit.EditValue == null
+   //? (int?)null
+   //: Convert.ToInt32(salesmanlookUpEdit.EditValue);
                 //header.SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue);
                     header.Status = (InvoiceStatus)comboBoxStatus.EditValue;
                     header.DiscountType = (Discount)comboBoxDiscountType.EditValue;
@@ -445,8 +466,20 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                     header.Payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
                     header.ContactId = Convert.ToInt32(contactLookUpEdit.EditValue);
                     header.UpdatedLog = DateTime.Now.ToString();
+                header.Taxes = new List<ServiceSystem.Models.Taxes>();
 
-                    _invoiceHeaderService.Update(header);
+
+                foreach (DevExpress.XtraEditors.Controls.CheckedListBoxItem checkedItem in checkedListBoxControltax.CheckedItems)
+                {
+                    int taxId = (int)checkedItem.Value;
+                    var tax = await _context.Taxeses.FirstOrDefaultAsync(tx => tx.TaxesID == taxId);
+                    if (tax != null)
+                    {
+                        header.Taxes.Add(tax);
+                    }
+                }
+
+                _invoiceHeaderService.Update(header);
                 }
 
                 // Update details

@@ -279,9 +279,9 @@
             // 
             savebutton.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             savebutton.Appearance.Options.UseFont = true;
-            savebutton.Location = new Point(12, 602);
+            savebutton.Location = new Point(202, 945);
             savebutton.Name = "savebutton";
-            savebutton.Size = new Size(476, 49);
+            savebutton.Size = new Size(574, 49);
             savebutton.TabIndex = 35;
             savebutton.Text = "Save";
             // 
@@ -301,14 +301,14 @@
             Invoice.ForeColor = Color.White;
             Invoice.Location = new Point(15, 204);
             Invoice.Name = "Invoice";
-            Invoice.Size = new Size(476, 392);
+            Invoice.Size = new Size(476, 447);
             Invoice.TabIndex = 34;
             Invoice.TabStop = false;
             Invoice.Text = "Invoice";
             // 
             // salesmanlookUpEdit
             // 
-            salesmanlookUpEdit.Location = new Point(209, 223);
+            salesmanlookUpEdit.Location = new Point(209, 241);
             salesmanlookUpEdit.Name = "salesmanlookUpEdit";
             salesmanlookUpEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             salesmanlookUpEdit.Properties.Appearance.ForeColor = Color.Silver;
@@ -323,7 +323,7 @@
             // 
             labelControl20.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             labelControl20.Appearance.Options.UseFont = true;
-            labelControl20.Location = new Point(10, 229);
+            labelControl20.Location = new Point(10, 247);
             labelControl20.Name = "labelControl20";
             labelControl20.Size = new Size(131, 29);
             labelControl20.TabIndex = 38;
@@ -333,7 +333,7 @@
             // 
             labelControl19.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             labelControl19.Appearance.Options.UseFont = true;
-            labelControl19.Location = new Point(10, 164);
+            labelControl19.Location = new Point(10, 174);
             labelControl19.Margin = new Padding(4, 6, 4, 6);
             labelControl19.Name = "labelControl19";
             labelControl19.Size = new Size(72, 29);
@@ -342,7 +342,7 @@
             // 
             // comboBoxStatus
             // 
-            comboBoxStatus.Location = new Point(209, 164);
+            comboBoxStatus.Location = new Point(209, 174);
             comboBoxStatus.Margin = new Padding(4, 6, 4, 6);
             comboBoxStatus.Name = "comboBoxStatus";
             comboBoxStatus.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
@@ -364,7 +364,7 @@
             // noterichTextBox
             // 
             noterichTextBox.Font = new Font("Microsoft Sans Serif", 12F);
-            noterichTextBox.Location = new Point(209, 280);
+            noterichTextBox.Location = new Point(209, 319);
             noterichTextBox.Name = "noterichTextBox";
             noterichTextBox.Size = new Size(250, 103);
             noterichTextBox.TabIndex = 28;
@@ -374,7 +374,7 @@
             // 
             labelControl2.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             labelControl2.Appearance.Options.UseFont = true;
-            labelControl2.Location = new Point(10, 297);
+            labelControl2.Location = new Point(10, 336);
             labelControl2.Name = "labelControl2";
             labelControl2.Size = new Size(64, 29);
             labelControl2.TabIndex = 27;
@@ -383,7 +383,7 @@
             // invoiceDateEdit
             // 
             invoiceDateEdit.EditValue = null;
-            invoiceDateEdit.Location = new Point(209, 92);
+            invoiceDateEdit.Location = new Point(209, 101);
             invoiceDateEdit.Name = "invoiceDateEdit";
             invoiceDateEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             invoiceDateEdit.Properties.Appearance.Options.UseFont = true;
@@ -397,7 +397,7 @@
             // 
             labelControl10.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
             labelControl10.Appearance.Options.UseFont = true;
-            labelControl10.Location = new Point(10, 98);
+            labelControl10.Location = new Point(10, 107);
             labelControl10.Name = "labelControl10";
             labelControl10.Size = new Size(144, 29);
             labelControl10.TabIndex = 19;
@@ -563,7 +563,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(991, 936);
+            ClientSize = new Size(991, 1027);
             Controls.Add(gridcontrolDetails);
             Controls.Add(Payment);
             Controls.Add(savebutton);

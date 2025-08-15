@@ -12,23 +12,30 @@ using ServiveceSystem.Models;
 using ServiceSystem.Models;
 using ServiveceSystem.BusinessLayer;
 using System.Reflection.PortableExecutable;
+using DevExpress.XtraEditors.Controls;
 
 namespace ServiceSystem.PresentationLayer.InvoiceDetail
 {
     public partial class TransferToInvoice : DevExpress.XtraEditors.XtraForm
     {
         private List<QuotationDetail> _details;
+        private ServiceSystem.Models.QuotationHeader _quotationHeader;
         public TransferToInvoice()
         {
             InitializeComponent();
         }
 
-        public TransferToInvoice(int quotationId, int clinicId, int contactId, List<QuotationDetail> details, string quotationName)
+        public TransferToInvoice(
+            // int quotationId, int clinicId, int contactId, List<QuotationDetail> details, string quotationName
+            ServiceSystem.Models.QuotationHeader quotationHeader, List<QuotationDetail> details
+
+            )
         {
             InitializeComponent();
+            _quotationHeader = quotationHeader;
             _details = details;
             var context = new AppDBContext();
-            this.Size = new Size(710, 630);
+            this.Size = new Size(710, 650);
             // Set invoice date to current
             invoiceDateEdit.DateTime = DateTime.Now;
             // Populate clinic lookup
@@ -38,21 +45,26 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             clinicLookUpEdit.Properties.ValueMember = "ClinicId";
             clinicLookUpEdit.Properties.Columns.Clear();
             clinicLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ClinicName", "Clinic Name"));
-            clinicLookUpEdit.EditValue = clinicId;
+            //clinicLookUpEdit.EditValue = clinicId;
+            clinicLookUpEdit.EditValue = _quotationHeader.ClinicId;
             // Populate contact lookup (filtered by clinic)
-            var contacts = context.ContactPersons.Where(cp => cp.ClinicId == clinicId).ToList();
+            //var contacts = context.ContactPersons.Where(cp => cp.ClinicId == clinicId).ToList();
+            var contacts = context.ContactPersons.Where(cp => cp.ClinicId == _quotationHeader.ClinicId).ToList();
             contactLookUpEdit.Properties.DataSource = contacts;
             contactLookUpEdit.Properties.DisplayMember = "ContactName";
             contactLookUpEdit.Properties.ValueMember = "ContactId";
             contactLookUpEdit.Properties.Columns.Clear();
             contactLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ContactName", "Contact Name"));
+            contactLookUpEdit.EditValue = _quotationHeader.ContactId;
             //salesman
 
             // Quotation lookup
-            quotationLookUpEdit.EditValue = quotationId;
+            quotationLookUpEdit.EditValue = _quotationHeader.QuotationId;
+            // quotationLookUpEdit.EditValue = quotationId;
             if (quotationLookUpEdit.Properties.DataSource == null)
             {
-                quotationLookUpEdit.Properties.DataSource = new[] { new { QuotationId = quotationId, QuotationNaMe = quotationName } };
+                // quotationLookUpEdit.Properties.DataSource = new[] { new { QuotationId = quotationId, QuotationNaMe = quotationName } };
+                quotationLookUpEdit.Properties.DataSource = new[] { new { QuotationId = _quotationHeader.QuotationId, QuotationNaMe = _quotationHeader.QuotationNaMe } };
                 quotationLookUpEdit.Properties.DisplayMember = "QuotationNaMe";
                 quotationLookUpEdit.Properties.ValueMember = "QuotationId";
             }
@@ -72,7 +84,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             gridViewdet.OptionsBehavior.Editable = false;
 
             // Fill phone, email, location for the selected clinic
-            var selectedClinic = clinics.FirstOrDefault(c => c.ClinicId == clinicId);
+            // var selectedClinic = clinics.FirstOrDefault(c => c.ClinicId == clinicId);
+            var selectedClinic = clinics.FirstOrDefault(c => c.ClinicId == _quotationHeader.ClinicId);
             if (selectedClinic != null)
             {
                 phoneTextEdit.Text = selectedClinic.Phone;
@@ -109,12 +122,14 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             paymentmethodlookupedit.Properties.ValueMember = "PaymentMethodId";
             paymentmethodlookupedit.Properties.Columns.Clear();
             paymentmethodlookupedit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("PaymentType", "Payment Method"));
+
             //salesman
             salesmanlookUpEdit.Properties.DataSource = context.SalesMen.Where(c => !c.isDeleted).ToList();
             salesmanlookUpEdit.Properties.DisplayMember = "SalesManName";
             salesmanlookUpEdit.Properties.ValueMember = "SalesManId";
             salesmanlookUpEdit.Properties.Columns.Clear();
             salesmanlookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("SalesManName", "SalesMan Name"));
+            salesmanlookUpEdit.EditValue = _quotationHeader.SalesManId;
 
 
             // Discount Type
@@ -132,8 +147,32 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             var taxes = context.Taxeses.Where(t => !t.isDeleted).ToList();
             foreach (var tax in taxes)
             {
-                checkedListBoxControltax.Items.Add($"{tax.Name} ({tax.TaxRate}%)");
+                checkedListBoxControltax.Items.Add(
+       new CheckedListBoxItem(
+           value: tax.TaxesID,                               // store ID here
+           description: $"{tax.Name} ({tax.TaxRate}%)",      // display text
+           checkState: CheckState.Unchecked                  // initially unchecked
+       )
+   );
             }
+              
+            if (_quotationHeader.Taxes != null)
+            {
+                foreach (var qTax in _quotationHeader.Taxes)
+                {
+                    for (int i = 0; i < checkedListBoxControltax.Items.Count; i++)
+                    {
+                        if (checkedListBoxControltax.Items[i] is CheckedListBoxItem item &&
+                            (int)item.Value == qTax.TaxesID)
+                        {
+                            checkedListBoxControltax.SetItemChecked(i, true);
+                            break;
+                        }
+                    }
+                }
+            }
+
+
             // Event handlers for payment logic
             checkedListBoxControltax.ItemCheck += (s, e) => CalculateTotalWithDiscount();
             PaymenttextEdit.EditValueChanged += (s, e) => CalculateReminder();
@@ -180,6 +219,31 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             decimal totalPrice = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
             decimal payment = decimal.TryParse(PaymenttextEdit.Text, out var p) ? p : 0;
             decimal discount = decimal.TryParse(Discounttextedit.Text, out var d) ? d : 0;
+            // Get selected taxes and assign directly to InvoiceHeader.Taxes
+           // var selectedTaxes = new List<Taxes>();
+            //foreach (var checkedItem in checkedListBoxControltax.CheckedItems)
+            //{
+            //    if (checkedItem is CheckedListBoxItem item)
+            //    {
+            //        var taxId = (int)item.Value;
+            //        var tax = context.Taxeses.FirstOrDefault(t => t.TaxesID == taxId);
+            //        if (tax != null)
+            //        {
+            //            selectedTaxes.Add(tax);
+            //        }
+            //    }
+            //}
+            // Get selected taxes and assign directly to InvoiceHeader.Taxes
+            var selectedTaxes = new List<Taxes>();
+            foreach (CheckedListBoxItem checkedItem in checkedListBoxControltax.CheckedItems)
+            {
+                int taxId = (int)checkedItem.Value;
+                var tax = context.Taxeses.FirstOrDefault(t => t.TaxesID == taxId);
+                if (tax != null)
+                {
+                    selectedTaxes.Add(tax);
+                }
+            }
             var header = new InvoiceHeader
             {
                 QuotationId = Convert.ToInt32(quotationLookUpEdit.EditValue),
@@ -193,6 +257,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue),
                 Discount = discount,
                 TotalPrice = totalPrice,
+                Taxes = selectedTaxes,
                 Payment = payment,
                 CreatedLog = DateTime.Now.ToString(),
                 UpdatedLog = DateTime.Now.ToString(),

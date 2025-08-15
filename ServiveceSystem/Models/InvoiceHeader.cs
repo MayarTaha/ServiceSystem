@@ -43,6 +43,7 @@ namespace ServiceSystem.Models
         public string Reminder { get; set; }
         [ForeignKey("Contact")]
         public int ContactId { get; set; } ///fk
+
         public virtual ContactPerson? Contact { get; set; }
 
         public virtual List<Taxes>? Taxes { get; set; }

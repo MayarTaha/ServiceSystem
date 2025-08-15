@@ -12,6 +12,8 @@ using ServiveceSystem.BusinessLayer;
 using ServiveceSystem.Models;
 using ServiceSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using DevExpress.XtraEditors.Controls;
+using System.Reflection.PortableExecutable;
 
 namespace ServiceSystem.PresentationLayer.Quotation
 {
@@ -87,9 +89,26 @@ namespace ServiceSystem.PresentationLayer.Quotation
             contactLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ContactName", "Contact Name"));
 
             // Taxes
-            checkedListBoxControltax.DataSource = _context.Taxeses.Where(t => !t.isDeleted).ToList();
-            checkedListBoxControltax.DisplayMember = "Name";
-            checkedListBoxControltax.ValueMember = "TaxesID";
+            //checkedListBoxControltax.DataSource = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+            //checkedListBoxControltax.DisplayMember = "Name";
+            //checkedListBoxControltax.ValueMember = "TaxesID";
+            // Taxes
+            checkedListBoxControltax.Items.Clear();
+            var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+
+            foreach (var tax in taxes)
+            {
+
+                checkedListBoxControltax.Items.Add(
+                    new DevExpress.XtraEditors.Controls.CheckedListBoxItem(
+                        value: tax.TaxesID,
+                        description: $"{tax.Name} ({tax.TaxRate}%)",
+                         false
+                    )
+                );
+            }
+
+            
         }
 
         private void LoadQuotationData()
@@ -137,6 +156,22 @@ namespace ServiceSystem.PresentationLayer.Quotation
                     else
                     {
                         locationTextEdit.Text = "";
+                    }
+                }
+
+                if (header.Taxes != null)
+                {
+                    foreach (var qTax in header.Taxes)
+                    {
+                        for (int i = 0; i < checkedListBoxControltax.Items.Count; i++)
+                        {
+                            if (checkedListBoxControltax.Items[i] is CheckedListBoxItem item &&
+                                (int)item.Value == qTax.TaxesID)
+                            {
+                                checkedListBoxControltax.SetItemChecked(i, true);
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -458,7 +493,18 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 header.TotalDuo = decimal.TryParse(TotaltextEdit.Text, out var t) ? t : 0;
                 header.ContactId = Convert.ToInt32(contactLookUpEdit.EditValue);
                 header.UpdatedLog = DateTime.Now.ToString();
+                header.Taxes = new List<ServiceSystem.Models.Taxes>();
 
+
+                foreach (DevExpress.XtraEditors.Controls.CheckedListBoxItem checkedItem in checkedListBoxControltax.CheckedItems)
+                {
+                    int taxId = (int)checkedItem.Value;
+                    var tax = await _context.Taxeses.FirstOrDefaultAsync(tx => tx.TaxesID == taxId);
+                    if (tax != null)
+                    {
+                        header.Taxes.Add(tax);
+                    }
+                }
                 await _quotationHeaderService.UpdateQuotationHeader(header);
             }
 

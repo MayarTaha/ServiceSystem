@@ -108,14 +108,30 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             comboBoxPaymentDiscountType.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
             comboBoxPaymentDiscountType.EditValue = Discount.NotSelected;
 
-            
 
-            //taxes
+
+            ////taxes
+            //checkedListBoxControltax.Items.Clear();
+            //var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+            //foreach (var tax in taxes)
+            //{
+            //    checkedListBoxControltax.Items.Add($"{tax.Name} ({tax.TaxRate}%)");
+            //}
+            // Taxes
             checkedListBoxControltax.Items.Clear();
             var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+
             foreach (var tax in taxes)
             {
-                checkedListBoxControltax.Items.Add($"{tax.Name} ({tax.TaxRate}%)");
+
+
+                checkedListBoxControltax.Items.Add(
+                    new DevExpress.XtraEditors.Controls.CheckedListBoxItem(
+                        value: tax.TaxesID,
+                        description: $"{tax.Name} ({tax.TaxRate}%)",
+                         false
+                    )
+                );
             }
         }
 
@@ -262,8 +278,20 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 DeletedLog = "",
                 isDeleted = false
             };
+            newHeader.Taxes = new List<ServiceSystem.Models.Taxes>();
 
-            
+
+            foreach (DevExpress.XtraEditors.Controls.CheckedListBoxItem checkedItem in checkedListBoxControltax.CheckedItems)
+            {
+                int taxId = (int)checkedItem.Value;
+                var tax = await _context.Taxeses.FirstOrDefaultAsync(tx => tx.TaxesID == taxId);
+                if (tax != null)
+                {
+                    newHeader.Taxes.Add(tax);
+                }
+            }
+
+
             try
             {
                 var headerAdded = await _invoiceHeaderService.AddInvoiceHeader(newHeader);

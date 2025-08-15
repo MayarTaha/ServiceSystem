@@ -13,6 +13,7 @@ using ServiveceSystem.Models;
 using ServiveceSystem.PresentationLayer.QuotationHeader;
 using DevExpress.XtraEditors.Repository;
 using ServiceSystem.PresentationLayer.Quotation;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServiceSystem.PresentationLayer.QuotationHeader
 {
@@ -195,16 +196,67 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
 
         private async void TransferToInvoiceButton_Click(object sender, EventArgs e)
         {
+            //var rowHandle = gridView1.FocusedRowHandle;
+            //if (rowHandle < 0) return;
+            //int quotationId = (int)gridView1.GetRowCellValue(rowHandle, "QuotationId");
+            //var quotation = _quotations.FirstOrDefault(q => q.QuotationId == quotationId);
+            //if (quotation == null) return;
+            //int clinicId = quotation.ClinicId;
+            //int contactId = quotation.ContactId;
+
+            //// Fetch QuotationDetails
+            //var context = new AppDBContext();
+            //var details = context.QuotationDetails.Where(qd => qd.QuotationId == quotationId && !qd.isDeleted).ToList();
+            //// Load Service navigation property for each detail
+            //foreach (var d in details)
+            //{
+            //    d.Service = context.Services.FirstOrDefault(s => s.ServiceId == d.ServiceId);
+            //}
+
+            //var transferForm = new ServiceSystem.PresentationLayer.InvoiceDetail.TransferToInvoice(quotationId, clinicId, contactId, details, quotation.QuotationNaMe);
+            //transferForm.ShowDialog();
+
+            //================
+            //================
+            //================
+
+            //var rowHandle = gridView1.FocusedRowHandle;
+            //if (rowHandle < 0) return;
+            //int quotationId = (int)gridView1.GetRowCellValue(rowHandle, "QuotationId");
+            //var quotation = _quotations.FirstOrDefault(q => q.QuotationId == quotationId);
+            //if (quotation == null) return;
+
+            //// Fetch QuotationDetails
+            //var context = new AppDBContext();
+            //var details = context.QuotationDetails.Where(qd => qd.QuotationId == quotationId && !qd.isDeleted).ToList();
+            //// Load Service navigation property for each detail
+            //foreach (var d in details)
+            //{
+            //    d.Service = context.Services.FirstOrDefault(s => s.ServiceId == d.ServiceId);
+            //}
+
+            //var transferForm = new ServiceSystem.PresentationLayer.InvoiceDetail.TransferToInvoice(quotation, details);
+            //transferForm.ShowDialog();
+            //================
+            //================
+            //================
+
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
             int quotationId = (int)gridView1.GetRowCellValue(rowHandle, "QuotationId");
-            var quotation = _quotations.FirstOrDefault(q => q.QuotationId == quotationId);
+
+            // Fetch the full QuotationHeader with related entities (Taxes, Clinic, Contact, SalesMan)
+            var context = new AppDBContext();
+            var quotation = await context.QuotationHeaders
+                                        .Include(q => q.Taxes)
+                                        .Include(q => q.Clinic)
+                                        .Include(q => q.Contact)
+                                        .Include(q => q.SalesMan)
+                                        .FirstOrDefaultAsync(q => q.QuotationId == quotationId);
+
             if (quotation == null) return;
-            int clinicId = quotation.ClinicId;
-            int contactId = quotation.ContactId;
 
             // Fetch QuotationDetails
-            var context = new AppDBContext();
             var details = context.QuotationDetails.Where(qd => qd.QuotationId == quotationId && !qd.isDeleted).ToList();
             // Load Service navigation property for each detail
             foreach (var d in details)
@@ -212,7 +264,7 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
                 d.Service = context.Services.FirstOrDefault(s => s.ServiceId == d.ServiceId);
             }
 
-            var transferForm = new ServiceSystem.PresentationLayer.InvoiceDetail.TransferToInvoice(quotationId, clinicId, contactId, details, quotation.QuotationNaMe);
+            var transferForm = new ServiceSystem.PresentationLayer.InvoiceDetail.TransferToInvoice(quotation, details);
             transferForm.ShowDialog();
         }
 

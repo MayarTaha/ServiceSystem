@@ -11,6 +11,8 @@ using DevExpress.XtraEditors;
 using ServiveceSystem.Models;
 using ServiveceSystem.BusinessLayer;
 using ServiceSystem.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace ServiceSystem.PresentationLayer.Quotation
 {
@@ -112,9 +114,18 @@ namespace ServiceSystem.PresentationLayer.Quotation
             // Taxes
             checkedListBoxControltax.Items.Clear();
             var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
+            
             foreach (var tax in taxes)
             {
-                checkedListBoxControltax.Items.Add($"{tax.Name} ({tax.TaxRate}%)");
+
+              
+                checkedListBoxControltax.Items.Add(
+                    new DevExpress.XtraEditors.Controls.CheckedListBoxItem(
+                        value: tax.TaxesID,
+                        description: $"{tax.Name} ({tax.TaxRate}%)",
+                         false
+                    )
+                );
             }
         }
 
@@ -189,33 +200,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
 
         private async void savebutton_Click(object sender, EventArgs e)
         {
-            if (_editQuotationHeaderId.HasValue)
-            {
-                // Edit mode: update existing quotation using business layer
-                var updatedHeader = new ServiceSystem.Models.QuotationHeader
-                {
-                    QuotationId = _editQuotationHeaderId.Value,
-                    ClinicId = Convert.ToInt32(clinicLookUpEdit.EditValue),
-                    InitialDate = initialDateEdit.DateTime,
-                    ExpireDate = expireDateEdit.DateTime,
-                    Note = noteRichTextBox.Text,
-                    QuotationNaMe = quotationNameTextEdit.Text,
-                    Status = (QuotationStatus)comboBoxStatus.EditValue,
-                    priority = (priorityStatus)prioritycomboBoxEdit.EditValue,
-                    SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue),
-                    DiscountType = (Discount)comboBoxDiscountType.EditValue,
-                    Discount = decimal.TryParse(textEditDiscountHeader.Text, out var d) ? d : 0,
-                    TotalDuo = decimal.TryParse(totaltextEdit.Text, out var t) ? t : 0,
-                    ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
-                    UpdatedLog = DateTime.Now.ToString(),
-                    // Add other fields as needed
-                };
-                await _quotationHeaderService.UpdateQuotationHeader(updatedHeader);
-                XtraMessageBox.Show("Quotation updated successfully!");
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-                return;
-            }
+            
             // 1. أنشئ QuotationHeader
             var newHeader = new ServiceSystem.Models.QuotationHeader
             {
@@ -224,6 +209,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 ExpireDate = expireDateEdit.DateTime,
                 Note = noteRichTextBox.Text,
                 QuotationNaMe = quotationNameTextEdit.Text,
+                SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue),
                 Status = (QuotationStatus)comboBoxStatus.EditValue,
                 priority = (priorityStatus)prioritycomboBoxEdit.EditValue,
                 DiscountType = (Discount)comboBoxDiscountType.EditValue,
@@ -235,6 +221,20 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 DeletedLog = "",
                 isDeleted = false
             };
+
+            // Add Taxes to the new quotation
+            newHeader.Taxes = new List<ServiceSystem.Models.Taxes>();
+           
+
+            foreach (DevExpress.XtraEditors.Controls.CheckedListBoxItem checkedItem in checkedListBoxControltax.CheckedItems)
+            {
+                int taxId = (int)checkedItem.Value;
+                var tax = await _context.Taxeses.FirstOrDefaultAsync(tx => tx.TaxesID == taxId);
+                if (tax != null)
+                {
+                    newHeader.Taxes.Add(tax);
+                }
+            }
             // 2. أضف QuotationHeader أولاً
             var headerAdded = await _quotationHeaderService.AddQuotationHeader(newHeader);
             if (!headerAdded)

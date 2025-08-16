@@ -252,6 +252,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue),
                 Reminder = reminderTextEdit.Text,
                 Note = noterichTextBox.Text,
+                ClinicId = Convert.ToInt32(clinicLookUpEdit.EditValue),
                 ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
                 Status = (InvoiceStatus)comboBoxStatus.EditValue,
                 DiscountType = (Discount)comboBoxDiscountType.EditValue,

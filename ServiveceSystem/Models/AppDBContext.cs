@@ -61,6 +61,13 @@ namespace ServiveceSystem.Models
                 .HasForeignKey(qh => qh.ClinicId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            // --- QuotationHeader and Clinic --- //
+            modelBuilder.Entity<InvoiceHeader>()
+                .HasOne(i => i.Clinic)
+                .WithMany()
+                .HasForeignKey(qh => qh.ClinicId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             // --- QuotationHeader and ContactPerson --- //
             modelBuilder.Entity<QuotationHeader>()
                 .HasOne(qh => qh.Contact)

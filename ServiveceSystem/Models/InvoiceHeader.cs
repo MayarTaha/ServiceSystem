@@ -26,7 +26,9 @@ namespace ServiceSystem.Models
         public  SalesMan? SalesMan { get; set; }
 
 
-
+        [ForeignKey("Clinic")]
+        public int ClinicId { get; set; } ///fk
+        public virtual Clinic Clinic { get; set; }
         public string InvoiceDate { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal Payment { get; set; }

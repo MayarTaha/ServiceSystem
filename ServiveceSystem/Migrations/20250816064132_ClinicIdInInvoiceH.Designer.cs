@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ServiveceSystem.Models;
 
@@ -11,9 +12,11 @@ using ServiveceSystem.Models;
 namespace ServiceSystem.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250816064132_ClinicIdInInvoiceH")]
+    partial class ClinicIdInInvoiceH
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,8 +241,6 @@ namespace ServiceSystem.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("InvoiceHeaderId");
-
-                    b.HasIndex("ClinicId");
 
                     b.HasIndex("ContactId");
 
@@ -643,12 +644,6 @@ namespace ServiceSystem.Migrations
 
             modelBuilder.Entity("ServiceSystem.Models.InvoiceHeader", b =>
                 {
-                    b.HasOne("ServiceSystem.Models.Clinic", "Clinic")
-                        .WithMany()
-                        .HasForeignKey("ClinicId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("ServiceSystem.Models.ContactPerson", "Contact")
                         .WithMany()
                         .HasForeignKey("ContactId")
@@ -670,8 +665,6 @@ namespace ServiceSystem.Migrations
                         .WithMany("InvoiceHeaders")
                         .HasForeignKey("SalesManId")
                         .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Clinic");
 
                     b.Navigation("Contact");
 

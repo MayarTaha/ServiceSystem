@@ -209,7 +209,10 @@ namespace ServiceSystem.PresentationLayer.Quotation
                 ExpireDate = expireDateEdit.DateTime,
                 Note = noteRichTextBox.Text,
                 QuotationNaMe = quotationNameTextEdit.Text,
-                SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue),
+                //SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue),
+                SalesManId = salesmanlookUpEdit.EditValue == null
+    ? (int?)null
+    : Convert.ToInt32(salesmanlookUpEdit.EditValue),
                 Status = (QuotationStatus)comboBoxStatus.EditValue,
                 priority = (priorityStatus)prioritycomboBoxEdit.EditValue,
                 DiscountType = (Discount)comboBoxDiscountType.EditValue,
@@ -235,6 +238,8 @@ namespace ServiceSystem.PresentationLayer.Quotation
                     newHeader.Taxes.Add(tax);
                 }
             }
+            if (!ValidateQuotationForm())
+                return;
             // 2. أضف QuotationHeader أولاً
             var headerAdded = await _quotationHeaderService.AddQuotationHeader(newHeader);
             if (!headerAdded)
@@ -263,5 +268,80 @@ namespace ServiceSystem.PresentationLayer.Quotation
 
 
     }
+        private bool ValidateQuotationForm()
+        {
+            // Clinic required
+            if (clinicLookUpEdit.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select a clinic.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Initial Date required
+            if (initialDateEdit.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select an initial date.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Expire Date required
+            if (expireDateEdit.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select an expire date.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Quotation name required
+            if (string.IsNullOrWhiteSpace(quotationNameTextEdit.Text))
+            {
+                XtraMessageBox.Show("Please enter a quotation name.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            //// Salesman required
+            //if (salesmanlookUpEdit.EditValue == null)
+            //{
+            //    XtraMessageBox.Show("Please select a salesman.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return false;
+            //}
+
+            // Status required
+            if (comboBoxStatus.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select a quotation status.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Priority required
+            if (prioritycomboBoxEdit.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select a priority.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Discount type required
+            if (comboBoxDiscountType.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select a discount type.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Contact required
+            if (contactLookUpEdit.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select a contact.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // At least one detail required
+            if (_quotationDetails == null || !_quotationDetails.Any())
+            {
+                XtraMessageBox.Show("Please add at least one service to the quotation.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
     }
 }

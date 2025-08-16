@@ -29,6 +29,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         public InvoicePayment(List<ServiceSystem.Models.InvoiceDetail> invoiceDetails, decimal total)
         {
             InitializeComponent();
+            PaymenttextEdit.KeyPress += PaymenttextEdit_KeyPress;
             invoiceDateEdit.DateTime = DateTime.Now;
             noterichTextBox.BackColor = this.BackColor;
             noterichTextBox.ForeColor = Color.White;
@@ -108,15 +109,6 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             comboBoxPaymentDiscountType.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
             comboBoxPaymentDiscountType.EditValue = Discount.NotSelected;
 
-
-
-            ////taxes
-            //checkedListBoxControltax.Items.Clear();
-            //var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
-            //foreach (var tax in taxes)
-            //{
-            //    checkedListBoxControltax.Items.Add($"{tax.Name} ({tax.TaxRate}%)");
-            //}
             // Taxes
             checkedListBoxControltax.Items.Clear();
             var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
@@ -266,8 +258,12 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 PaymentMethodId = Convert.ToInt32(paymentmethodlookupedit.EditValue),
                 Reminder = reminderTextEdit.Text,
                 Note = noterichTextBox.Text,
+                ClinicId = Convert.ToInt32(clinicLookUpEdit.EditValue),
                 ContactId = Convert.ToInt32(contactLookUpEdit.EditValue),
-                SalesManId = Convert.ToInt32(lookUpEditSalesMan.EditValue),
+                SalesManId = lookUpEditSalesMan.EditValue == null
+    ? (int?)null
+    : Convert.ToInt32(lookUpEditSalesMan.EditValue),
+              //  SalesManId = Convert.ToInt32(lookUpEditSalesMan.EditValue),
                 Status = (InvoiceStatus)comboBoxStatus.EditValue,
                 DiscountType = (Discount)comboBoxPaymentDiscountType.EditValue,
                 Discount = discount,
@@ -290,7 +286,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                     newHeader.Taxes.Add(tax);
                 }
             }
-
+            if (!ValidateInvoiceForm())
+                return;
 
             try
             {
@@ -303,8 +300,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show($"Failed to add invoice header: {ex.Message}");
-                return;
+                //XtraMessageBox.Show($"Failed to add invoice header: {ex.Message}");
+               // return;
             }
 
 
@@ -322,7 +319,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 await _invoiceDetailService.AddInvoiceDetail(detail);
             }
 
-            // ✅ Add Payment
+            //  Add Payment
             var newPayment = new Payment
             {
                 InvoiceId = newHeader.InvoiceHeaderId,
@@ -345,6 +342,96 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             this.Close();
         }
 
-        
+        private bool ValidateInvoiceForm()
+        {
+            // Quotation is optional (you already handled that) ✅
+
+            // Clinic must be selected
+            if (clinicLookUpEdit.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select a clinic.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Contact must be selected
+            if (contactLookUpEdit.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select a contact person.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            //// Salesman must be selected
+            //if (lookUpEditSalesMan.EditValue == null)
+            //{
+            //    XtraMessageBox.Show("Please select a salesman.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return false;
+            //}
+
+            // Payment method must be selected
+            if (paymentmethodlookupedit.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select a payment method.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Status must be selected
+            if (comboBoxStatus.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select an invoice status.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Discount type must be selected
+            if (comboBoxPaymentDiscountType.EditValue == null)
+            {
+                XtraMessageBox.Show("Please select a discount type.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Payment must be numeric and > 0
+            if (!decimal.TryParse(PaymenttextEdit.Text, out var payment) || payment <= 0)
+            {
+                XtraMessageBox.Show("Please enter a valid payment amount.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Total Price must be numeric and > 0
+            if (!decimal.TryParse(TotalPricetextEdit.Text, out var totalPrice) || totalPrice <= 0)
+            {
+                XtraMessageBox.Show("Please enter a valid total price.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Must have at least one invoice detail
+            if (_invoiceDetails == null || !_invoiceDetails.Any())
+            {
+                XtraMessageBox.Show("Please add at least one service to the invoice.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
+        }
+        private void PaymenttextEdit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow control keys (Backspace, Delete, etc.)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            // Allow digits
+            if (char.IsDigit(e.KeyChar))
+                return;
+
+            // Allow only one decimal separator (.)
+            if (e.KeyChar == '.' && !PaymenttextEdit.Text.Contains("."))
+                return;
+
+            // Otherwise block and show message
+            e.Handled = true;
+            XtraMessageBox.Show("Only decimal numbers are allowed in Payment.",
+                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+
+
     }
 }

@@ -386,7 +386,7 @@
             Appearance.Options.UseForeColor = true;
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1368, 642);
+            ClientSize = new Size(1368, 657);
             Controls.Add(TotaltextEdit);
             Controls.Add(labelControl1);
             Controls.Add(CompleteprocessButton);

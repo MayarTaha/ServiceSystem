@@ -56,6 +56,7 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
             // Event handlers for gridViewdet (the GridView)
             gridViewdet.CellValueChanged += (s, e) => UpdateGrandTotal();
             gridViewdet.RowCountChanged += (s, e) => UpdateGrandTotal();
+            quantityTextEdit.KeyPress += quantityTextEdit_KeyPress;
 
         }
 
@@ -81,25 +82,7 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "DiscountType", Caption = "Discount Type" });
             gridViewdet.Columns.Add(new GridColumn() { FieldName = "TotalService", Caption = "Total" });
 
-            //// Set up Service column as LookUpEdit
-            //var serviceCol = gridViewdet.Columns["ServiceId"];
-            //if (serviceCol != null)
-            //{
-            //    var repoService = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-            //    repoService.DataSource = _context.Services.ToList();
-            //    repoService.DisplayMember = "Name";
-            //    repoService.ValueMember = "ServiceId";
-            //    serviceCol.ColumnEdit = repoService;
-            //}
-
-            //// Set up DiscountType column as ComboBox
-            //var discountTypeCol = gridViewdet.Columns["DiscountType"];
-            //if (discountTypeCol != null)
-            //{
-            //    var repoDiscountType = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-            //    repoDiscountType.Items.AddRange(Enum.GetValues(typeof(Discount)));
-            //    discountTypeCol.ColumnEdit = repoDiscountType;
-            //}
+            
 
         }
         private void gridcontrolDetails_Click(object sender, EventArgs e)
@@ -197,13 +180,17 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            
+
             var detail = new ServiceSystem.Models.InvoiceDetail
             {
                 ServiceId = Convert.ToInt32(serviceLookUpEdit.EditValue),
-                Quantity = int.TryParse(quantityTextEdit.Text, out var q) ? q : 0,
-                Discount = decimal.TryParse(discountValueTextEdit.Text, out var d) ? d : 0,
+                 Quantity = int.TryParse(quantityTextEdit.Text, out var q) ? q : 0,
+                 Discount = decimal.TryParse(discountValueTextEdit.Text, out var d) ? d : 0,
+               
                 DiscountType = (Discount)comboBoxDiscountType.EditValue,
                 ServicePrice = decimal.TryParse(textEditServicePrice.Text, out var p) ? p : 0,
+                
                 TotalService = decimal.TryParse(totalServiceTextEdit.Text, out var t) ? t : 0,
             };
 
@@ -230,5 +217,17 @@ namespace ServiveceSystem.PresentationLayer.InvoiceDetail
 
 
         }
+        private void quantityTextEdit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // allow control keys (backspace, delete, etc.)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // block input
+                XtraMessageBox.Show("Only numbers are allowed in Quantity.", "Validation Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
     }
 }

@@ -35,6 +35,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             _invoiceHeaderId = invoiceHeaderId;
             noterichTextBox.BackColor = this.BackColor;
             noterichTextBox.ForeColor = Color.White;
+            PaymenttextEdit.KeyPress += PaymenttextEdit_KeyPress;
             // Reminder field is now editable
             LoadLookUps();
             LoadInvoiceData();
@@ -98,10 +99,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             quotationLookUpEdit.Properties.Columns.Clear();
             quotationLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("QuotationNaMe", "Quotation Name"));
 
-            //// Taxes
-            //checkedListBoxControltax.DataSource = _context.Taxeses.Where(t => !t.isDeleted).ToList();
-            //checkedListBoxControltax.DisplayMember = "Name";
-            //checkedListBoxControltax.ValueMember = "TaxesID";
+            
             // Taxes
             checkedListBoxControltax.Items.Clear();
             var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
@@ -123,7 +121,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         {
             var header = _context.Set<InvoiceHeader>()
                 .Include(i => i.QuotationHeader)
-                .ThenInclude(q => q.Clinic)
+                .ThenInclude(i => i.Clinic)
                 .Include(i => i.Contact)
                 .ThenInclude(c => c.Clinic)
                 .Include(i => i.PaymentMethod)
@@ -132,11 +130,37 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             if (header != null)
             {
                 // Populate header controls
+                clinicLookUpEdit.EditValue = header.ClinicId;
+
+                // Set contact data source based on selected clinic
+                if (header.ClinicId > 0)
+                {
+                    var contacts = _context.ContactPersons.Where(cp => cp.ClinicId == header.ClinicId && !cp.isDeleted).ToList();
+                    contactLookUpEdit.Properties.DataSource = contacts;
+                }
+                // Load contact details
+                if (header.Contact != null)
+                {
+                    emailTextEdit.Text = header.Contact.ContactEmail;
+                    phoneTextEdit.Text = header.Contact.ContactNumber;
+                    // Get clinic location for the contact
+                    if (header.Contact.Clinic != null)
+                    {
+                        locationTextEdit.Text = header.Contact.Clinic.Location;
+                    }
+                    else
+                    {
+                        locationTextEdit.Text = "";
+                    }
+                }
+                // Populate header controls
                 quotationLookUpEdit.EditValue = header.QuotationId;
                 invoiceDateEdit.DateTime = DateTime.TryParse(header.InvoiceDate, out var dt) ? dt : DateTime.Now;
                 paymentmethodlookupedit.EditValue = header.PaymentMethodId;
                 noterichTextBox.Text = header.Note;
                 comboBoxStatus.EditValue = header.Status;
+                clinicLookUpEdit.EditValue = header.ClinicId;
+                contactLookUpEdit.EditValue = header.Contact;
                 salesmanlookUpEdit.EditValue = header.SalesManId;
                 comboBoxDiscountType.EditValue = header.DiscountType;
                 Discounttextedit.Text = header.Discount.ToString("0.##");
@@ -235,6 +259,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         private void SetupHeaderEvents()
         {
+
+
             // Clinic change - filter contacts and fill clinic data
             clinicLookUpEdit.EditValueChanged += (s, e) =>
             {
@@ -455,11 +481,12 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                     header.Reminder = reminderTextEdit.Text; // Save the edited reminder value
                     header.Note = noterichTextBox.Text;
                 header.SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue);
-   //             header.SalesManId = salesmanlookUpEdit.EditValue == null
-   //? (int?)null
-   //: Convert.ToInt32(salesmanlookUpEdit.EditValue);
+                    header.ClinicId = Convert.ToInt32(clinicLookUpEdit.EditValue);
+                //             header.SalesManId = salesmanlookUpEdit.EditValue == null
+                //? (int?)null
+                //: Convert.ToInt32(salesmanlookUpEdit.EditValue);
                 //header.SalesManId = Convert.ToInt32(salesmanlookUpEdit.EditValue);
-                    header.Status = (InvoiceStatus)comboBoxStatus.EditValue;
+                header.Status = (InvoiceStatus)comboBoxStatus.EditValue;
                     header.DiscountType = (Discount)comboBoxDiscountType.EditValue;
                     header.Discount = decimal.TryParse(Discounttextedit.Text, out var d) ? d : 0;
                     header.TotalPrice = decimal.TryParse(TotalPricetextEdit.Text, out var t) ? t : 0;
@@ -594,6 +621,26 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             comboBoxDiscountTypeDetail.EditValue = Discount.NotSelected;
             textEditDiscountDetail.Text = "0";
             totalServiceTextEdit.Text = "0";
+        }
+
+        private void PaymenttextEdit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow control keys (Backspace, Delete, etc.)
+            if (char.IsControl(e.KeyChar))
+                return;
+
+            // Allow digits
+            if (char.IsDigit(e.KeyChar))
+                return;
+
+            // Allow only one decimal separator (.)
+            if (e.KeyChar == '.' && !PaymenttextEdit.Text.Contains("."))
+                return;
+
+            // Otherwise block and show message
+            e.Handled = true;
+            XtraMessageBox.Show("Only decimal numbers are allowed in Payment.",
+                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
     }

@@ -46,6 +46,7 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
             // Event handlers for gridViewdet (the GridView)
             gridViewdet.CellValueChanged += (s, e) => UpdateGrandTotal();
             gridViewdet.RowCountChanged += (s, e) => UpdateGrandTotal();
+            quantityTextEdit.KeyPress += quantityTextEdit_KeyPress;
         }
 
         private void LoadLookUps()
@@ -250,6 +251,16 @@ namespace ServiveceSystem.PresentationLayer.QuotationHeader
             gridViewdet.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
 
             
+        }
+        private void quantityTextEdit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // allow control keys (backspace, delete, etc.)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // block input
+                XtraMessageBox.Show("Only numbers are allowed in Quantity.", "Validation Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

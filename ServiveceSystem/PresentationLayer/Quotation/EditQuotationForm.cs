@@ -29,7 +29,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
         public EditQuotationForm(int quotationHeaderId)
         {
             InitializeComponent();
-            this.Size = new Size(900, 600);
+            this.Size = new Size(870, 590);
             _context = new AppDBContext();
             _quotationHeaderService = new QuotationHeaderService(_context);
             _quotationDetailService = new QuotationDetailService(_context);

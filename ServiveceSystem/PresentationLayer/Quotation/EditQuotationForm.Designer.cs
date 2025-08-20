@@ -312,7 +312,7 @@
             // gridcontrolDetails
             // 
             gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(6, 9, 6, 9);
-            gridcontrolDetails.Location = new Point(9, 684);
+            gridcontrolDetails.Location = new Point(8, 629);
             gridcontrolDetails.MainView = gridViewdet;
             gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);
             gridcontrolDetails.Name = "gridcontrolDetails";
@@ -335,9 +335,9 @@
             // 
             savebutton.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             savebutton.Appearance.Options.UseFont = true;
-            savebutton.Location = new Point(11, 628);
+            savebutton.Location = new Point(9, 835);
             savebutton.Name = "savebutton";
-            savebutton.Size = new Size(462, 49);
+            savebutton.Size = new Size(1281, 49);
             savebutton.TabIndex = 49;
             savebutton.Text = "Save";
             // 
@@ -597,7 +597,7 @@
             groupBox1.ForeColor = Color.White;
             groupBox1.Location = new Point(9, 211);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(465, 399);
+            groupBox1.Size = new Size(465, 411);
             groupBox1.TabIndex = 55;
             groupBox1.TabStop = false;
             groupBox1.Text = "Client";

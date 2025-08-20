@@ -86,8 +86,6 @@
             textEditServicePrice = new DevExpress.XtraEditors.TextEdit();
             quantityTextEdit = new DevExpress.XtraEditors.TextEdit();
             textEditDiscountDetail = new DevExpress.XtraEditors.TextEdit();
-            TotaltextEdit = new DevExpress.XtraEditors.TextEdit();
-            labelControl26 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)gridViewdet).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).BeginInit();
             ((System.ComponentModel.ISupportInitialize)emailTextEdit.Properties).BeginInit();
@@ -118,7 +116,6 @@
             ((System.ComponentModel.ISupportInitialize)textEditServicePrice.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)textEditDiscountDetail.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).BeginInit();
             SuspendLayout();
             // 
             // gridViewdet
@@ -135,11 +132,11 @@
             // gridcontrolDetails
             // 
             gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(6, 8, 6, 8);
-            gridcontrolDetails.Location = new Point(12, 839);
+            gridcontrolDetails.Location = new Point(12, 810);
             gridcontrolDetails.MainView = gridViewdet;
             gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);
             gridcontrolDetails.Name = "gridcontrolDetails";
-            gridcontrolDetails.Size = new Size(962, 199);
+            gridcontrolDetails.Size = new Size(962, 192);
             gridcontrolDetails.TabIndex = 43;
             gridcontrolDetails.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewdet });
             // 
@@ -240,9 +237,9 @@
             // 
             savebutton.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             savebutton.Appearance.Options.UseFont = true;
-            savebutton.Location = new Point(12, 783);
+            savebutton.Location = new Point(12, 1009);
             savebutton.Name = "savebutton";
-            savebutton.Size = new Size(476, 49);
+            savebutton.Size = new Size(962, 49);
             savebutton.TabIndex = 41;
             savebutton.Text = "Save";
             savebutton.Click += savebutton_Click;
@@ -263,7 +260,7 @@
             Invoice.ForeColor = Color.White;
             Invoice.Location = new Point(12, 385);
             Invoice.Name = "Invoice";
-            Invoice.Size = new Size(476, 392);
+            Invoice.Size = new Size(476, 418);
             Invoice.TabIndex = 40;
             Invoice.TabStop = false;
             Invoice.Text = "Invoice";
@@ -328,7 +325,7 @@
             noterichTextBox.Font = new Font("Microsoft Sans Serif", 12F);
             noterichTextBox.Location = new Point(209, 271);
             noterichTextBox.Name = "noterichTextBox";
-            noterichTextBox.Size = new Size(250, 103);
+            noterichTextBox.Size = new Size(250, 106);
             noterichTextBox.TabIndex = 28;
             noterichTextBox.Text = "";
             // 
@@ -435,14 +432,14 @@
             Payment.ForeColor = Color.White;
             Payment.Location = new Point(494, 385);
             Payment.Name = "Payment";
-            Payment.Size = new Size(480, 447);
+            Payment.Size = new Size(480, 418);
             Payment.TabIndex = 42;
             Payment.TabStop = false;
             Payment.Text = "Payment";
             // 
             // PaymenttextEdit
             // 
-            PaymenttextEdit.Location = new Point(208, 346);
+            PaymenttextEdit.Location = new Point(208, 328);
             PaymenttextEdit.Name = "PaymenttextEdit";
             PaymenttextEdit.Size = new Size(250, 34);
             PaymenttextEdit.TabIndex = 58;
@@ -451,7 +448,7 @@
             // 
             labelControl8.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl8.Appearance.Options.UseFont = true;
-            labelControl8.Location = new Point(8, 342);
+            labelControl8.Location = new Point(8, 324);
             labelControl8.Name = "labelControl8";
             labelControl8.Size = new Size(105, 32);
             labelControl8.TabIndex = 57;
@@ -472,7 +469,7 @@
             // 
             checkedListBoxControltax.Appearance.Font = new Font("Tahoma", 10F);
             checkedListBoxControltax.Appearance.Options.UseFont = true;
-            checkedListBoxControltax.Location = new Point(207, 114);
+            checkedListBoxControltax.Location = new Point(207, 96);
             checkedListBoxControltax.Name = "checkedListBoxControltax";
             checkedListBoxControltax.Size = new Size(250, 127);
             checkedListBoxControltax.TabIndex = 55;
@@ -481,7 +478,7 @@
             // 
             labelControl12.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl12.Appearance.Options.UseFont = true;
-            labelControl12.Location = new Point(7, 83);
+            labelControl12.Location = new Point(7, 65);
             labelControl12.Name = "labelControl12";
             labelControl12.Size = new Size(106, 32);
             labelControl12.TabIndex = 54;
@@ -489,14 +486,14 @@
             // 
             // Discounttextedit
             // 
-            Discounttextedit.Location = new Point(207, 78);
+            Discounttextedit.Location = new Point(207, 60);
             Discounttextedit.Name = "Discounttextedit";
             Discounttextedit.Size = new Size(250, 34);
             Discounttextedit.TabIndex = 53;
             // 
             // comboBoxDiscountType
             // 
-            comboBoxDiscountType.Location = new Point(207, 41);
+            comboBoxDiscountType.Location = new Point(207, 23);
             comboBoxDiscountType.Name = "comboBoxDiscountType";
             comboBoxDiscountType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             comboBoxDiscountType.Size = new Size(250, 34);
@@ -506,7 +503,7 @@
             // 
             labelControl17.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl17.Appearance.Options.UseFont = true;
-            labelControl17.Location = new Point(7, 43);
+            labelControl17.Location = new Point(7, 25);
             labelControl17.Name = "labelControl17";
             labelControl17.Size = new Size(165, 32);
             labelControl17.TabIndex = 51;
@@ -514,7 +511,7 @@
             // 
             // TotalPricetextEdit
             // 
-            TotalPricetextEdit.Location = new Point(207, 248);
+            TotalPricetextEdit.Location = new Point(207, 230);
             TotalPricetextEdit.Name = "TotalPricetextEdit";
             TotalPricetextEdit.Size = new Size(250, 34);
             TotalPricetextEdit.TabIndex = 50;
@@ -523,7 +520,7 @@
             // 
             labelControl6.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl6.Appearance.Options.UseFont = true;
-            labelControl6.Location = new Point(7, 241);
+            labelControl6.Location = new Point(7, 232);
             labelControl6.Name = "labelControl6";
             labelControl6.Size = new Size(65, 32);
             labelControl6.TabIndex = 49;
@@ -548,7 +545,7 @@
             // 
             // reminderTextEdit
             // 
-            reminderTextEdit.Location = new Point(208, 390);
+            reminderTextEdit.Location = new Point(208, 372);
             reminderTextEdit.Name = "reminderTextEdit";
             reminderTextEdit.Properties.ReadOnly = true;
             reminderTextEdit.Size = new Size(250, 34);
@@ -556,7 +553,7 @@
             // 
             // paymentmethodlookupedit
             // 
-            paymentmethodlookupedit.Location = new Point(207, 295);
+            paymentmethodlookupedit.Location = new Point(207, 277);
             paymentmethodlookupedit.Name = "paymentmethodlookupedit";
             paymentmethodlookupedit.Properties.Appearance.ForeColor = Color.Silver;
             paymentmethodlookupedit.Properties.Appearance.Options.UseForeColor = true;
@@ -569,7 +566,7 @@
             // 
             labelControl3.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl3.Appearance.Options.UseFont = true;
-            labelControl3.Location = new Point(8, 384);
+            labelControl3.Location = new Point(8, 366);
             labelControl3.Name = "labelControl3";
             labelControl3.Size = new Size(115, 32);
             labelControl3.TabIndex = 21;
@@ -579,7 +576,7 @@
             // 
             labelControl5.Appearance.Font = new Font("Segoe UI", 12F);
             labelControl5.Appearance.Options.UseFont = true;
-            labelControl5.Location = new Point(7, 288);
+            labelControl5.Location = new Point(7, 276);
             labelControl5.Name = "labelControl5";
             labelControl5.Size = new Size(197, 32);
             labelControl5.TabIndex = 20;
@@ -763,36 +760,12 @@
             textEditDiscountDetail.Size = new Size(141, 38);
             textEditDiscountDetail.TabIndex = 5;
             // 
-            // TotaltextEdit
-            // 
-            TotaltextEdit.Location = new Point(1007, 86);
-            TotaltextEdit.Margin = new Padding(3, 4, 3, 4);
-            TotaltextEdit.Name = "TotaltextEdit";
-            TotaltextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TotaltextEdit.Properties.Appearance.Options.UseFont = true;
-            TotaltextEdit.Properties.ReadOnly = true;
-            TotaltextEdit.Size = new Size(238, 94);
-            TotaltextEdit.TabIndex = 46;
-            // 
-            // labelControl26
-            // 
-            labelControl26.Appearance.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl26.Appearance.Options.UseFont = true;
-            labelControl26.Location = new Point(997, 11);
-            labelControl26.Margin = new Padding(3, 4, 3, 4);
-            labelControl26.Name = "labelControl26";
-            labelControl26.Size = new Size(153, 55);
-            labelControl26.TabIndex = 45;
-            labelControl26.Text = "Total  :";
-            // 
             // EditInvoiceForm
             // 
             Appearance.Options.UseFont = true;
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1276, 1062);
-            Controls.Add(TotaltextEdit);
-            Controls.Add(labelControl26);
+            ClientSize = new Size(1003, 1062);
             Controls.Add(Quotaion);
             Controls.Add(gridcontrolDetails);
             Controls.Add(savebutton);
@@ -840,9 +813,7 @@
             ((System.ComponentModel.ISupportInitialize)textEditServicePrice.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)textEditDiscountDetail.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -903,8 +874,6 @@
         private DevExpress.XtraEditors.TextEdit quantityTextEdit;
         private DevExpress.XtraEditors.TextEdit textEditDiscountDetail;
         private DevExpress.XtraEditors.SimpleButton btnSubmit;
-        private DevExpress.XtraEditors.TextEdit TotaltextEdit;
-        private DevExpress.XtraEditors.LabelControl labelControl26;
         private DevExpress.XtraEditors.LookUpEdit salesmanlookUpEdit;
         private DevExpress.XtraEditors.LabelControl labelControl27;
     }

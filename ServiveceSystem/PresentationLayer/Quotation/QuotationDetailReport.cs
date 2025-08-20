@@ -15,15 +15,15 @@ using ServiceSystem.Models;
 
 namespace ServiceSystem.PresentationLayer.Quotation
 {
-	public partial class QuotationDetailReport: DevExpress.XtraEditors.XtraForm
-	{
+    public partial class QuotationDetailReport : DevExpress.XtraEditors.XtraForm
+    {
         private readonly AppDBContext _context;
         private BindingList<ServiceSystem.Models.QuotationDetail> quotationDetailsList = new BindingList<ServiceSystem.Models.QuotationDetail>();
         private int _quotationHeaderId;
         public QuotationDetailReport(int quotationHeaderId)
-		{
+        {
             InitializeComponent();
-            this.Size = new Size(900, 600);
+            this.Size = new Size(900, 460);
             _context = new AppDBContext();
             _quotationHeaderId = quotationHeaderId;
             noteRichTextBox.BackColor = this.BackColor;
@@ -31,14 +31,10 @@ namespace ServiceSystem.PresentationLayer.Quotation
             LoadLookUps();
             LoadQuotationData();
             SetupGrid();
-           
+
         }
         private void LoadLookUps()
         {
-            // Discount Type Detail
-            comboBoxDiscountTypeDetail.Properties.Items.Clear();
-            comboBoxDiscountTypeDetail.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
-            comboBoxDiscountTypeDetail.EditValue = Discount.NotSelected;
 
             // Discount Type Header
             comboBoxDiscountType.Properties.Items.Clear();
@@ -53,12 +49,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
             prioritycomboBoxEdit.Properties.Items.Clear();
             prioritycomboBoxEdit.Properties.Items.AddRange(Enum.GetValues(typeof(priorityStatus)));
 
-            // Services
-            serviceLookUpEdit.Properties.DataSource = _context.Services.Where(s => !s.isDeleted).ToList();
-            serviceLookUpEdit.Properties.DisplayMember = "Name";
-            serviceLookUpEdit.Properties.ValueMember = "ServiceId";
-            serviceLookUpEdit.Properties.Columns.Clear();
-            serviceLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "Service Name"));
+
 
             // Clinics
             clinicLookUpEdit.Properties.DataSource = _context.Clinics.Where(c => !c.isDeleted).ToList();
@@ -79,7 +70,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
             contactLookUpEdit.Properties.Columns.Clear();
             contactLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("ContactName", "Contact Name"));
 
-            
+
             // Taxes
             checkedListBoxControltax.Items.Clear();
             var taxes = _context.Taxeses.Where(t => !t.isDeleted).ToList();
@@ -172,7 +163,7 @@ namespace ServiceSystem.PresentationLayer.Quotation
 
             quotationDetailsList = new BindingList<ServiceSystem.Models.QuotationDetail>(details);
             gridcontrolDetails.DataSource = quotationDetailsList;
-           // UpdateGrandTotal();
+            // UpdateGrandTotal();
         }
 
         private void SetupGrid()
@@ -195,99 +186,12 @@ namespace ServiceSystem.PresentationLayer.Quotation
             gridViewdet.Columns.AddVisible("TotalService", "Total");
         }
 
-        
-
-        private void SetupHeaderEvents()
+        private void QuotationDetailReport_Load(object sender, EventArgs e)
         {
-            // Clinic change - filter contacts and fill clinic data
-            clinicLookUpEdit.EditValueChanged += (s, e) =>
-            {
-                if (clinicLookUpEdit.EditValue != null)
-                {
-                    int clinicId = Convert.ToInt32(clinicLookUpEdit.EditValue);
+            gridViewdet.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
 
-                    // Get clinic data
-                    var clinic = _context.Clinics.FirstOrDefault(c => c.ClinicId == clinicId);
-                    if (clinic != null)
-                    {
-                        locationTextEdit.Text = clinic.Location;
-                        emailTextEdit.Text = clinic.Email;
-                        phoneTextEdit.Text = clinic.Phone;
-                    }
-
-                    // Filter contacts for this clinic
-                    var contacts = _context.ContactPersons.Where(cp => cp.ClinicId == clinicId && !cp.isDeleted).ToList();
-                    contactLookUpEdit.Properties.DataSource = contacts;
-
-                    // Auto-select first contact if available
-                    if (contacts.Count > 0)
-                    {
-                        contactLookUpEdit.EditValue = contacts.First().ContactId;
-                    }
-                    else
-                    {
-                        contactLookUpEdit.EditValue = null;
-                    }
-                }
-                else
-                {
-                    contactLookUpEdit.Properties.DataSource = null;
-                    contactLookUpEdit.EditValue = null;
-                    emailTextEdit.Text = "";
-                    phoneTextEdit.Text = "";
-                    locationTextEdit.Text = "";
-                }
-            };
-
-            // Header discount type change
-            comboBoxDiscountType.SelectedIndexChanged += (s, e) =>
-            {
-                if (comboBoxDiscountType.EditValue == null)
-                    return;
-
-                var selected = (Discount)comboBoxDiscountType.EditValue;
-                if (selected == Discount.NotSelected)
-                {
-                    textEditDiscountHeader.Text = "0";
-                    textEditDiscountHeader.Enabled = false;
-                }
-                else
-                {
-                    textEditDiscountHeader.Text = "0";
-                    textEditDiscountHeader.Enabled = true;
-                }
-              //  CalculateHeaderTotal();
-            };
-
-            // Header discount value change
-          //  textEditDiscountHeader.EditValueChanged += (s, e) => CalculateHeaderTotal();
-
-            // Taxes change
-          //  checkedListBoxControltax.ItemCheck += (s, e) => CalculateHeaderTotal();
-
-            // Contact change
-            contactLookUpEdit.EditValueChanged += (s, e) =>
-            {
-                if (contactLookUpEdit.EditValue != null)
-                {
-                    int contactId = Convert.ToInt32(contactLookUpEdit.EditValue);
-                    var contact = _context.ContactPersons.FirstOrDefault(c => c.ContactId == contactId);
-                    if (contact != null)
-                    {
-                        emailTextEdit.Text = contact.ContactEmail;
-                        phoneTextEdit.Text = contact.ContactNumber;
-                        // Get clinic location for the contact
-                        if (contact.Clinic != null)
-                        {
-                            locationTextEdit.Text = contact.Clinic.Location;
-                        }
-                        else
-                        {
-                            locationTextEdit.Text = "";
-                        }
-                    }
-                }
-            };
+            // Center header text
+            gridViewdet.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
         }
     }
 }

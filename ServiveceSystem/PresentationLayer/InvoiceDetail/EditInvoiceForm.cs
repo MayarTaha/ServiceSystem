@@ -28,7 +28,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         public EditInvoiceForm(int invoiceHeaderId)
         {
             InitializeComponent();
-            this.Size = new Size(850, 700);
+            this.Size = new Size(665, 695);
             _context = new AppDBContext();
             _invoiceHeaderService = new InvoiceHeaderService(_context);
             _invoiceDetailService = new InvoiceDetailService(_context);
@@ -219,7 +219,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             gridcontrolDetails.DataSource = invoiceDetailsList;
 
             // Set TotaltextEdit to match TotalPricetextEdit (both show the same total)
-            TotaltextEdit.Text = TotalPricetextEdit.Text;
+           // TotaltextEdit.Text = TotalPricetextEdit.Text;
 
             // Calculate payment balance based on loaded values
             CalculatePaymentBalance();
@@ -412,7 +412,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             total += taxTotal;
 
             TotalPricetextEdit.Text = total.ToString("0.##");
-            TotaltextEdit.Text = total.ToString("0.##");
+          //  TotaltextEdit.Text = total.ToString("0.##");
             CalculatePaymentBalance();
         }
 

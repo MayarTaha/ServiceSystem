@@ -25,7 +25,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             InitializeComponent();
             _context = new AppDBContext();
             _invoiceHeaderId = invoiceHeaderId;
-            this.Size = new Size(850, 700);
+            this.Size = new Size(670, 620);
             noterichTextBox.BackColor = this.BackColor;
             noterichTextBox.ForeColor = Color.White;
             LoadLookUps();
@@ -36,11 +36,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
 
         private void LoadLookUps()
         {
-            // Discount Type Detail
-            comboBoxDiscountTypeDetail.Properties.Items.Clear();
-            comboBoxDiscountTypeDetail.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
-            comboBoxDiscountTypeDetail.EditValue = Discount.NotSelected;
-
+            
             // Discount Type Header
             comboBoxDiscountType.Properties.Items.Clear();
             comboBoxDiscountType.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
@@ -56,13 +52,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             salesmanlookUpEdit.Properties.Columns.Clear();
             salesmanlookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("SalesManName", "SalesMan Name"));
 
-            // Services
-            serviceLookUpEdit.Properties.DataSource = _context.Services.Where(s => !s.isDeleted).ToList();
-            serviceLookUpEdit.Properties.DisplayMember = "Name";
-            serviceLookUpEdit.Properties.ValueMember = "ServiceId";
-            serviceLookUpEdit.Properties.Columns.Clear();
-            serviceLookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "Service Name"));
-
+           
             // Clinics
             clinicLookUpEdit.Properties.DataSource = _context.Clinics.Where(c => !c.isDeleted).ToList();
             clinicLookUpEdit.Properties.DisplayMember = "ClinicName";
@@ -210,7 +200,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             gridcontrolDetails.DataSource = invoiceDetailsList;
 
             // Set TotaltextEdit to match TotalPricetextEdit (both show the same total)
-            TotaltextEdit.Text = TotalPricetextEdit.Text;
+            //TotaltextEdit.Text = TotalPricetextEdit.Text;
 
             // Calculate payment balance based on loaded values
             //CalculatePaymentBalance();

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             groupBox2 = new GroupBox();
             comboBoxDiscountType = new DevExpress.XtraEditors.ComboBoxEdit();
             labelControl8 = new DevExpress.XtraEditors.LabelControl();
@@ -247,6 +247,7 @@
             totalServiceTextEdit.Name = "totalServiceTextEdit";
             totalServiceTextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             totalServiceTextEdit.Properties.Appearance.Options.UseFont = true;
+            totalServiceTextEdit.Properties.ReadOnly = true;
             totalServiceTextEdit.Size = new Size(250, 40);
             totalServiceTextEdit.TabIndex = 9;
             // 
@@ -282,6 +283,7 @@
             TotaltextEdit.Name = "TotaltextEdit";
             TotaltextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TotaltextEdit.Properties.Appearance.Options.UseFont = true;
+            TotaltextEdit.Properties.ReadOnly = true;
             TotaltextEdit.Size = new Size(261, 88);
             TotaltextEdit.TabIndex = 34;
             // 
@@ -366,8 +368,8 @@
             // gridcontrolDetails
             // 
             gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(1, 2, 1, 2);
-            gridLevelNode2.RelationName = "Level1";
-            gridcontrolDetails.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode2 });
+            gridLevelNode1.RelationName = "Level1";
+            gridcontrolDetails.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] { gridLevelNode1 });
             gridcontrolDetails.Location = new Point(7, 288);
             gridcontrolDetails.MainView = gridViewdet;
             gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);

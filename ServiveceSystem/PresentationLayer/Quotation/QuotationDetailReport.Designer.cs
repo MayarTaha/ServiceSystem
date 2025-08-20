@@ -1,6 +1,6 @@
 ﻿namespace ServiceSystem.PresentationLayer.Quotation
 {
-    partial class EditQuotationForm
+    partial class QuotationDetailReport
     {
         /// <summary>
         /// Required designer variable.
@@ -28,25 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            TotaltextEdit = new DevExpress.XtraEditors.TextEdit();
-            Quotaion = new GroupBox();
-            labelControl20 = new DevExpress.XtraEditors.LabelControl();
-            comboBoxDiscountTypeDetail = new DevExpress.XtraEditors.ComboBoxEdit();
-            labelControl21 = new DevExpress.XtraEditors.LabelControl();
-            serviceLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
-            btnSubmit = new DevExpress.XtraEditors.SimpleButton();
-            labelControl22 = new DevExpress.XtraEditors.LabelControl();
-            labelControl23 = new DevExpress.XtraEditors.LabelControl();
-            labelControl24 = new DevExpress.XtraEditors.LabelControl();
-            totalServiceTextEdit = new DevExpress.XtraEditors.TextEdit();
-            labelControl25 = new DevExpress.XtraEditors.LabelControl();
-            textEditServicePrice = new DevExpress.XtraEditors.TextEdit();
-            quantityTextEdit = new DevExpress.XtraEditors.TextEdit();
-            textEditDiscountDetail = new DevExpress.XtraEditors.TextEdit();
-            labelControl26 = new DevExpress.XtraEditors.LabelControl();
-            gridcontrolDetails = new DevExpress.XtraGrid.GridControl();
-            gridViewdet = new DevExpress.XtraGrid.Views.Grid.GridView();
-            savebutton = new DevExpress.XtraEditors.SimpleButton();
             Invoice = new GroupBox();
             labelControl16 = new DevExpress.XtraEditors.LabelControl();
             checkedListBoxControltax = new DevExpress.XtraEditors.CheckedListBoxControl();
@@ -80,16 +61,24 @@
             labelControl9 = new DevExpress.XtraEditors.LabelControl();
             labelControl1 = new DevExpress.XtraEditors.LabelControl();
             clinicLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
-            ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).BeginInit();
-            Quotaion.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)comboBoxDiscountTypeDetail.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)serviceLookUpEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)totalServiceTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)textEditServicePrice.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)textEditDiscountDetail.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)gridViewdet).BeginInit();
+            TotaltextEdit = new DevExpress.XtraEditors.TextEdit();
+            Quotaion = new GroupBox();
+            labelControl20 = new DevExpress.XtraEditors.LabelControl();
+            comboBoxDiscountTypeDetail = new DevExpress.XtraEditors.ComboBoxEdit();
+            labelControl21 = new DevExpress.XtraEditors.LabelControl();
+            serviceLookUpEdit = new DevExpress.XtraEditors.LookUpEdit();
+            labelControl22 = new DevExpress.XtraEditors.LabelControl();
+            labelControl23 = new DevExpress.XtraEditors.LabelControl();
+            labelControl24 = new DevExpress.XtraEditors.LabelControl();
+            totalServiceTextEdit = new DevExpress.XtraEditors.TextEdit();
+            labelControl25 = new DevExpress.XtraEditors.LabelControl();
+            textEditServicePrice = new DevExpress.XtraEditors.TextEdit();
+            quantityTextEdit = new DevExpress.XtraEditors.TextEdit();
+            textEditDiscountDetail = new DevExpress.XtraEditors.TextEdit();
+            labelControl26 = new DevExpress.XtraEditors.LabelControl();
+            gridcontrolDetails = new DevExpress.XtraGrid.GridControl();
+            gridViewdet = new DevExpress.XtraGrid.Views.Grid.GridView();
+            savebutton = new DevExpress.XtraEditors.SimpleButton();
             Invoice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)checkedListBoxControltax).BeginInit();
             ((System.ComponentModel.ISupportInitialize)prioritycomboBoxEdit.Properties).BeginInit();
@@ -108,238 +97,17 @@
             ((System.ComponentModel.ISupportInitialize)locationTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)phoneTextEdit.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)clinicLookUpEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).BeginInit();
+            Quotaion.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)comboBoxDiscountTypeDetail.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)serviceLookUpEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)totalServiceTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)textEditServicePrice.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)textEditDiscountDetail.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridViewdet).BeginInit();
             SuspendLayout();
-            // 
-            // TotaltextEdit
-            // 
-            TotaltextEdit.Location = new Point(1052, 78);
-            TotaltextEdit.Margin = new Padding(3, 4, 3, 4);
-            TotaltextEdit.Name = "TotaltextEdit";
-            TotaltextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TotaltextEdit.Properties.Appearance.Options.UseFont = true;
-            TotaltextEdit.Properties.ReadOnly = true;
-            TotaltextEdit.Size = new Size(237, 94);
-            TotaltextEdit.TabIndex = 54;
-            // 
-            // Quotaion
-            // 
-            Quotaion.Controls.Add(labelControl20);
-            Quotaion.Controls.Add(comboBoxDiscountTypeDetail);
-            Quotaion.Controls.Add(labelControl21);
-            Quotaion.Controls.Add(serviceLookUpEdit);
-            Quotaion.Controls.Add(btnSubmit);
-            Quotaion.Controls.Add(labelControl22);
-            Quotaion.Controls.Add(labelControl23);
-            Quotaion.Controls.Add(labelControl24);
-            Quotaion.Controls.Add(totalServiceTextEdit);
-            Quotaion.Controls.Add(labelControl25);
-            Quotaion.Controls.Add(textEditServicePrice);
-            Quotaion.Controls.Add(quantityTextEdit);
-            Quotaion.Controls.Add(textEditDiscountDetail);
-            Quotaion.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Quotaion.ForeColor = Color.White;
-            Quotaion.Location = new Point(11, -3);
-            Quotaion.Margin = new Padding(2);
-            Quotaion.Name = "Quotaion";
-            Quotaion.Padding = new Padding(2);
-            Quotaion.Size = new Size(962, 199);
-            Quotaion.TabIndex = 52;
-            Quotaion.TabStop = false;
-            Quotaion.Text = "Service";
-            // 
-            // labelControl20
-            // 
-            labelControl20.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
-            labelControl20.Appearance.Options.UseFont = true;
-            labelControl20.Location = new Point(373, 92);
-            labelControl20.Margin = new Padding(3, 4, 3, 4);
-            labelControl20.Name = "labelControl20";
-            labelControl20.Size = new Size(160, 29);
-            labelControl20.TabIndex = 32;
-            labelControl20.Text = "Discount Type:";
-            // 
-            // comboBoxDiscountTypeDetail
-            // 
-            comboBoxDiscountTypeDetail.Location = new Point(545, 90);
-            comboBoxDiscountTypeDetail.Margin = new Padding(3, 4, 3, 4);
-            comboBoxDiscountTypeDetail.Name = "comboBoxDiscountTypeDetail";
-            comboBoxDiscountTypeDetail.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
-            comboBoxDiscountTypeDetail.Properties.Appearance.Options.UseFont = true;
-            comboBoxDiscountTypeDetail.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            comboBoxDiscountTypeDetail.Size = new Size(141, 38);
-            comboBoxDiscountTypeDetail.TabIndex = 31;
-            // 
-            // labelControl21
-            // 
-            labelControl21.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
-            labelControl21.Appearance.ForeColor = Color.White;
-            labelControl21.Appearance.Options.UseFont = true;
-            labelControl21.Appearance.Options.UseForeColor = true;
-            labelControl21.Location = new Point(21, 45);
-            labelControl21.Margin = new Padding(3, 4, 3, 4);
-            labelControl21.Name = "labelControl21";
-            labelControl21.Size = new Size(87, 29);
-            labelControl21.TabIndex = 26;
-            labelControl21.Text = "Service:";
-            // 
-            // serviceLookUpEdit
-            // 
-            serviceLookUpEdit.Location = new Point(198, 40);
-            serviceLookUpEdit.Margin = new Padding(3, 4, 3, 4);
-            serviceLookUpEdit.Name = "serviceLookUpEdit";
-            serviceLookUpEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
-            serviceLookUpEdit.Properties.Appearance.Options.UseFont = true;
-            serviceLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            serviceLookUpEdit.Properties.NullText = "Select Service";
-            serviceLookUpEdit.Size = new Size(148, 38);
-            serviceLookUpEdit.TabIndex = 8;
-            // 
-            // btnSubmit
-            // 
-            btnSubmit.Appearance.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSubmit.Appearance.Options.UseFont = true;
-            btnSubmit.Location = new Point(758, 65);
-            btnSubmit.Margin = new Padding(3, 4, 3, 4);
-            btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(153, 49);
-            btnSubmit.TabIndex = 38;
-            btnSubmit.Text = "Add";
-            // 
-            // labelControl22
-            // 
-            labelControl22.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
-            labelControl22.Appearance.Options.UseFont = true;
-            labelControl22.Location = new Point(21, 151);
-            labelControl22.Margin = new Padding(3, 4, 3, 4);
-            labelControl22.Name = "labelControl22";
-            labelControl22.Size = new Size(144, 29);
-            labelControl22.TabIndex = 30;
-            labelControl22.Text = "Total service:";
-            // 
-            // labelControl23
-            // 
-            labelControl23.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
-            labelControl23.Appearance.Options.UseFont = true;
-            labelControl23.Location = new Point(373, 42);
-            labelControl23.Margin = new Padding(3, 4, 3, 4);
-            labelControl23.Name = "labelControl23";
-            labelControl23.Size = new Size(149, 29);
-            labelControl23.TabIndex = 27;
-            labelControl23.Text = "Service Price:";
-            // 
-            // labelControl24
-            // 
-            labelControl24.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
-            labelControl24.Appearance.Options.UseFont = true;
-            labelControl24.Location = new Point(376, 146);
-            labelControl24.Margin = new Padding(3, 4, 3, 4);
-            labelControl24.Name = "labelControl24";
-            labelControl24.Size = new Size(99, 29);
-            labelControl24.TabIndex = 23;
-            labelControl24.Text = "Discount:";
-            // 
-            // totalServiceTextEdit
-            // 
-            totalServiceTextEdit.Location = new Point(198, 149);
-            totalServiceTextEdit.Margin = new Padding(3, 4, 3, 4);
-            totalServiceTextEdit.Name = "totalServiceTextEdit";
-            totalServiceTextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
-            totalServiceTextEdit.Properties.Appearance.Options.UseFont = true;
-            totalServiceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            totalServiceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            totalServiceTextEdit.Properties.ReadOnly = true;
-            totalServiceTextEdit.Size = new Size(148, 38);
-            totalServiceTextEdit.TabIndex = 12;
-            // 
-            // labelControl25
-            // 
-            labelControl25.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
-            labelControl25.Appearance.Options.UseFont = true;
-            labelControl25.Location = new Point(23, 92);
-            labelControl25.Margin = new Padding(3, 4, 3, 4);
-            labelControl25.Name = "labelControl25";
-            labelControl25.Size = new Size(93, 29);
-            labelControl25.TabIndex = 28;
-            labelControl25.Text = "Quantity:";
-            // 
-            // textEditServicePrice
-            // 
-            textEditServicePrice.Location = new Point(545, 40);
-            textEditServicePrice.Margin = new Padding(3, 4, 3, 4);
-            textEditServicePrice.Name = "textEditServicePrice";
-            textEditServicePrice.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
-            textEditServicePrice.Properties.Appearance.Options.UseFont = true;
-            textEditServicePrice.Properties.Appearance.Options.UseTextOptions = true;
-            textEditServicePrice.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-            textEditServicePrice.Size = new Size(141, 38);
-            textEditServicePrice.TabIndex = 9;
-            // 
-            // quantityTextEdit
-            // 
-            quantityTextEdit.Location = new Point(198, 90);
-            quantityTextEdit.Margin = new Padding(3, 4, 3, 4);
-            quantityTextEdit.Name = "quantityTextEdit";
-            quantityTextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
-            quantityTextEdit.Properties.Appearance.Options.UseFont = true;
-            quantityTextEdit.Properties.Appearance.Options.UseTextOptions = true;
-            quantityTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            quantityTextEdit.Size = new Size(148, 38);
-            quantityTextEdit.TabIndex = 10;
-            // 
-            // textEditDiscountDetail
-            // 
-            textEditDiscountDetail.Location = new Point(545, 146);
-            textEditDiscountDetail.Margin = new Padding(3, 4, 3, 4);
-            textEditDiscountDetail.Name = "textEditDiscountDetail";
-            textEditDiscountDetail.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
-            textEditDiscountDetail.Properties.Appearance.Options.UseFont = true;
-            textEditDiscountDetail.Properties.Appearance.Options.UseTextOptions = true;
-            textEditDiscountDetail.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            textEditDiscountDetail.Size = new Size(141, 38);
-            textEditDiscountDetail.TabIndex = 5;
-            // 
-            // labelControl26
-            // 
-            labelControl26.Appearance.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelControl26.Appearance.Options.UseFont = true;
-            labelControl26.Location = new Point(1057, 19);
-            labelControl26.Margin = new Padding(3, 4, 3, 4);
-            labelControl26.Name = "labelControl26";
-            labelControl26.Size = new Size(153, 55);
-            labelControl26.TabIndex = 53;
-            labelControl26.Text = "Total  :";
-            // 
-            // gridcontrolDetails
-            // 
-            gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(6, 9, 6, 9);
-            gridcontrolDetails.Location = new Point(9, 684);
-            gridcontrolDetails.MainView = gridViewdet;
-            gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);
-            gridcontrolDetails.Name = "gridcontrolDetails";
-            gridcontrolDetails.Size = new Size(1281, 199);
-            gridcontrolDetails.TabIndex = 51;
-            gridcontrolDetails.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewdet });
-            // 
-            // gridViewdet
-            // 
-            gridViewdet.Appearance.EvenRow.Options.UseTextOptions = true;
-            gridViewdet.Appearance.EvenRow.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            gridViewdet.Appearance.Row.Options.UseTextOptions = true;
-            gridViewdet.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
-            gridViewdet.GridControl = gridcontrolDetails;
-            gridViewdet.Name = "gridViewdet";
-            gridViewdet.OptionsBehavior.Editable = false;
-            gridViewdet.OptionsView.ShowGroupPanel = false;
-            // 
-            // savebutton
-            // 
-            savebutton.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            savebutton.Appearance.Options.UseFont = true;
-            savebutton.Location = new Point(11, 628);
-            savebutton.Name = "savebutton";
-            savebutton.Size = new Size(462, 49);
-            savebutton.TabIndex = 49;
-            savebutton.Text = "Save";
             // 
             // Invoice
             // 
@@ -364,10 +132,10 @@
             Invoice.Controls.Add(labelControl4);
             Invoice.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Invoice.ForeColor = Color.White;
-            Invoice.Location = new Point(480, 211);
+            Invoice.Location = new Point(493, 200);
             Invoice.Name = "Invoice";
             Invoice.Size = new Size(810, 411);
-            Invoice.TabIndex = 56;
+            Invoice.TabIndex = 63;
             Invoice.TabStop = false;
             Invoice.Text = "Quotation";
             // 
@@ -388,6 +156,7 @@
             checkedListBoxControltax.Appearance.Options.UseFont = true;
             checkedListBoxControltax.Location = new Point(121, 246);
             checkedListBoxControltax.Name = "checkedListBoxControltax";
+            checkedListBoxControltax.ReadOnly = true;
             checkedListBoxControltax.Size = new Size(310, 141);
             checkedListBoxControltax.TabIndex = 39;
             // 
@@ -399,6 +168,7 @@
             prioritycomboBoxEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             prioritycomboBoxEdit.Properties.Appearance.Options.UseFont = true;
             prioritycomboBoxEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            prioritycomboBoxEdit.Properties.ReadOnly = true;
             prioritycomboBoxEdit.Size = new Size(221, 46);
             prioritycomboBoxEdit.TabIndex = 45;
             // 
@@ -408,6 +178,7 @@
             noteRichTextBox.Font = new Font("Microsoft Sans Serif", 14.25F);
             noteRichTextBox.Location = new Point(554, 246);
             noteRichTextBox.Name = "noteRichTextBox";
+            noteRichTextBox.ReadOnly = true;
             noteRichTextBox.Size = new Size(250, 97);
             noteRichTextBox.TabIndex = 28;
             noteRichTextBox.Text = "";
@@ -432,6 +203,7 @@
             quotationNameTextEdit.Properties.Appearance.Options.UseFont = true;
             quotationNameTextEdit.Properties.Appearance.Options.UseTextOptions = true;
             quotationNameTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            quotationNameTextEdit.Properties.ReadOnly = true;
             quotationNameTextEdit.Size = new Size(225, 46);
             quotationNameTextEdit.TabIndex = 40;
             // 
@@ -466,6 +238,7 @@
             textEditDiscountHeader.Properties.Appearance.Options.UseFont = true;
             textEditDiscountHeader.Properties.Appearance.Options.UseTextOptions = true;
             textEditDiscountHeader.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            textEditDiscountHeader.Properties.ReadOnly = true;
             textEditDiscountHeader.Size = new Size(160, 46);
             textEditDiscountHeader.TabIndex = 37;
             // 
@@ -477,6 +250,7 @@
             comboBoxDiscountType.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             comboBoxDiscountType.Properties.Appearance.Options.UseFont = true;
             comboBoxDiscountType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            comboBoxDiscountType.Properties.ReadOnly = true;
             comboBoxDiscountType.Size = new Size(194, 46);
             comboBoxDiscountType.TabIndex = 36;
             // 
@@ -512,6 +286,7 @@
             initialDateEdit.Properties.Appearance.Options.UseFont = true;
             initialDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             initialDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            initialDateEdit.Properties.ReadOnly = true;
             initialDateEdit.Size = new Size(221, 46);
             initialDateEdit.TabIndex = 32;
             // 
@@ -525,6 +300,7 @@
             expireDateEdit.Properties.Appearance.Options.UseFont = true;
             expireDateEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             expireDateEdit.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            expireDateEdit.Properties.ReadOnly = true;
             expireDateEdit.Size = new Size(221, 46);
             expireDateEdit.TabIndex = 33;
             // 
@@ -547,6 +323,7 @@
             comboBoxStatus.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 14.25F);
             comboBoxStatus.Properties.Appearance.Options.UseFont = true;
             comboBoxStatus.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            comboBoxStatus.Properties.ReadOnly = true;
             comboBoxStatus.Size = new Size(225, 46);
             comboBoxStatus.TabIndex = 30;
             // 
@@ -595,10 +372,10 @@
             groupBox1.Controls.Add(clinicLookUpEdit);
             groupBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             groupBox1.ForeColor = Color.White;
-            groupBox1.Location = new Point(9, 211);
+            groupBox1.Location = new Point(22, 200);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(465, 399);
-            groupBox1.TabIndex = 55;
+            groupBox1.TabIndex = 62;
             groupBox1.TabStop = false;
             groupBox1.Text = "Client";
             // 
@@ -613,6 +390,7 @@
             SalesManlookUpEdit.Properties.Appearance.Options.UseForeColor = true;
             SalesManlookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             SalesManlookUpEdit.Properties.NullText = "Select Sales Man";
+            SalesManlookUpEdit.Properties.ReadOnly = true;
             SalesManlookUpEdit.Size = new Size(250, 50);
             SalesManlookUpEdit.TabIndex = 39;
             // 
@@ -637,6 +415,7 @@
             contactLookUpEdit.Properties.Appearance.Options.UseForeColor = true;
             contactLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             contactLookUpEdit.Properties.NullText = "Select Contact";
+            contactLookUpEdit.Properties.ReadOnly = true;
             contactLookUpEdit.Size = new Size(250, 52);
             contactLookUpEdit.TabIndex = 30;
             // 
@@ -658,6 +437,7 @@
             emailTextEdit.Name = "emailTextEdit";
             emailTextEdit.Properties.Appearance.Font = new Font("Segoe UI", 14.25F);
             emailTextEdit.Properties.Appearance.Options.UseFont = true;
+            emailTextEdit.Properties.ReadOnly = true;
             emailTextEdit.Size = new Size(250, 52);
             emailTextEdit.TabIndex = 28;
             // 
@@ -668,6 +448,7 @@
             locationTextEdit.Name = "locationTextEdit";
             locationTextEdit.Properties.Appearance.Font = new Font("Segoe UI", 14.25F);
             locationTextEdit.Properties.Appearance.Options.UseFont = true;
+            locationTextEdit.Properties.ReadOnly = true;
             locationTextEdit.Size = new Size(250, 52);
             locationTextEdit.TabIndex = 27;
             // 
@@ -678,6 +459,7 @@
             phoneTextEdit.Name = "phoneTextEdit";
             phoneTextEdit.Properties.Appearance.Font = new Font("Segoe UI", 14.25F);
             phoneTextEdit.Properties.Appearance.Options.UseFont = true;
+            phoneTextEdit.Properties.ReadOnly = true;
             phoneTextEdit.Size = new Size(250, 52);
             phoneTextEdit.TabIndex = 26;
             // 
@@ -736,14 +518,240 @@
             clinicLookUpEdit.Properties.Appearance.Options.UseForeColor = true;
             clinicLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             clinicLookUpEdit.Properties.NullText = "Select Clinic";
+            clinicLookUpEdit.Properties.ReadOnly = true;
             clinicLookUpEdit.Size = new Size(250, 52);
             clinicLookUpEdit.TabIndex = 1;
             // 
-            // EditQuotationForm
+            // TotaltextEdit
             // 
+            TotaltextEdit.Location = new Point(1065, 67);
+            TotaltextEdit.Margin = new Padding(3, 4, 3, 4);
+            TotaltextEdit.Name = "TotaltextEdit";
+            TotaltextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TotaltextEdit.Properties.Appearance.Options.UseFont = true;
+            TotaltextEdit.Properties.ReadOnly = true;
+            TotaltextEdit.Size = new Size(237, 94);
+            TotaltextEdit.TabIndex = 61;
+            // 
+            // Quotaion
+            // 
+            Quotaion.Controls.Add(labelControl20);
+            Quotaion.Controls.Add(comboBoxDiscountTypeDetail);
+            Quotaion.Controls.Add(labelControl21);
+            Quotaion.Controls.Add(serviceLookUpEdit);
+            Quotaion.Controls.Add(labelControl22);
+            Quotaion.Controls.Add(labelControl23);
+            Quotaion.Controls.Add(labelControl24);
+            Quotaion.Controls.Add(totalServiceTextEdit);
+            Quotaion.Controls.Add(labelControl25);
+            Quotaion.Controls.Add(textEditServicePrice);
+            Quotaion.Controls.Add(quantityTextEdit);
+            Quotaion.Controls.Add(textEditDiscountDetail);
+            Quotaion.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Quotaion.ForeColor = Color.White;
+            Quotaion.Location = new Point(24, -3);
+            Quotaion.Margin = new Padding(2);
+            Quotaion.Name = "Quotaion";
+            Quotaion.Padding = new Padding(2);
+            Quotaion.Size = new Size(962, 199);
+            Quotaion.TabIndex = 59;
+            Quotaion.TabStop = false;
+            Quotaion.Text = "Service";
+            // 
+            // labelControl20
+            // 
+            labelControl20.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            labelControl20.Appearance.Options.UseFont = true;
+            labelControl20.Location = new Point(519, 91);
+            labelControl20.Margin = new Padding(3, 4, 3, 4);
+            labelControl20.Name = "labelControl20";
+            labelControl20.Size = new Size(160, 29);
+            labelControl20.TabIndex = 32;
+            labelControl20.Text = "Discount Type:";
+            // 
+            // comboBoxDiscountTypeDetail
+            // 
+            comboBoxDiscountTypeDetail.Location = new Point(692, 90);
+            comboBoxDiscountTypeDetail.Margin = new Padding(3, 4, 3, 4);
+            comboBoxDiscountTypeDetail.Name = "comboBoxDiscountTypeDetail";
+            comboBoxDiscountTypeDetail.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
+            comboBoxDiscountTypeDetail.Properties.Appearance.Options.UseFont = true;
+            comboBoxDiscountTypeDetail.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            comboBoxDiscountTypeDetail.Properties.ReadOnly = true;
+            comboBoxDiscountTypeDetail.Size = new Size(141, 38);
+            comboBoxDiscountTypeDetail.TabIndex = 31;
+            // 
+            // labelControl21
+            // 
+            labelControl21.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            labelControl21.Appearance.ForeColor = Color.White;
+            labelControl21.Appearance.Options.UseFont = true;
+            labelControl21.Appearance.Options.UseForeColor = true;
+            labelControl21.Location = new Point(20, 44);
+            labelControl21.Margin = new Padding(3, 4, 3, 4);
+            labelControl21.Name = "labelControl21";
+            labelControl21.Size = new Size(87, 29);
+            labelControl21.TabIndex = 26;
+            labelControl21.Text = "Service:";
+            // 
+            // serviceLookUpEdit
+            // 
+            serviceLookUpEdit.Location = new Point(198, 40);
+            serviceLookUpEdit.Margin = new Padding(3, 4, 3, 4);
+            serviceLookUpEdit.Name = "serviceLookUpEdit";
+            serviceLookUpEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
+            serviceLookUpEdit.Properties.Appearance.Options.UseFont = true;
+            serviceLookUpEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
+            serviceLookUpEdit.Properties.NullText = "Select Service";
+            serviceLookUpEdit.Properties.ReadOnly = true;
+            serviceLookUpEdit.Size = new Size(148, 38);
+            serviceLookUpEdit.TabIndex = 8;
+            // 
+            // labelControl22
+            // 
+            labelControl22.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            labelControl22.Appearance.Options.UseFont = true;
+            labelControl22.Location = new Point(20, 150);
+            labelControl22.Margin = new Padding(3, 4, 3, 4);
+            labelControl22.Name = "labelControl22";
+            labelControl22.Size = new Size(144, 29);
+            labelControl22.TabIndex = 30;
+            labelControl22.Text = "Total service:";
+            // 
+            // labelControl23
+            // 
+            labelControl23.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            labelControl23.Appearance.Options.UseFont = true;
+            labelControl23.Location = new Point(519, 41);
+            labelControl23.Margin = new Padding(3, 4, 3, 4);
+            labelControl23.Name = "labelControl23";
+            labelControl23.Size = new Size(149, 29);
+            labelControl23.TabIndex = 27;
+            labelControl23.Text = "Service Price:";
+            // 
+            // labelControl24
+            // 
+            labelControl24.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            labelControl24.Appearance.Options.UseFont = true;
+            labelControl24.Location = new Point(522, 145);
+            labelControl24.Margin = new Padding(3, 4, 3, 4);
+            labelControl24.Name = "labelControl24";
+            labelControl24.Size = new Size(99, 29);
+            labelControl24.TabIndex = 23;
+            labelControl24.Text = "Discount:";
+            // 
+            // totalServiceTextEdit
+            // 
+            totalServiceTextEdit.Location = new Point(198, 149);
+            totalServiceTextEdit.Margin = new Padding(3, 4, 3, 4);
+            totalServiceTextEdit.Name = "totalServiceTextEdit";
+            totalServiceTextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
+            totalServiceTextEdit.Properties.Appearance.Options.UseFont = true;
+            totalServiceTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            totalServiceTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            totalServiceTextEdit.Properties.ReadOnly = true;
+            totalServiceTextEdit.Size = new Size(148, 38);
+            totalServiceTextEdit.TabIndex = 12;
+            // 
+            // labelControl25
+            // 
+            labelControl25.Appearance.Font = new Font("Microsoft Sans Serif", 12F);
+            labelControl25.Appearance.Options.UseFont = true;
+            labelControl25.Location = new Point(22, 91);
+            labelControl25.Margin = new Padding(3, 4, 3, 4);
+            labelControl25.Name = "labelControl25";
+            labelControl25.Size = new Size(93, 29);
+            labelControl25.TabIndex = 28;
+            labelControl25.Text = "Quantity:";
+            // 
+            // textEditServicePrice
+            // 
+            textEditServicePrice.Location = new Point(692, 40);
+            textEditServicePrice.Margin = new Padding(3, 4, 3, 4);
+            textEditServicePrice.Name = "textEditServicePrice";
+            textEditServicePrice.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
+            textEditServicePrice.Properties.Appearance.Options.UseFont = true;
+            textEditServicePrice.Properties.Appearance.Options.UseTextOptions = true;
+            textEditServicePrice.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            textEditServicePrice.Properties.ReadOnly = true;
+            textEditServicePrice.Size = new Size(141, 38);
+            textEditServicePrice.TabIndex = 9;
+            // 
+            // quantityTextEdit
+            // 
+            quantityTextEdit.Location = new Point(198, 90);
+            quantityTextEdit.Margin = new Padding(3, 4, 3, 4);
+            quantityTextEdit.Name = "quantityTextEdit";
+            quantityTextEdit.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
+            quantityTextEdit.Properties.Appearance.Options.UseFont = true;
+            quantityTextEdit.Properties.Appearance.Options.UseTextOptions = true;
+            quantityTextEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            quantityTextEdit.Properties.ReadOnly = true;
+            quantityTextEdit.Size = new Size(148, 38);
+            quantityTextEdit.TabIndex = 10;
+            // 
+            // textEditDiscountDetail
+            // 
+            textEditDiscountDetail.Location = new Point(692, 146);
+            textEditDiscountDetail.Margin = new Padding(3, 4, 3, 4);
+            textEditDiscountDetail.Name = "textEditDiscountDetail";
+            textEditDiscountDetail.Properties.Appearance.Font = new Font("Microsoft Sans Serif", 10F);
+            textEditDiscountDetail.Properties.Appearance.Options.UseFont = true;
+            textEditDiscountDetail.Properties.Appearance.Options.UseTextOptions = true;
+            textEditDiscountDetail.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            textEditDiscountDetail.Properties.ReadOnly = true;
+            textEditDiscountDetail.Size = new Size(141, 38);
+            textEditDiscountDetail.TabIndex = 5;
+            // 
+            // labelControl26
+            // 
+            labelControl26.Appearance.Font = new Font("Microsoft Sans Serif", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelControl26.Appearance.Options.UseFont = true;
+            labelControl26.Location = new Point(1070, 8);
+            labelControl26.Margin = new Padding(3, 4, 3, 4);
+            labelControl26.Name = "labelControl26";
+            labelControl26.Size = new Size(153, 55);
+            labelControl26.TabIndex = 60;
+            labelControl26.Text = "Total  :";
+            // 
+            // gridcontrolDetails
+            // 
+            gridcontrolDetails.EmbeddedNavigator.Margin = new Padding(6, 8, 6, 8);
+            gridcontrolDetails.Location = new Point(22, 673);
+            gridcontrolDetails.MainView = gridViewdet;
+            gridcontrolDetails.Margin = new Padding(3, 4, 3, 4);
+            gridcontrolDetails.Name = "gridcontrolDetails";
+            gridcontrolDetails.Size = new Size(1281, 199);
+            gridcontrolDetails.TabIndex = 58;
+            gridcontrolDetails.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridViewdet });
+            // 
+            // gridViewdet
+            // 
+            gridViewdet.Appearance.EvenRow.Options.UseTextOptions = true;
+            gridViewdet.Appearance.EvenRow.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            gridViewdet.Appearance.Row.Options.UseTextOptions = true;
+            gridViewdet.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
+            gridViewdet.GridControl = gridcontrolDetails;
+            gridViewdet.Name = "gridViewdet";
+            gridViewdet.OptionsBehavior.Editable = false;
+            gridViewdet.OptionsView.ShowGroupPanel = false;
+            // 
+            // savebutton
+            // 
+            savebutton.Appearance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            savebutton.Appearance.Options.UseFont = true;
+            savebutton.Location = new Point(24, 617);
+            savebutton.Name = "savebutton";
+            savebutton.Size = new Size(462, 49);
+            savebutton.TabIndex = 57;
+            savebutton.Text = "Show Quotation Report";
+            // 
+            // QuotationDetailReport
+            // 
+            Appearance.Options.UseFont = true;
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1301, 896);
+            ClientSize = new Size(1339, 889);
             Controls.Add(Invoice);
             Controls.Add(groupBox1);
             Controls.Add(TotaltextEdit);
@@ -751,23 +759,10 @@
             Controls.Add(labelControl26);
             Controls.Add(gridcontrolDetails);
             Controls.Add(savebutton);
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             IconOptions.Image = Properties.Resources.icons8_offer_40;
-            Name = "EditQuotationForm";
+            Name = "QuotationDetailReport";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Edit Quotation";
-            Load += EditQuotationForm_Load;
-            ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).EndInit();
-            Quotaion.ResumeLayout(false);
-            Quotaion.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)comboBoxDiscountTypeDetail.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)serviceLookUpEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)totalServiceTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)textEditServicePrice.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)textEditDiscountDetail.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).EndInit();
-            ((System.ComponentModel.ISupportInitialize)gridViewdet).EndInit();
+            Text = "Quotation Report";
             Invoice.ResumeLayout(false);
             Invoice.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)checkedListBoxControltax).EndInit();
@@ -788,30 +783,23 @@
             ((System.ComponentModel.ISupportInitialize)locationTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)phoneTextEdit.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)clinicLookUpEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)TotaltextEdit.Properties).EndInit();
+            Quotaion.ResumeLayout(false);
+            Quotaion.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)comboBoxDiscountTypeDetail.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)serviceLookUpEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)totalServiceTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)textEditServicePrice.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)quantityTextEdit.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)textEditDiscountDetail.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridcontrolDetails).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridViewdet).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private DevExpress.XtraEditors.TextEdit TotaltextEdit;
-        private GroupBox Quotaion;
-        private DevExpress.XtraEditors.LabelControl labelControl20;
-        private DevExpress.XtraEditors.ComboBoxEdit comboBoxDiscountTypeDetail;
-        private DevExpress.XtraEditors.LabelControl labelControl21;
-        private DevExpress.XtraEditors.LookUpEdit serviceLookUpEdit;
-        private DevExpress.XtraEditors.SimpleButton btnSubmit;
-        private DevExpress.XtraEditors.LabelControl labelControl22;
-        private DevExpress.XtraEditors.LabelControl labelControl23;
-        private DevExpress.XtraEditors.LabelControl labelControl24;
-        private DevExpress.XtraEditors.TextEdit totalServiceTextEdit;
-        private DevExpress.XtraEditors.LabelControl labelControl25;
-        private DevExpress.XtraEditors.TextEdit textEditServicePrice;
-        private DevExpress.XtraEditors.TextEdit quantityTextEdit;
-        private DevExpress.XtraEditors.TextEdit textEditDiscountDetail;
-        private DevExpress.XtraEditors.LabelControl labelControl26;
-        private DevExpress.XtraGrid.GridControl gridcontrolDetails;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridViewdet;
-        private DevExpress.XtraEditors.SimpleButton savebutton;
+
         private GroupBox Invoice;
         private DevExpress.XtraEditors.LabelControl labelControl16;
         private DevExpress.XtraEditors.CheckedListBoxControl checkedListBoxControltax;
@@ -833,6 +821,8 @@
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private GroupBox groupBox1;
+        private DevExpress.XtraEditors.LookUpEdit SalesManlookUpEdit;
+        private DevExpress.XtraEditors.LabelControl labelControl10;
         private DevExpress.XtraEditors.LookUpEdit contactLookUpEdit;
         private DevExpress.XtraEditors.LabelControl labelControl13;
         private DevExpress.XtraEditors.TextEdit emailTextEdit;
@@ -843,7 +833,23 @@
         private DevExpress.XtraEditors.LabelControl labelControl9;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.LookUpEdit clinicLookUpEdit;
-        private DevExpress.XtraEditors.LabelControl labelControl10;
-        private DevExpress.XtraEditors.LookUpEdit SalesManlookUpEdit;
+        private DevExpress.XtraEditors.TextEdit TotaltextEdit;
+        private GroupBox Quotaion;
+        private DevExpress.XtraEditors.LabelControl labelControl20;
+        private DevExpress.XtraEditors.ComboBoxEdit comboBoxDiscountTypeDetail;
+        private DevExpress.XtraEditors.LabelControl labelControl21;
+        private DevExpress.XtraEditors.LookUpEdit serviceLookUpEdit;
+        private DevExpress.XtraEditors.LabelControl labelControl22;
+        private DevExpress.XtraEditors.LabelControl labelControl23;
+        private DevExpress.XtraEditors.LabelControl labelControl24;
+        private DevExpress.XtraEditors.TextEdit totalServiceTextEdit;
+        private DevExpress.XtraEditors.LabelControl labelControl25;
+        private DevExpress.XtraEditors.TextEdit textEditServicePrice;
+        private DevExpress.XtraEditors.TextEdit quantityTextEdit;
+        private DevExpress.XtraEditors.TextEdit textEditDiscountDetail;
+        private DevExpress.XtraEditors.LabelControl labelControl26;
+        private DevExpress.XtraGrid.GridControl gridcontrolDetails;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewdet;
+        private DevExpress.XtraEditors.SimpleButton savebutton;
     }
 }

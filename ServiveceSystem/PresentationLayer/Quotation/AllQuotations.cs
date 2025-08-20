@@ -14,6 +14,7 @@ using ServiveceSystem.PresentationLayer.QuotationHeader;
 using DevExpress.XtraEditors.Repository;
 using ServiceSystem.PresentationLayer.Quotation;
 using Microsoft.EntityFrameworkCore;
+using ServiceSystem.PresentationLayer.InvoiceDetail;
 
 namespace ServiceSystem.PresentationLayer.QuotationHeader
 {
@@ -114,7 +115,22 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
                 deleteCol.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
                 deleteCol.VisibleIndex = 1;
             }
+            if (gridView1.Columns["Detail"] == null)
+            {
+                var DetailButton = new RepositoryItemButtonEdit();
+                DetailButton.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+                DetailButton.Buttons[0].Caption = "Detail";
+                DetailButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
+                DetailButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Yellow;
+                gridControl1.RepositoryItems.Add(DetailButton);
 
+                var DetailCol = gridView1.Columns.AddField("Detail");
+                DetailCol.Visible = true;
+                DetailCol.UnboundType = DevExpress.Data.UnboundColumnType.Object;
+                DetailCol.ColumnEdit = DetailButton;
+                DetailCol.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+                DetailCol.VisibleIndex = 2;
+            }
             if (gridView1.Columns["TransferToInvoice"] == null)
             {
                 var transferButton = new RepositoryItemButtonEdit();
@@ -157,6 +173,18 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
                 await LoadQuotationsAsync();
             }
         }
+        private void DetailButton_Click(object sender, EventArgs e)
+        {
+            var rowHandle = gridView1.FocusedRowHandle;
+            if (rowHandle < 0) return;
+            int quotationId = (int)gridView1.GetRowCellValue(rowHandle, "QuotationId");
+            var detailForm = new QuotationDetailReport(quotationId);
+            if (detailForm.ShowDialog() == DialogResult.OK)
+            {
+                //  LoadInvoices();
+                gridView1.RefreshData();
+            }
+        }
 
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
@@ -192,54 +220,15 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             {
                 TransferToInvoiceButton_Click(sender, EventArgs.Empty);
             }
+            else if (e.Column.FieldName == "Detail")
+            {
+                DetailButton_Click(sender, EventArgs.Empty);
+            }
         }
 
         private async void TransferToInvoiceButton_Click(object sender, EventArgs e)
         {
-            //var rowHandle = gridView1.FocusedRowHandle;
-            //if (rowHandle < 0) return;
-            //int quotationId = (int)gridView1.GetRowCellValue(rowHandle, "QuotationId");
-            //var quotation = _quotations.FirstOrDefault(q => q.QuotationId == quotationId);
-            //if (quotation == null) return;
-            //int clinicId = quotation.ClinicId;
-            //int contactId = quotation.ContactId;
 
-            //// Fetch QuotationDetails
-            //var context = new AppDBContext();
-            //var details = context.QuotationDetails.Where(qd => qd.QuotationId == quotationId && !qd.isDeleted).ToList();
-            //// Load Service navigation property for each detail
-            //foreach (var d in details)
-            //{
-            //    d.Service = context.Services.FirstOrDefault(s => s.ServiceId == d.ServiceId);
-            //}
-
-            //var transferForm = new ServiceSystem.PresentationLayer.InvoiceDetail.TransferToInvoice(quotationId, clinicId, contactId, details, quotation.QuotationNaMe);
-            //transferForm.ShowDialog();
-
-            //================
-            //================
-            //================
-
-            //var rowHandle = gridView1.FocusedRowHandle;
-            //if (rowHandle < 0) return;
-            //int quotationId = (int)gridView1.GetRowCellValue(rowHandle, "QuotationId");
-            //var quotation = _quotations.FirstOrDefault(q => q.QuotationId == quotationId);
-            //if (quotation == null) return;
-
-            //// Fetch QuotationDetails
-            //var context = new AppDBContext();
-            //var details = context.QuotationDetails.Where(qd => qd.QuotationId == quotationId && !qd.isDeleted).ToList();
-            //// Load Service navigation property for each detail
-            //foreach (var d in details)
-            //{
-            //    d.Service = context.Services.FirstOrDefault(s => s.ServiceId == d.ServiceId);
-            //}
-
-            //var transferForm = new ServiceSystem.PresentationLayer.InvoiceDetail.TransferToInvoice(quotation, details);
-            //transferForm.ShowDialog();
-            //================
-            //================
-            //================
 
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
@@ -282,6 +271,17 @@ namespace ServiceSystem.PresentationLayer.QuotationHeader
             string filter = txtFilter.Text.Trim().ToLower();
             var filtered = _quotations.Where(q => q.QuotationNaMe != null && q.QuotationNaMe.ToLower().Contains(filter)).ToList();
             BindGrid(filtered);
+        }
+
+        private void AllQuotations_Load(object sender, EventArgs e)
+        {
+            // Center all row text
+            ((DevExpress.XtraGrid.Views.Grid.GridView)gridControl1.MainView)
+                .Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
+            // Center header text
+            ((DevExpress.XtraGrid.Views.Grid.GridView)gridControl1.MainView)
+                .Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
         }
     }
 }

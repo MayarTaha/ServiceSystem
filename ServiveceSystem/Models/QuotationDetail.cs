@@ -34,9 +34,6 @@ namespace ServiceSystem.Models
         public string DeletedLog { get; set; }
         public bool isDeleted { get; set; }
 
-        //[NotMapped]
-        //public string ServiceName => Service?.Name ?? string.Empty;
-        //[NotMapped]
-        //public string QuotationNote => QuotationHeader?.Note ?? string.Empty;
+        
     }
 }

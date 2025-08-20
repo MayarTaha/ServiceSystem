@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ServiceSystem.Models;
+using ServiceSystem.Models.View;
 
 namespace ServiveceSystem.Models
 {
@@ -24,6 +25,14 @@ namespace ServiveceSystem.Models
 
         public DbSet<SalesMan> SalesMen { get; set; }
 
+        //my views 
+        public DbSet<InvoiceHeaderView> InvoiceHeaderViews { get; set; }
+        public DbSet<QuotationHeaderView> QuotationHeaderViews { get; set; }
+        public DbSet<InvoiceDetailView> InvoiceDetailViews { get; set; }
+        public DbSet<QuotationDetailView> QuotationDetailViews { get; set; }
+
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,6 +42,48 @@ namespace ServiveceSystem.Models
         {
 
             base.OnModelCreating(modelBuilder);
+            //invoice header view
+            modelBuilder.Entity<InvoiceHeaderView>(entity =>
+            {
+                // Map to your SQL view
+                entity.ToView("vw_InvoiceHeader");
+
+                // Specify the key (must exist in your view!)
+                entity.HasKey(e => e.InvoiceHeaderId);
+
+               
+            });
+            //invoice detail view
+            modelBuilder.Entity<InvoiceDetailView>(entity =>
+            {
+                entity.ToView("vw_InvoiceDetail");
+                entity.HasNoKey();
+            });
+
+
+            //quotation header view
+            modelBuilder.Entity<QuotationHeaderView>(entity =>
+            {
+                // Map to your SQL view
+                entity.ToView("vw_QuotationHeader");
+
+                // Specify the key (must exist in your view!)
+                entity.HasKey(e => e.QuotationId);
+
+
+            });
+            // quotation details view
+            modelBuilder.Entity<QuotationDetailView>(entity =>
+            {
+                // Map to your SQL view
+                entity.ToView("vw_QuotationDetail");
+
+                // Specify the key (must exist in your view!)
+                entity.HasNoKey();
+
+
+            });
+
 
             modelBuilder.Entity<SalesMan>()
                 .HasMany(s => s.InvoiceHeaders)

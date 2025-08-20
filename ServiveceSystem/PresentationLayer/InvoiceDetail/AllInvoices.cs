@@ -23,6 +23,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         private List<ServiceSystem.Models.InvoiceHeader> _invoices;
         private RepositoryItemButtonEdit editButton;
         private RepositoryItemButtonEdit deleteButton;
+        private RepositoryItemButtonEdit DetailButton;
+
         private bool _isReminderFilterActive = false; // Track if reminder filter is active
 
         public AllInvoices()
@@ -30,6 +32,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             InitializeComponent();
             _invoiceHeaderService = new InvoiceHeaderService(new AppDBContext());
             gridView1.RowCellClick += gridView1_RowCellClick;
+            //  DetailButton.Click += DetailButton_Click;
 
             // Connect the filter event - try both possible event types
             txtFilter.EditValueChanged += txtFilter_TextChanged;
@@ -42,7 +45,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
         {
             try
             {
-              var  _invoiceHeaderService = new InvoiceHeaderService(new AppDBContext());
+                var _invoiceHeaderService = new InvoiceHeaderService(new AppDBContext());
                 _invoices = await _invoiceHeaderService.GetAll();
                 BindGrid(_invoices);
 
@@ -158,6 +161,23 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 paymentCol.VisibleIndex = 2;
             }
 
+            if (gridView1.Columns["Detail"] == null)
+            {
+                var DetailButton = new RepositoryItemButtonEdit();
+                DetailButton.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+                DetailButton.Buttons[0].Caption = "Detail";
+                DetailButton.Buttons[0].Kind = DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph;
+                DetailButton.Buttons[0].Appearance.ForeColor = System.Drawing.Color.Yellow;
+                gridControl1.RepositoryItems.Add(DetailButton);
+
+                var DetailCol = gridView1.Columns.AddField("Detail");
+                DetailCol.Visible = true;
+                DetailCol.UnboundType = DevExpress.Data.UnboundColumnType.Object;
+                DetailCol.ColumnEdit = DetailButton;
+                DetailCol.ShowButtonMode = DevExpress.XtraGrid.Views.Base.ShowButtonModeEnum.ShowAlways;
+                DetailCol.VisibleIndex = 2;
+            }
+
             // Set up conditional visibility for Payment button
             gridView1.CustomRowCellEdit += GridView1_CustomRowCellEdit;
         }
@@ -186,7 +206,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             }
         }
 
-        private  void EditButton_Click(object sender, EventArgs e)
+        private void EditButton_Click(object sender, EventArgs e)
         {
             var rowHandle = gridView1.FocusedRowHandle;
             if (rowHandle < 0) return;
@@ -194,7 +214,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             var editForm = new EditInvoiceForm(invoiceHeaderId);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                 LoadInvoices();
+                LoadInvoices();
                 gridView1.RefreshData();
             }
         }
@@ -210,6 +230,19 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             {
                 await _invoiceHeaderService.Delete(invoiceHeaderId);
                 await LoadInvoicesAsync();
+            }
+        }
+
+        private void DetailButton_Click(object sender, EventArgs e)
+        {
+            var rowHandle = gridView1.FocusedRowHandle;
+            if (rowHandle < 0) return;
+            int invoiceHeaderId = (int)gridView1.GetRowCellValue(rowHandle, "InvoiceHeaderId");
+            var detailForm = new InvoiceDetailReport(invoiceHeaderId);
+            if (detailForm.ShowDialog() == DialogResult.OK)
+            {
+                LoadInvoices();
+                gridView1.RefreshData();
             }
         }
 
@@ -231,6 +264,8 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
                 }
             }
         }
+
+
 
         // Enhanced txtFilter_TextChanged method with filter state tracking
         private void txtFilter_TextChanged(object sender, EventArgs e)
@@ -278,9 +313,13 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             {
                 PaymentButton_Click(sender, EventArgs.Empty);
             }
+            else if (e.Column.FieldName == "Detail")
+            {
+                DetailButton_Click(sender, EventArgs.Empty);
+            }
         }
 
-     
+
 
         private void txtFilter_EditValueChanged(object sender, EventArgs e)
         {
@@ -353,9 +392,21 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             var addForm = new AddInvoiceForm();
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-               await LoadInvoicesAsync();
+                await LoadInvoicesAsync();
 
             }
+        }
+
+        private void AllInvoices_Load(object sender, EventArgs e)
+        {
+            // Center all row text
+            ((DevExpress.XtraGrid.Views.Grid.GridView)gridControl1.MainView)
+                .Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
+            // Center header text
+            ((DevExpress.XtraGrid.Views.Grid.GridView)gridControl1.MainView)
+                .Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+
         }
     }
 }

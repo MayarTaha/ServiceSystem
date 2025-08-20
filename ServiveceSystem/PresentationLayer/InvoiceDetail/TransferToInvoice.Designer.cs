@@ -234,6 +234,7 @@
             // 
             reminderTextEdit.Location = new Point(208, 390);
             reminderTextEdit.Name = "reminderTextEdit";
+            reminderTextEdit.Properties.ReadOnly = true;
             reminderTextEdit.Size = new Size(250, 34);
             reminderTextEdit.TabIndex = 24;
             // 

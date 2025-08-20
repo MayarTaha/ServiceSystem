@@ -54,6 +54,7 @@ namespace ServiveceSystem.PresentationLayer.Reports
             // gridControl1
             // 
             gridControl1.Dock = DockStyle.Fill;
+            gridControl1.EmbeddedNavigator.Margin = new Padding(6, 9, 6, 9);
             gridControl1.Location = new Point(0, 100);
             gridControl1.MainView = gridView1;
             gridControl1.Name = "gridControl1";
@@ -85,7 +86,7 @@ namespace ServiveceSystem.PresentationLayer.Reports
             // 
             btnViewInvoiceDetails.Location = new Point(12, 12);
             btnViewInvoiceDetails.Name = "btnViewInvoiceDetails";
-            btnViewInvoiceDetails.Size = new Size(120, 30);
+            btnViewInvoiceDetails.Size = new Size(156, 30);
             btnViewInvoiceDetails.TabIndex = 3;
             btnViewInvoiceDetails.Text = "View Invoice Details";
             btnViewInvoiceDetails.Click += btnViewInvoiceDetails_Click;
@@ -136,7 +137,7 @@ namespace ServiveceSystem.PresentationLayer.Reports
             lblClinicName.Appearance.Options.UseForeColor = true;
             lblClinicName.Location = new Point(12, 15);
             lblClinicName.Name = "lblClinicName";
-            lblClinicName.Size = new Size(41, 16);
+            lblClinicName.Size = new Size(68, 24);
             lblClinicName.TabIndex = 2;
             lblClinicName.Text = "Clinic: ";
             // 
@@ -148,7 +149,7 @@ namespace ServiveceSystem.PresentationLayer.Reports
             lblTotalInvoices.Appearance.Options.UseForeColor = true;
             lblTotalInvoices.Location = new Point(400, 15);
             lblTotalInvoices.Name = "lblTotalInvoices";
-            lblTotalInvoices.Size = new Size(256, 14);
+            lblTotalInvoices.Size = new Size(377, 22);
             lblTotalInvoices.TabIndex = 1;
             lblTotalInvoices.Text = "Total Invoices with Outstanding Balance: ";
             // 
@@ -160,13 +161,14 @@ namespace ServiveceSystem.PresentationLayer.Reports
             lblTotalOutstanding.Appearance.Options.UseForeColor = true;
             lblTotalOutstanding.Location = new Point(700, 15);
             lblTotalOutstanding.Name = "lblTotalOutstanding";
-            lblTotalOutstanding.Size = new Size(120, 14);
+            lblTotalOutstanding.Size = new Size(173, 22);
             lblTotalOutstanding.TabIndex = 0;
             lblTotalOutstanding.Text = "Total Outstanding: ";
             // 
             // InvoicesReportForm
             // 
-            AutoScaleDimensions = new SizeF(6F, 13F);
+            Appearance.Options.UseFont = true;
+            AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1000, 602);
             Controls.Add(gridControl1);

@@ -77,6 +77,7 @@ namespace ServiveceSystem.PresentationLayer.Reports
                      cb.TotalPaid,
                      cb.OutstandingBalance
                  })
+                .Where(cb => cb.OutstandingBalance > 0) 
                 .OrderByDescending(cb => cb.OutstandingBalance)
                 .ToList();
 

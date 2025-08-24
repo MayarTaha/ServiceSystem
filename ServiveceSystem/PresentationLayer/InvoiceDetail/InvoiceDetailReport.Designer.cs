@@ -128,6 +128,7 @@
             savebutton.Size = new Size(962, 49);
             savebutton.TabIndex = 49;
             savebutton.Text = "Show Invoice Report";
+            savebutton.Click += savebutton_Click;
             // 
             // Invoice
             // 

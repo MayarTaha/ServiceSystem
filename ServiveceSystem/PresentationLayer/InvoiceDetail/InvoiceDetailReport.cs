@@ -12,16 +12,20 @@ using DevExpress.XtraEditors.Controls;
 using ServiceSystem.Models;
 using ServiveceSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using ServiceSystem.PresentationLayer.Reports;
+using DevExpress.XtraReports.UI;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace ServiceSystem.PresentationLayer.InvoiceDetail
 {
-	public partial class InvoiceDetailReport: DevExpress.XtraEditors.XtraForm
-	{
+    public partial class InvoiceDetailReport : DevExpress.XtraEditors.XtraForm
+    {
         private readonly AppDBContext _context;
         private BindingList<ServiceSystem.Models.InvoiceDetail> invoiceDetailsList = new BindingList<ServiceSystem.Models.InvoiceDetail>();
         private int _invoiceHeaderId;
         public InvoiceDetailReport(int invoiceHeaderId)
-		{
+        {
             InitializeComponent();
             _context = new AppDBContext();
             _invoiceHeaderId = invoiceHeaderId;
@@ -31,12 +35,12 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             LoadLookUps();
             LoadInvoiceData();
             SetupGrid();
-           
+
         }
 
         private void LoadLookUps()
         {
-            
+
             // Discount Type Header
             comboBoxDiscountType.Properties.Items.Clear();
             comboBoxDiscountType.Properties.Items.AddRange(Enum.GetValues(typeof(Discount)));
@@ -52,7 +56,7 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             salesmanlookUpEdit.Properties.Columns.Clear();
             salesmanlookUpEdit.Properties.Columns.Add(new DevExpress.XtraEditors.Controls.LookUpColumnInfo("SalesManName", "SalesMan Name"));
 
-           
+
             // Clinics
             clinicLookUpEdit.Properties.DataSource = _context.Clinics.Where(c => !c.isDeleted).ToList();
             clinicLookUpEdit.Properties.DisplayMember = "ClinicName";
@@ -226,81 +230,144 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             gridViewdet.Columns.AddVisible("TotalService", "Total");
         }
 
-       
 
 
-        private void SetupHeaderEvents()
+
+
+        //private DataSet GetInvoiceData(int invoiceId)
+        //{
+        //    string connectionString = "Server=.;Database=ServiceSystem;Trusted_Connection=True;Trustservercertificate=true ";
+        //    DataSet ds = new DataSet();
+
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        conn.Open();
+
+        //        // Header
+        //        using (SqlCommand cmd = new SqlCommand("sp_GetInvoiceHeaderById", conn))
+        //        {
+        //            cmd.CommandType = CommandType.StoredProcedure;
+        //            cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
+
+        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
+        //            da.Fill(ds, "InvoiceHeader");
+        //        }
+
+        //        // Details
+        //        using (SqlCommand cmd = new SqlCommand("sp_GetInvoiceDetailsByInvoiceId", conn))
+        //        {
+        //            cmd.CommandType = CommandType.StoredProcedure;
+        //            cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
+
+        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
+        //            da.Fill(ds, "InvoiceHeader");
+        //        }
+        //    }
+
+        //    //// هنا ممكن تعمل Relation بين الجدولين (Header ↔ Detail)
+        //    //if (!ds.Relations.Contains("HeaderDetail"))
+        //    //{
+        //    //    ds.Relations.Add("HeaderDetail",
+        //    //        ds.Tables["InvoiceHeader"].Columns["InvoiceHeaderId"],
+        //    //        ds.Tables["InvoiceDetail"].Columns["InvoiceHeaderId"]);
+        //    //}
+
+        //    return ds;
+        //}
+        private DataSet GetInvoiceData(int invoiceId)
         {
+            string connectionString = "Server=.;Database=ServiceSystem;Trusted_Connection=True;Trustservercertificate=true ";
+            DataSet ds = new DataSet();
 
-
-            // Clinic change - filter contacts and fill clinic data
-            clinicLookUpEdit.EditValueChanged += (s, e) =>
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                if (clinicLookUpEdit.EditValue != null)
+                conn.Open();
+
+                // Header
+                using (SqlCommand cmd = new SqlCommand("sp_GetInvoiceHeaderById", conn))
                 {
-                    int clinicId = Convert.ToInt32(clinicLookUpEdit.EditValue);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
 
-                    // Get clinic data
-                    var clinic = _context.Clinics.FirstOrDefault(c => c.ClinicId == clinicId);
-                    if (clinic != null)
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(ds, "InvoiceHeader");
+                }
+
+                // Details
+                using (SqlCommand cmd = new SqlCommand("sp_GetInvoiceDetailsByInvoiceId", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(ds, "InvoiceDetail"); // CORRECTED LINE: Changed "InvoiceHeader" to "InvoiceDetail"
+                }
+            }
+
+            // IMPORTANT: Re-enable the DataRelation creation, as it's essential for master-detail
+            if (!ds.Relations.Contains("HeaderDetail"))
+            {
+                // Ensure both tables exist before creating the relation
+                if (ds.Tables.Contains("InvoiceHeader") && ds.Tables.Contains("InvoiceDetail"))
+                {
+                    DataColumn parentColumn = ds.Tables["InvoiceHeader"].Columns["InvoiceHeaderId"];
+                    DataColumn childColumn = ds.Tables["InvoiceDetail"].Columns["InvoiceHeaderId"];
+
+                    if (parentColumn != null && childColumn != null)
                     {
-                        locationTextEdit.Text = clinic.Location;
-                        emailTextEdit.Text = clinic.Email;
-                        phoneTextEdit.Text = clinic.Phone;
-                    }
-
-                    // Filter contacts for this clinic
-                    var contacts = _context.ContactPersons.Where(cp => cp.ClinicId == clinicId && !cp.isDeleted).ToList();
-                    contactLookUpEdit.Properties.DataSource = contacts;
-
-                    // Auto-select first contact if available
-                    if (contacts.Count > 0)
-                    {
-                        contactLookUpEdit.EditValue = contacts.First().ContactId;
+                        ds.Relations.Add("HeaderDetail", parentColumn, childColumn, false);
                     }
                     else
                     {
-                        contactLookUpEdit.EditValue = null;
+                        // Log or handle error: InvoiceHeaderId column not found in one of the DataTables.
+                        // This should ideally not happen if your SPs return the ID.
+                         MessageBox.Show("InvoiceHeaderId column not found in one of the DataTables.");
                     }
                 }
                 else
                 {
-                    contactLookUpEdit.Properties.DataSource = null;
-                    contactLookUpEdit.EditValue = null;
-                    emailTextEdit.Text = "";
-                    phoneTextEdit.Text = "";
-                    locationTextEdit.Text = "";
+                    MessageBox.Show("InvoiceHeader or InvoiceDetail DataTable not found in DataSet.");
+                    // Log or handle error: InvoiceHeader or InvoiceDetail DataTable not found in DataSet.
                 }
-            };
+            }
 
-            // Header discount type change
-            comboBoxDiscountType.SelectedIndexChanged += (s, e) =>
-            {
-                if (comboBoxDiscountType.EditValue == null)
-                    return;
+            return ds;
+        }
 
-                var selected = (Discount)comboBoxDiscountType.EditValue;
-                if (selected == Discount.NotSelected)
-                {
-                    Discounttextedit.Text = "0";
-                    Discounttextedit.Enabled = false;
-                }
-                else
-                {
-                    Discounttextedit.Text = ""; // Clear text so user can type
-                    Discounttextedit.Enabled = true;
-                }
-               // CalculateHeaderTotal();
-            };
 
-            // Header discount value change
-          //  Discounttextedit.EditValueChanged += (s, e) => CalculateHeaderTotal();
+        private void savebutton_Click(object sender, EventArgs e)
+        {
 
-            // Payment change
-           // PaymenttextEdit.EditValueChanged += (s, e) => CalculatePaymentBalance();
+            // InvoiceReport InvoiceReport = new InvoiceReport();
+            //InvReport invReport = new InvReport();
+            //invReport.DataSource = invoiceDetailsList;
+            //invReport.Parameters["InvoiceHeaderId"].Value = _invoiceHeaderId;
+            //invReport.ShowPreview();
 
-            // Taxes change
-           // checkedListBoxControltax.ItemCheck += (s, e) => CalculateHeaderTotal();
+            //InvoiceReport.DataSource = invoiceDetailsList;
+            //// InvoiceReport.Parameters["InvoiceHeaderId"].Value = _invoiceHeaderId;
+            //InvoiceReport.ShowPreview();
+            //var ds = GetInvoiceData(_invoiceHeaderId);
+            //MessageBox.Show(ds.Tables["InvoiceDetail"].Rows.Count.ToString());
+
+
+            //InvoiceReport report = new InvoiceReport();
+            //report.DataSource = ds;
+            //report.DataMember = "InvoiceHeader"; // الماستر
+
+            //report.ShowPreview();
+            //var ds = GetInvoiceData(_invoiceHeaderId);
+
+            //InvoiceReport report = new InvoiceReport(ds);
+            //report.ShowPreview();
+            var ds = GetInvoiceData(_invoiceHeaderId);
+
+            InvoiceReport report = new InvoiceReport();
+            report.DataSource = ds;
+            report.DataMember = "InvoiceHeader"; 
+                                                 // Master
+
+            report.ShowPreview();
         }
     }
 }

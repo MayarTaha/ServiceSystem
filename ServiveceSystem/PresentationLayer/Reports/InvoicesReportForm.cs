@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using ServiceSystem.Models;
 using ServiveceSystem.Models;
 using ServiveceSystem.BusinessLayer;
+using ServiceSystem.PresentationLayer.InvoiceDetail;
 
 namespace ServiveceSystem.PresentationLayer.Reports
 {
@@ -176,71 +177,75 @@ namespace ServiveceSystem.PresentationLayer.Reports
             if (rowHandle < 0) return;
 
             int invoiceId = (int)gridView1.GetRowCellValue(rowHandle, "InvoiceId");
-            ShowInvoiceDetails(invoiceId);
+            using (var form = new InvoiceDetailReport(invoiceId))
+            {
+                form.ShowDialog(); 
+            }
+            // ShowInvoiceDetails(invoiceId);
         }
 
-        private void ShowInvoiceDetails(int invoiceId)
-        {
-            try
-            {
-                // Get invoice details
-                var invoice = _context.invoiceHeaders
-                    .Where(ih => ih.InvoiceHeaderId == invoiceId)
-                    .Include(ih => ih.QuotationHeader)
-                    .Include(ih => ih.Contact)
-                    .Include(ih => ih.PaymentMethod)
-                    .FirstOrDefault();
+        //private void ShowInvoiceDetails(int invoiceId)
+        //{
+        //    try
+        //    {
+        //        // Get invoice details
+        //        var invoice = _context.invoiceHeaders
+        //            .Where(ih => ih.InvoiceHeaderId == invoiceId)
+        //            .Include(ih => ih.QuotationHeader)
+        //            .Include(ih => ih.Contact)
+        //            .Include(ih => ih.PaymentMethod)
+        //            .FirstOrDefault();
 
-                if (invoice == null)
-                {
-                    XtraMessageBox.Show("Invoice not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+        //        if (invoice == null)
+        //        {
+        //            XtraMessageBox.Show("Invoice not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //            return;
+        //        }
 
-                // Get payment history
-                var paymentHistory = _paymentHistoryService.GetPaymentHistory(invoiceId);
-                var currentRemainder = _paymentHistoryService.GetCurrentRemainder(invoiceId);
-                var totalPaid = _paymentHistoryService.GetTotalPaid(invoiceId);
+        //        // Get payment history
+        //        var paymentHistory = _paymentHistoryService.GetPaymentHistory(invoiceId);
+        //        var currentRemainder = _paymentHistoryService.GetCurrentRemainder(invoiceId);
+        //        var totalPaid = _paymentHistoryService.GetTotalPaid(invoiceId);
 
-                // Create detailed message
-                var details = new StringBuilder();
-                details.AppendLine($"Invoice ID: {invoice.InvoiceHeaderId}");
-                details.AppendLine($"Invoice Date: {invoice.InvoiceDate:dd/MM/yyyy}");
-                details.AppendLine($"Quotation Note: {invoice.QuotationHeader?.Note ?? "N/A"}");
-                details.AppendLine($"Contact: {invoice.Contact?.ContactName ?? "N/A"}");
-                details.AppendLine($"Payment Method: {invoice.PaymentMethod?.PaymentType ?? "N/A"}");
-                details.AppendLine($"Total Price: {invoice.TotalPrice:C2}");
-                details.AppendLine($"Total Paid: {totalPaid:C2}");
-                details.AppendLine($"Current Outstanding: {currentRemainder:C2}");
-                details.AppendLine();
-                details.AppendLine("Payment History:");
-                details.AppendLine("================");
+        //        // Create detailed message
+        //        var details = new StringBuilder();
+        //        details.AppendLine($"Invoice ID: {invoice.InvoiceHeaderId}");
+        //        details.AppendLine($"Invoice Date: {invoice.InvoiceDate:dd/MM/yyyy}");
+        //        details.AppendLine($"Quotation Note: {invoice.QuotationHeader?.Note ?? "N/A"}");
+        //        details.AppendLine($"Contact: {invoice.Contact?.ContactName ?? "N/A"}");
+        //        details.AppendLine($"Payment Method: {invoice.PaymentMethod?.PaymentType ?? "N/A"}");
+        //        details.AppendLine($"Total Price: {invoice.TotalPrice:C2}");
+        //        details.AppendLine($"Total Paid: {totalPaid:C2}");
+        //        details.AppendLine($"Current Outstanding: {currentRemainder:C2}");
+        //        details.AppendLine();
+        //        details.AppendLine("Payment History:");
+        //        details.AppendLine("================");
 
-                if (paymentHistory.Any())
-                {
-                    foreach (var payment in paymentHistory)
-                    {
-                        details.AppendLine($"Date: {payment.PaymentDate:dd/MM/yyyy HH:mm}");
-                        details.AppendLine($"Amount Paid: {payment.AmountPaid:C2}");
-                        details.AppendLine($"Remaining After Payment: {payment.RemainingAmount:C2}");
-                        details.AppendLine($"Status: {payment.PaymentStatus}");
-                        details.AppendLine("---");
-                    }
-                }
-                else
-                {
-                    details.AppendLine("No payments recorded yet.");
-                }
+        //        if (paymentHistory.Any())
+        //        {
+        //            foreach (var payment in paymentHistory)
+        //            {
+        //                details.AppendLine($"Date: {payment.PaymentDate:dd/MM/yyyy HH:mm}");
+        //                details.AppendLine($"Amount Paid: {payment.AmountPaid:C2}");
+        //                details.AppendLine($"Remaining After Payment: {payment.RemainingAmount:C2}");
+        //                details.AppendLine($"Status: {payment.PaymentStatus}");
+        //                details.AppendLine("---");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            details.AppendLine("No payments recorded yet.");
+        //        }
 
-                XtraMessageBox.Show(details.ToString(), $"Invoice Details - {invoice.InvoiceHeaderId}", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                XtraMessageBox.Show($"Error showing invoice details: {ex.Message}", "Error", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        //        XtraMessageBox.Show(details.ToString(), $"Invoice Details - {invoice.InvoiceHeaderId}", 
+        //            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        XtraMessageBox.Show($"Error showing invoice details: {ex.Message}", "Error", 
+        //            MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
 
         private void gridView1_DoubleClick(object sender, EventArgs e)
         {

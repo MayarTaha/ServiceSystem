@@ -12,6 +12,9 @@ using ServiveceSystem.Models;
 using DevExpress.XtraEditors.Controls;
 using Microsoft.EntityFrameworkCore;
 using ServiceSystem.Models;
+using System.Data.SqlClient;
+using ServiceSystem.PresentationLayer.Reports;
+using DevExpress.XtraReports.UI;
 
 namespace ServiceSystem.PresentationLayer.Quotation
 {
@@ -192,6 +195,259 @@ namespace ServiceSystem.PresentationLayer.Quotation
 
             // Center header text
             gridViewdet.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+        }
+
+        private DataSet GetQuotationData(int quotationId)
+        {
+            string connectionString = "Server=.;Database=ServiceSystem;Trusted_Connection=True;Trustservercertificate=true ";
+            DataSet ds = new DataSet();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // Header
+                    using (SqlCommand cmd = new SqlCommand("sp_GetQuotationHeaderById", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@QuotationId", quotationId);
+
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(ds, "QuotationHeader");
+                    }
+
+                    // Details
+                    using (SqlCommand cmd = new SqlCommand("sp_GetQuotationDetailsByQuotationId", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@QuotationId", quotationId);
+
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(ds, "QuotationDetail");
+                    }
+                }
+
+                // Create the DataRelation for master-detail
+                if (!ds.Relations.Contains("QuotationDetail"))
+                {
+                    if (ds.Tables.Contains("QuotationHeader") && ds.Tables.Contains("QuotationDetail"))
+                    {
+                        DataColumn parentColumn = ds.Tables["QuotationHeader"].Columns["QuotationId"];
+                        DataColumn childColumn = ds.Tables["QuotationDetail"].Columns["QuotationId"];
+
+                        if (parentColumn != null && childColumn != null)
+                        {
+                            ds.Relations.Add("QuotationDetail", parentColumn, childColumn, false);
+                        }
+                    }
+                }
+
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error getting quotation data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return ds;
+            }
+        }
+
+        private void savebutton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var ds = GetQuotationData(_quotationHeaderId);
+
+                if (ds != null && ds.Tables.Contains("QuotationHeader") && ds.Tables.Contains("QuotationDetail"))
+                {
+                    // Add calculated columns for the report
+                    AddCalculatedColumns(ds);
+
+                    QuotationReport report = new QuotationReport();
+                    report.DataSource = ds;
+                    report.DataMember = "QuotationHeader";
+
+                    report.ShowPreview();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to load quotation data for report.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generating report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void AddCalculatedColumns(DataSet ds)
+        {
+            try
+            {
+                // Add calculated columns to QuotationHeader table
+                if (ds.Tables.Contains("QuotationHeader"))
+                {
+                    var headerTable = ds.Tables["QuotationHeader"];
+                    
+                    // Add ContactName column if it doesn't exist
+                    if (!headerTable.Columns.Contains("ContactName"))
+                    {
+                        headerTable.Columns.Add("ContactName", typeof(string));
+                        if (headerTable.Rows.Count > 0)
+                        {
+                            var row = headerTable.Rows[0];
+                            var contactId = row["ContactId"];
+                            if (contactId != DBNull.Value)
+                            {
+                                var contact = _context.ContactPersons.FirstOrDefault(c => c.ContactId == (int)contactId);
+                                row["ContactName"] = contact?.ContactName ?? "N/A";
+                            }
+                        }
+                    }
+
+                    // Add ContactEmail column if it doesn't exist
+                    if (!headerTable.Columns.Contains("ContactEmail"))
+                    {
+                        headerTable.Columns.Add("ContactEmail", typeof(string));
+                        if (headerTable.Rows.Count > 0)
+                        {
+                            var row = headerTable.Rows[0];
+                            var contactId = row["ContactId"];
+                            if (contactId != DBNull.Value)
+                            {
+                                var contact = _context.ContactPersons.FirstOrDefault(c => c.ContactId == (int)contactId);
+                                row["ContactEmail"] = contact?.ContactEmail ?? "N/A";
+                            }
+                        }
+                    }
+
+                    // Add ContactPhone column if it doesn't exist
+                    if (!headerTable.Columns.Contains("ContactPhone"))
+                    {
+                        headerTable.Columns.Add("ContactPhone", typeof(string));
+                        if (headerTable.Rows.Count > 0)
+                        {
+                            var row = headerTable.Rows[0];
+                            var contactId = row["ContactId"];
+                            if (contactId != DBNull.Value)
+                            {
+                                var contact = _context.ContactPersons.FirstOrDefault(c => c.ContactId == (int)contactId);
+                                row["ContactPhone"] = contact?.ContactNumber ?? "N/A";
+                            }
+                        }
+                    }
+
+                    // Add ContactAddress column if it doesn't exist
+                    if (!headerTable.Columns.Contains("ContactAddress"))
+                    {
+                        headerTable.Columns.Add("ContactAddress", typeof(string));
+                        if (headerTable.Rows.Count > 0)
+                        {
+                            var row = headerTable.Rows[0];
+                            var clinicId = row["ClinicId"];
+                            if (clinicId != DBNull.Value)
+                            {
+                                var clinic = _context.Clinics.FirstOrDefault(c => c.ClinicId == (int)clinicId);
+                                row["ContactAddress"] = clinic?.Location ?? "N/A";
+                            }
+                        }
+                    }
+
+                    // Add QuotationNo column if it doesn't exist
+                    if (!headerTable.Columns.Contains("QuotationNo"))
+                    {
+                        headerTable.Columns.Add("QuotationNo", typeof(string));
+                        if (headerTable.Rows.Count > 0)
+                        {
+                            var row = headerTable.Rows[0];
+                            row["QuotationNo"] = row["QuotationNaMe"] ?? "N/A";
+                        }
+                    }
+
+                    // Add QuotationDate column if it doesn't exist
+                    if (!headerTable.Columns.Contains("QuotationDate"))
+                    {
+                        headerTable.Columns.Add("QuotationDate", typeof(string));
+                        if (headerTable.Rows.Count > 0)
+                        {
+                            var row = headerTable.Rows[0];
+                            var initialDate = row["InitialDate"];
+                            if (initialDate != DBNull.Value)
+                            {
+                                row["QuotationDate"] = Convert.ToDateTime(initialDate);
+                            }
+                            else
+                            {
+                                row["QuotationDate"] = DateTime.Now;
+                            }
+                        }
+                    }
+
+                    // Add TotalAmount column if it doesn't exist
+                    if (!headerTable.Columns.Contains("TotalAmount"))
+                    {
+                        headerTable.Columns.Add("TotalAmount", typeof(string));
+                        if (headerTable.Rows.Count > 0)
+                        {
+                            var row = headerTable.Rows[0];
+                            var totalDue = row["TotalDuo"];
+                            if (totalDue != DBNull.Value)
+                            {
+                                row["TotalAmount"] = Convert.ToDecimal(totalDue).ToString("C");
+                            }
+                            else
+                            {
+                                row["TotalAmount"] = "$0.00";
+                            }
+                        }
+                    }
+
+                    // Add QuotationId column if it doesn't exist
+                    if (!headerTable.Columns.Contains("QuotationId"))
+                    {
+                        headerTable.Columns.Add("QuotationId", typeof(int));
+                        if (headerTable.Rows.Count > 0)
+                        {
+                            var row = headerTable.Rows[0];
+                            var quotationId = row["QuotationId"];
+                            if (quotationId != DBNull.Value)
+                            {
+                                row["QuotationId"] = quotationId;
+                            }
+                            else
+                            {
+                                row["QuotationId"] = _quotationHeaderId;
+                            }
+                        }
+                    }
+                }
+
+                // Add calculated columns to QuotationDetail table
+                if (ds.Tables.Contains("QuotationDetail"))
+                {
+                    var detailTable = ds.Tables["QuotationDetail"];
+                    
+                    // Add ServiceName column if it doesn't exist
+                    if (!detailTable.Columns.Contains("ServiceName"))
+                    {
+                        detailTable.Columns.Add("ServiceName", typeof(string));
+                        foreach (DataRow row in detailTable.Rows)
+                        {
+                            var serviceId = row["ServiceId"];
+                            if (serviceId != DBNull.Value)
+                            {
+                                var service = _context.Services.FirstOrDefault(s => s.ServiceId == (int)serviceId);
+                                row["ServiceName"] = service?.Name ?? "N/A";
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding calculated columns: {ex.Message}");
+            }
         }
     }
 }

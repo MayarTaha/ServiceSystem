@@ -559,6 +559,7 @@
             savebutton.Size = new Size(1299, 49);
             savebutton.TabIndex = 57;
             savebutton.Text = "Show Quotation Report";
+            savebutton.Click += savebutton_Click;
             // 
             // QuotationDetailReport
             // 

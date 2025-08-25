@@ -14,8 +14,7 @@ using ServiveceSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceSystem.PresentationLayer.Reports;
 using DevExpress.XtraReports.UI;
-using System.Data;
-using System.Data.SqlClient;
+
 
 namespace ServiceSystem.PresentationLayer.InvoiceDetail
 {
@@ -229,145 +228,28 @@ namespace ServiceSystem.PresentationLayer.InvoiceDetail
             gridViewdet.Columns.AddVisible("Discount", "Discount");
             gridViewdet.Columns.AddVisible("TotalService", "Total");
         }
-
-
-
-
-
-        //private DataSet GetInvoiceData(int invoiceId)
-        //{
-        //    string connectionString = "Server=.;Database=ServiceSystem;Trusted_Connection=True;Trustservercertificate=true ";
-        //    DataSet ds = new DataSet();
-
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-
-        //        // Header
-        //        using (SqlCommand cmd = new SqlCommand("sp_GetInvoiceHeaderById", conn))
-        //        {
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
-
-        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
-        //            da.Fill(ds, "InvoiceHeader");
-        //        }
-
-        //        // Details
-        //        using (SqlCommand cmd = new SqlCommand("sp_GetInvoiceDetailsByInvoiceId", conn))
-        //        {
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
-
-        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
-        //            da.Fill(ds, "InvoiceHeader");
-        //        }
-        //    }
-
-        //    //// هنا ممكن تعمل Relation بين الجدولين (Header ↔ Detail)
-        //    //if (!ds.Relations.Contains("HeaderDetail"))
-        //    //{
-        //    //    ds.Relations.Add("HeaderDetail",
-        //    //        ds.Tables["InvoiceHeader"].Columns["InvoiceHeaderId"],
-        //    //        ds.Tables["InvoiceDetail"].Columns["InvoiceHeaderId"]);
-        //    //}
-
-        //    return ds;
-        //}
-        private DataSet GetInvoiceData(int invoiceId)
-        {
-            string connectionString = "Server=.;Database=ServiceSystem;Trusted_Connection=True;Trustservercertificate=true ";
-            DataSet ds = new DataSet();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-
-                // Header
-                using (SqlCommand cmd = new SqlCommand("sp_GetInvoiceHeaderById", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
-
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(ds, "InvoiceHeader");
-                }
-
-                // Details
-                using (SqlCommand cmd = new SqlCommand("sp_GetInvoiceDetailsByInvoiceId", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@InvoiceId", invoiceId);
-
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(ds, "InvoiceDetail"); // CORRECTED LINE: Changed "InvoiceHeader" to "InvoiceDetail"
-                }
-            }
-
-            // IMPORTANT: Re-enable the DataRelation creation, as it's essential for master-detail
-            if (!ds.Relations.Contains("HeaderDetail"))
-            {
-                // Ensure both tables exist before creating the relation
-                if (ds.Tables.Contains("InvoiceHeader") && ds.Tables.Contains("InvoiceDetail"))
-                {
-                    DataColumn parentColumn = ds.Tables["InvoiceHeader"].Columns["InvoiceHeaderId"];
-                    DataColumn childColumn = ds.Tables["InvoiceDetail"].Columns["InvoiceHeaderId"];
-
-                    if (parentColumn != null && childColumn != null)
-                    {
-                        ds.Relations.Add("HeaderDetail", parentColumn, childColumn, false);
-                    }
-                    else
-                    {
-                        // Log or handle error: InvoiceHeaderId column not found in one of the DataTables.
-                        // This should ideally not happen if your SPs return the ID.
-                         MessageBox.Show("InvoiceHeaderId column not found in one of the DataTables.");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("InvoiceHeader or InvoiceDetail DataTable not found in DataSet.");
-                    // Log or handle error: InvoiceHeader or InvoiceDetail DataTable not found in DataSet.
-                }
-            }
-
-            return ds;
-        }
-
-
         private void savebutton_Click(object sender, EventArgs e)
         {
 
-            // InvoiceReport InvoiceReport = new InvoiceReport();
-            //InvReport invReport = new InvReport();
-            //invReport.DataSource = invoiceDetailsList;
-            //invReport.Parameters["InvoiceHeaderId"].Value = _invoiceHeaderId;
-            //invReport.ShowPreview();
+            ServiseDataSet ds = new ServiseDataSet();
 
-            //InvoiceReport.DataSource = invoiceDetailsList;
-            //// InvoiceReport.Parameters["InvoiceHeaderId"].Value = _invoiceHeaderId;
-            //InvoiceReport.ShowPreview();
-            //var ds = GetInvoiceData(_invoiceHeaderId);
-            //MessageBox.Show(ds.Tables["InvoiceDetail"].Rows.Count.ToString());
+            // Fill Header
+            using (var headerAdapter = new Models.ServiseDataSetTableAdapters.InvoiceHeaderTableAdapter())
+                headerAdapter.Fill(ds.InvoiceHeader, _invoiceHeaderId);
 
+            // Fill Details
+            using (var detailAdapter = new Models.ServiseDataSetTableAdapters.InvoiceDetailTableAdapter())
+                detailAdapter.Fill(ds.InvoiceDetail, _invoiceHeaderId);
 
-            //InvoiceReport report = new InvoiceReport();
-            //report.DataSource = ds;
-            //report.DataMember = "InvoiceHeader"; // الماستر
-
-            //report.ShowPreview();
-            //var ds = GetInvoiceData(_invoiceHeaderId);
-
-            //InvoiceReport report = new InvoiceReport(ds);
-            //report.ShowPreview();
-            var ds = GetInvoiceData(_invoiceHeaderId);
-
-            InvoiceReport report = new InvoiceReport();
+            // Bind to report
+            Invoice report = new Invoice();
             report.DataSource = ds;
-            report.DataMember = "InvoiceHeader"; 
-                                                 // Master
-
+            report.DataMember = "InvoiceHeader"; // master table
             report.ShowPreview();
+
+
+
         }
+       
     }
 }

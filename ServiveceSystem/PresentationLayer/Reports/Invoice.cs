@@ -3,13 +3,12 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using DevExpress.XtraReports.UI;
-using System.Data;
 
 namespace ServiceSystem.PresentationLayer.Reports
 {
-	public partial class InvoiceReport : DevExpress.XtraReports.UI.XtraReport
-	{
-		public InvoiceReport()
+	public partial class Invoice : DevExpress.XtraReports.UI.XtraReport
+	{	
+		public Invoice()
 		{
 			InitializeComponent();
 		}

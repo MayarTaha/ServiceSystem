@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using ServiceSystem.Models;
 using System.Data.SqlClient;
 using ServiceSystem.PresentationLayer.Reports;
+
 using DevExpress.XtraReports.UI;
 
 namespace ServiceSystem.PresentationLayer.Quotation
@@ -255,30 +256,48 @@ namespace ServiceSystem.PresentationLayer.Quotation
 
         private void savebutton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var ds = GetQuotationData(_quotationHeaderId);
+            //try
+            //{
+            //    var ds = GetQuotationData(_quotationHeaderId);
 
-                if (ds != null && ds.Tables.Contains("QuotationHeader") && ds.Tables.Contains("QuotationDetail"))
-                {
-                    // Add calculated columns for the report
-                    AddCalculatedColumns(ds);
+            //    if (ds != null && ds.Tables.Contains("QuotationHeader") && ds.Tables.Contains("QuotationDetail"))
+            //    {
+            //        // Add calculated columns for the report
+            //        AddCalculatedColumns(ds);
 
-                    QuotationReport report = new QuotationReport();
-                    report.DataSource = ds;
-                    report.DataMember = "QuotationHeader";
+            //        QuotationReport report = new QuotationReport();
+            //        report.DataSource = ds;
+            //        report.DataMember = "QuotationHeader";
 
-                    report.ShowPreview();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to load quotation data for report.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error generating report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //        report.ShowPreview();
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Failed to load quotation data for report.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Error generating report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            ServiseDataSet ds = new ServiseDataSet();
+
+            // Fill Header
+            using (var headerAdapter = new Models.ServiseDataSetTableAdapters.QuotationHeaderTableAdapter())
+                headerAdapter.Fill(ds.QuotationHeader, _quotationHeaderId);
+
+            // Fill Details
+            using (var detailAdapter = new Models.ServiseDataSetTableAdapters.QuotationDetailTableAdapter())
+                detailAdapter.Fill(ds.QuotationDetail, _quotationHeaderId);
+
+            // Bind to report
+            // QuotationReport report = new QuotationReport();
+            //   Quotation report = new Quotation();
+            QuotationRe report = new QuotationRe();
+            report.DataSource = ds;
+            report.DataMember = "QuotationHeader"; // master table
+            report.ShowPreview();
+
         }
 
         private void AddCalculatedColumns(DataSet ds)
